@@ -24,7 +24,7 @@ import (
 )
 
 var (
-	minEvmGasPrice = big.NewInt(1e10) // ablack
+	minEvmGasPrice = big.NewInt(1e10) // afury
 )
 
 func ublack(amt int64) sdk.Coin {
@@ -72,9 +72,9 @@ func (suite *IntegrationTestSuite) TestFundedAccount() {
 	suite.Equal(funds, *res.Balance)
 
 	// check balance via EVM query
-	ablackBal, err := suite.Black.EvmClient.BalanceAt(context.Background(), acc.EvmAddress, nil)
+	afuryBal, err := suite.Black.EvmClient.BalanceAt(context.Background(), acc.EvmAddress, nil)
 	suite.NoError(err)
-	suite.Equal(funds.Amount.MulRaw(1e12).BigInt(), ablackBal)
+	suite.Equal(funds.Amount.MulRaw(1e12).BigInt(), afuryBal)
 }
 
 // example test that signs & broadcasts an EVM tx
@@ -93,7 +93,7 @@ func (suite *IntegrationTestSuite) TestTransferOverEVM() {
 	suite.Equal(uint64(0), nonce) // sanity check. the account should have no prior txs
 
 	// transfer black over EVM
-	blackToTransfer := big.NewInt(1e18) // 1 BLACK; ablack has 18 decimals.
+	blackToTransfer := big.NewInt(1e18) // 1 BLACK; afury has 18 decimals.
 	req := util.EvmTxRequest{
 		Tx:   ethtypes.NewTransaction(nonce, to, blackToTransfer, 1e5, minEvmGasPrice, nil),
 		Data: "any ol' data to track this through the system",
@@ -105,7 +105,7 @@ func (suite *IntegrationTestSuite) TestTransferOverEVM() {
 	// evm txs refund unused gas. so to know the expected balance we need to know how much gas was used.
 	ublackUsedForGas := sdkmath.NewIntFromBigInt(minEvmGasPrice).
 		Mul(sdkmath.NewIntFromUint64(res.Receipt.GasUsed)).
-		QuoRaw(1e12) // convert ablack to ublack
+		QuoRaw(1e12) // convert afury to ublack
 
 	// expect (9 - gas used) BLACK remaining in account.
 	balance := suite.Black.QuerySdkForBalances(acc.SdkAddress)

@@ -30,7 +30,7 @@ func TestEvmMinGasFilter(t *testing.T) {
 
 	ctx := tApp.NewContext(true, tmproto.Header{Height: 1, Time: tmtime.Now()})
 	tApp.GetEvmKeeper().SetParams(ctx, evmtypes.Params{
-		EvmDenom: "ablack",
+		EvmDenom: "afury",
 	})
 
 	testCases := []struct {
@@ -54,19 +54,19 @@ func TestEvmMinGasFilter(t *testing.T) {
 			mustParseDecCoins("0.001ublack"),
 		},
 		{
-			"zero ublack gas price, min ablack price",
-			mustParseDecCoins("0ublack;100000ablack"),
-			mustParseDecCoins("0ublack"), // ablack is removed
+			"zero ublack gas price, min afury price",
+			mustParseDecCoins("0ublack;100000afury"),
+			mustParseDecCoins("0ublack"), // afury is removed
 		},
 		{
-			"zero ublack gas price, min ablack price, other token",
-			mustParseDecCoins("0ublack;100000ablack;0.001other"),
-			mustParseDecCoins("0ublack;0.001other"), // ablack is removed
+			"zero ublack gas price, min afury price, other token",
+			mustParseDecCoins("0ublack;100000afury;0.001other"),
+			mustParseDecCoins("0ublack;0.001other"), // afury is removed
 		},
 		{
-			"non-zero ublack gas price, min ablack price",
-			mustParseDecCoins("0.25ublack;100000ablack;0.001other"),
-			mustParseDecCoins("0.25ublack;0.001other"), // ablack is removed
+			"non-zero ublack gas price, min afury price",
+			mustParseDecCoins("0.25ublack;100000afury;0.001other"),
+			mustParseDecCoins("0.25ublack;0.001other"), // afury is removed
 		},
 	}
 

@@ -3724,7 +3724,7 @@ BalanceAccount defines an account in the evmutil module.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | `address` | [bytes](#bytes) |  |  |
-| `balance` | [string](#string) |  | balance indicates the amount of ablack owned by the address. |
+| `balance` | [string](#string) |  | balance indicates the amount of afury owned by the address. |
 
 
 

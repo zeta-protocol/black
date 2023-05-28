@@ -157,7 +157,7 @@ func (suite *EIP712TestSuite) SetupTest() {
 	// Genesis states
 	evmGs := evmtypes.NewGenesisState(
 		evmtypes.NewParams(
-			"ablack",                       // evmDenom
+			"afury",                       // evmDenom
 			false,                         // allowedUnprotectedTxs
 			true,                          // enableCreate
 			true,                          // enableCall

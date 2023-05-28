@@ -81,7 +81,7 @@ func (suite *Suite) SetupTest() {
 	suite.Addrs = addrs
 
 	evmGenesis := evmtypes.DefaultGenesisState()
-	evmGenesis.Params.EvmDenom = "ablack"
+	evmGenesis.Params.EvmDenom = "afury"
 
 	feemarketGenesis := feemarkettypes.DefaultGenesisState()
 	feemarketGenesis.Params.EnableHeight = 1
@@ -190,9 +190,9 @@ func (suite *Suite) FundAccountWithBlack(addr sdk.AccAddress, coins sdk.Coins) {
 		err := suite.App.FundAccount(suite.Ctx, addr, sdk.NewCoins(sdk.NewCoin("ublack", ublack)))
 		suite.Require().NoError(err)
 	}
-	ablack := coins.AmountOf("ablack")
-	if ablack.IsPositive() {
-		err := suite.Keeper.SetBalance(suite.Ctx, addr, ablack)
+	afury := coins.AmountOf("afury")
+	if afury.IsPositive() {
+		err := suite.Keeper.SetBalance(suite.Ctx, addr, afury)
 		suite.Require().NoError(err)
 	}
 }
@@ -203,10 +203,10 @@ func (suite *Suite) FundModuleAccountWithBlack(moduleName string, coins sdk.Coin
 		err := suite.App.FundModuleAccount(suite.Ctx, moduleName, sdk.NewCoins(sdk.NewCoin("ublack", ublack)))
 		suite.Require().NoError(err)
 	}
-	ablack := coins.AmountOf("ablack")
-	if ablack.IsPositive() {
+	afury := coins.AmountOf("afury")
+	if afury.IsPositive() {
 		addr := suite.AccountKeeper.GetModuleAddress(moduleName)
-		err := suite.Keeper.SetBalance(suite.Ctx, addr, ablack)
+		err := suite.Keeper.SetBalance(suite.Ctx, addr, afury)
 		suite.Require().NoError(err)
 	}
 }

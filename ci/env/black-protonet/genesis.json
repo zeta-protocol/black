@@ -1488,7 +1488,7 @@
         }
       ],
       "params": {
-        "evm_denom": "ablack",
+        "evm_denom": "afury",
         "enable_create": true,
         "enable_call": true,
         "extra_eips": [],

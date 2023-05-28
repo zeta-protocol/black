@@ -8,29 +8,29 @@ order: 1
 
 In order to use the EVM and be compatible with existing clients, the gas denom used by the EVM must be in 18 decimals. Since `ublack` has 6 decimals of precision, it cannot be used as the EVM gas denom directly.
 
-To use the Black token on the EVM, the evmutil module provides an `EvmBankKeeper` that is responsible for the conversion of `ublack` and `ablack`. A user's excess `ablack` balance is stored in the `x/evmutil` store, while its `ublack` balance remains in the cosmos-sdk `x/bank` module.
+To use the Black token on the EVM, the evmutil module provides an `EvmBankKeeper` that is responsible for the conversion of `ublack` and `afury`. A user's excess `afury` balance is stored in the `x/evmutil` store, while its `ublack` balance remains in the cosmos-sdk `x/bank` module.
 
 ## `EvmBankKeeper` Overview
 
-The `EvmBankKeeper` provides access to an account's total `ablack` balance and the ability to transfer, mint, and burn `ablack`. If anything other than the `ablack` denom is requested, the `EvmBankKeeper` will panic.
+The `EvmBankKeeper` provides access to an account's total `afury` balance and the ability to transfer, mint, and burn `afury`. If anything other than the `afury` denom is requested, the `EvmBankKeeper` will panic.
 
-This keeper implements the `x/evm` module's `BankKeeper` interface to enable the usage of `ablack` denom on the EVM.
+This keeper implements the `x/evm` module's `BankKeeper` interface to enable the usage of `afury` denom on the EVM.
 
 ### `x/evm` Parameter Requirements
 
-Since the EVM denom `ablack` is required to use the `EvmBankKeeper`, it is necessary to set the `EVMDenom` param of the `x/evm` module to `ablack`.
+Since the EVM denom `afury` is required to use the `EvmBankKeeper`, it is necessary to set the `EVMDenom` param of the `x/evm` module to `afury`.
 
-### Balance Calculation of `ablack`
+### Balance Calculation of `afury`
 
-The `ablack` balance of an account is derived from an account's **spendable** `ublack` balance times 10^12 (to derive its `ablack` equivalent), plus the account's excess `ablack` balance that can be accessed via the module `Keeper`.
+The `afury` balance of an account is derived from an account's **spendable** `ublack` balance times 10^12 (to derive its `afury` equivalent), plus the account's excess `afury` balance that can be accessed via the module `Keeper`.
 
-### `ablack` <> `ublack` Conversion
+### `afury` <> `ublack` Conversion
 
-When an account does not have sufficient `ablack` to cover a transfer or burn, the `EvmBankKeeper` will try to swap 1 `ublack` to its equivalent `ablack` amount. It does this by transferring 1 `ublack` from the sender to the `x/evmutil` module account, then adding the equivalent `ablack` amount to the sender's balance in the module state.
+When an account does not have sufficient `afury` to cover a transfer or burn, the `EvmBankKeeper` will try to swap 1 `ublack` to its equivalent `afury` amount. It does this by transferring 1 `ublack` from the sender to the `x/evmutil` module account, then adding the equivalent `afury` amount to the sender's balance in the module state.
 
-In reverse, if an account has enough `ablack` balance for one or more `ublack`, the excess `ablack` balance will be converted to `ublack`. This is done by removing the excess `ablack` balance in the module store, then transferring the equivalent `ublack` coins from the `x/evmutil` module account to the target account.
+In reverse, if an account has enough `afury` balance for one or more `ublack`, the excess `afury` balance will be converted to `ublack`. This is done by removing the excess `afury` balance in the module store, then transferring the equivalent `ublack` coins from the `x/evmutil` module account to the target account.
 
-The swap logic ensures that all `ablack` is backed by the equivalent `ublack` balance stored in the module account.
+The swap logic ensures that all `afury` is backed by the equivalent `ublack` balance stored in the module account.
 
 ## ERC20 token <> sdk.Coin Conversion
 
@@ -40,4 +40,4 @@ Only ERC20 contract address that are whitelist via the `EnabledConversionPairs` 
 
 ## Module Keeper
 
-The module Keeper provides access to an account's excess `ablack` balance and the ability to update the balance.
+The module Keeper provides access to an account's excess `afury` balance and the ability to update the balance.

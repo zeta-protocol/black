@@ -21,8 +21,8 @@ func (suite *IntegrationTestSuite) TestEthGasPriceReturnsMinFee() {
 	minGasPrices, err := getMinFeeFromAppToml(suite.BlackHomePath())
 	suite.NoError(err)
 
-	// evm uses ablack, get ablack min fee
-	evmMinGas := minGasPrices.AmountOf("ablack").TruncateInt().BigInt()
+	// evm uses afury, get afury min fee
+	evmMinGas := minGasPrices.AmountOf("afury").TruncateInt().BigInt()
 
 	// returns eth_gasPrice, units in black
 	gasPrice, err := suite.Black.EvmClient.SuggestGasPrice(context.Background())
@@ -39,7 +39,7 @@ func (suite *IntegrationTestSuite) TestEvmRespectsMinFee() {
 	// get min gas price for evm (from app.toml)
 	minFees, err := getMinFeeFromAppToml(suite.BlackHomePath())
 	suite.NoError(err)
-	minGasPrice := minFees.AmountOf("ablack").TruncateInt()
+	minGasPrice := minFees.AmountOf("afury").TruncateInt()
 
 	// attempt tx with less than min gas price (min fee - 1)
 	tooLowGasPrice := minGasPrice.Sub(sdk.OneInt()).BigInt()
