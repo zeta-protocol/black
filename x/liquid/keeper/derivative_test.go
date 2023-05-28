@@ -56,7 +56,7 @@ func (suite *KeeperTestSuite) TestBurnDerivative() {
 		},
 		{
 			name:             "error when user doesn't have enough funds",
-			balance:          c("ublack", 10),
+			balance:          c("ufury", 10),
 			moduleDelegation: i(1e9),
 			burnAmount:       c(liquidDenom, 1e9),
 			expectedErr:      sdkerrors.ErrInsufficientFunds,
@@ -355,8 +355,8 @@ func (suite *KeeperTestSuite) TestIsDerivativeDenom() {
 			wantIsDenom: false,
 		},
 		{
-			name:        "invalid - ublack",
-			denom:       "ublack",
+			name:        "invalid - ufury",
+			denom:       "ufury",
 			wantIsDenom: false,
 		},
 		{

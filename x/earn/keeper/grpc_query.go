@@ -369,7 +369,7 @@ func (s queryServer) getOneAccountOneVaultDeposit(
 	}
 
 	if req.ValueInStakedTokens {
-		// Get underlying ublack amount if denom is a derivative
+		// Get underlying ufury amount if denom is a derivative
 		if !s.keeper.liquidKeeper.IsDerivativeDenom(ctx, req.Denom) {
 			return nil, status.Errorf(
 				codes.InvalidArgument,
@@ -378,13 +378,13 @@ func (s queryServer) getOneAccountOneVaultDeposit(
 			)
 		}
 
-		ublackValue, err := s.keeper.liquidKeeper.GetStakedTokensForDerivatives(ctx, sdk.NewCoins(value))
+		ufuryValue, err := s.keeper.liquidKeeper.GetStakedTokensForDerivatives(ctx, sdk.NewCoins(value))
 		if err != nil {
 			// This should "never" happen if IsDerivativeDenom is true
-			panic("Error getting ublack value for " + req.Denom)
+			panic("Error getting ufury value for " + req.Denom)
 		}
 
-		value = ublackValue
+		value = ufuryValue
 	}
 
 	return &types.QueryDepositsResponse{
@@ -489,7 +489,7 @@ func (s queryServer) getOneAccountAllDeposits(
 	}
 
 	if req.ValueInStakedTokens {
-		// Plain slice to not sum ublack amounts together. This is not a valid
+		// Plain slice to not sum ufury amounts together. This is not a valid
 		// sdk.Coin due to multiple coins of the same denom, but we need them to
 		// be separate in the response to not be an aggregate amount.
 		var valueInStakedTokens []sdk.Coin
@@ -501,12 +501,12 @@ func (s queryServer) getOneAccountAllDeposits(
 			}
 
 			// Derivative coins are converted to underlying staked tokens
-			ublackValue, err := s.keeper.liquidKeeper.GetStakedTokensForDerivatives(ctx, sdk.NewCoins(coin))
+			ufuryValue, err := s.keeper.liquidKeeper.GetStakedTokensForDerivatives(ctx, sdk.NewCoins(coin))
 			if err != nil {
 				// This should "never" happen if IsDerivativeDenom is true
-				panic("Error getting ublack value for " + coin.Denom)
+				panic("Error getting ufury value for " + coin.Denom)
 			}
-			valueInStakedTokens = append(valueInStakedTokens, ublackValue)
+			valueInStakedTokens = append(valueInStakedTokens, ufuryValue)
 		}
 
 		var filteredShares types.VaultShares

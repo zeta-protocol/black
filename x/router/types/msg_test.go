@@ -20,12 +20,12 @@ func TestMsgMintDeposit_Signing(t *testing.T) {
 	msg := types.NewMsgMintDeposit(
 		address,
 		validatorAddress,
-		sdk.NewCoin("ublack", sdkmath.NewInt(1e9)),
+		sdk.NewCoin("ufury", sdkmath.NewInt(1e9)),
 	)
 
 	// checking for the "type" field ensures the msg is registered on the amino codec
 	signBytes := []byte(
-		`{"type":"router/MsgMintDeposit","value":{"amount":{"amount":"1000000000","denom":"ublack"},"depositor":"black1gepm4nwzz40gtpur93alv9f9wm5ht4l0hzzw9d","validator":"blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"}}`,
+		`{"type":"router/MsgMintDeposit","value":{"amount":{"amount":"1000000000","denom":"ufury"},"depositor":"black1gepm4nwzz40gtpur93alv9f9wm5ht4l0hzzw9d","validator":"blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"}}`,
 	)
 
 	assert.Equal(t, []sdk.AccAddress{address}, msg.GetSigners())
@@ -39,12 +39,12 @@ func TestMsgDelegateMintDeposit_Signing(t *testing.T) {
 	msg := types.NewMsgDelegateMintDeposit(
 		address,
 		validatorAddress,
-		sdk.NewCoin("ublack", sdkmath.NewInt(1e9)),
+		sdk.NewCoin("ufury", sdkmath.NewInt(1e9)),
 	)
 
 	// checking for the "type" field ensures the msg is registered on the amino codec
 	signBytes := []byte(
-		`{"type":"router/MsgDelegateMintDeposit","value":{"amount":{"amount":"1000000000","denom":"ublack"},"depositor":"black1gepm4nwzz40gtpur93alv9f9wm5ht4l0hzzw9d","validator":"blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"}}`,
+		`{"type":"router/MsgDelegateMintDeposit","value":{"amount":{"amount":"1000000000","denom":"ufury"},"depositor":"black1gepm4nwzz40gtpur93alv9f9wm5ht4l0hzzw9d","validator":"blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"}}`,
 	)
 
 	assert.Equal(t, []sdk.AccAddress{address}, msg.GetSigners())
@@ -58,12 +58,12 @@ func TestMsgWithdrawBurn_Signing(t *testing.T) {
 	msg := types.NewMsgWithdrawBurn(
 		address,
 		validatorAddress,
-		sdk.NewCoin("ublack", sdkmath.NewInt(1e9)),
+		sdk.NewCoin("ufury", sdkmath.NewInt(1e9)),
 	)
 
 	// checking for the "type" field ensures the msg is registered on the amino codec
 	signBytes := []byte(
-		`{"type":"router/MsgWithdrawBurn","value":{"amount":{"amount":"1000000000","denom":"ublack"},"from":"black1gepm4nwzz40gtpur93alv9f9wm5ht4l0hzzw9d","validator":"blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"}}`,
+		`{"type":"router/MsgWithdrawBurn","value":{"amount":{"amount":"1000000000","denom":"ufury"},"from":"black1gepm4nwzz40gtpur93alv9f9wm5ht4l0hzzw9d","validator":"blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"}}`,
 	)
 
 	assert.Equal(t, []sdk.AccAddress{address}, msg.GetSigners())
@@ -77,12 +77,12 @@ func TestMsgWithdrawBurnUndelegate_Signing(t *testing.T) {
 	msg := types.NewMsgWithdrawBurnUndelegate(
 		address,
 		validatorAddress,
-		sdk.NewCoin("ublack", sdkmath.NewInt(1e9)),
+		sdk.NewCoin("ufury", sdkmath.NewInt(1e9)),
 	)
 
 	// checking for the "type" field ensures the msg is registered on the amino codec
 	signBytes := []byte(
-		`{"type":"router/MsgWithdrawBurnUndelegate","value":{"amount":{"amount":"1000000000","denom":"ublack"},"from":"black1gepm4nwzz40gtpur93alv9f9wm5ht4l0hzzw9d","validator":"blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"}}`,
+		`{"type":"router/MsgWithdrawBurnUndelegate","value":{"amount":{"amount":"1000000000","denom":"ufury"},"from":"black1gepm4nwzz40gtpur93alv9f9wm5ht4l0hzzw9d","validator":"blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"}}`,
 	)
 
 	assert.Equal(t, []sdk.AccAddress{address}, msg.GetSigners())
@@ -92,7 +92,7 @@ func TestMsgWithdrawBurnUndelegate_Signing(t *testing.T) {
 func TestMsg_Validate(t *testing.T) {
 	validAddress := "black1gepm4nwzz40gtpur93alv9f9wm5ht4l0hzzw9d"
 	validValidatorAddress := "blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"
-	validCoin := sdk.NewInt64Coin("ublack", 1e9)
+	validCoin := sdk.NewInt64Coin("ufury", 1e9)
 
 	type msgArgs struct {
 		depositor string
@@ -153,7 +153,7 @@ func TestMsg_Validate(t *testing.T) {
 			msgArgs: msgArgs{
 				depositor: validAddress,
 				validator: validValidatorAddress,
-				amount:    sdk.NewCoin("ublack", sdk.ZeroInt()),
+				amount:    sdk.NewCoin("ufury", sdk.ZeroInt()),
 			},
 			expectedErr: sdkerrors.ErrInvalidCoins,
 		},
@@ -162,7 +162,7 @@ func TestMsg_Validate(t *testing.T) {
 			msgArgs: msgArgs{
 				depositor: validAddress,
 				validator: validValidatorAddress,
-				amount:    sdk.Coin{Denom: "ublack", Amount: sdkmath.NewInt(-1)},
+				amount:    sdk.Coin{Denom: "ufury", Amount: sdkmath.NewInt(-1)},
 			},
 			expectedErr: sdkerrors.ErrInvalidCoins,
 		},

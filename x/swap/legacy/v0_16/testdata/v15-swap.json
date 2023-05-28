@@ -22,7 +22,7 @@
         "token_b": "usdx"
       },
       {
-        "token_a": "ublack",
+        "token_a": "ufury",
         "token_b": "usdx"
       },
       {
@@ -34,10 +34,10 @@
   },
   "pool_records": [
     {
-      "pool_id": "ublack:usdx",
+      "pool_id": "ufury:usdx",
       "reserves_a": {
         "amount": "583616549439",
-        "denom": "ublack"
+        "denom": "ufury"
       },
       "reserves_b": {
         "amount": "3431399443511",
@@ -76,7 +76,7 @@
     },
     {
       "depositor": "black1ll3ndyv333aet6mzqltu5wdepqhyme8umv34es",
-      "pool_id": "ublack:usdx",
+      "pool_id": "ufury:usdx",
       "shares_owned": "3427014047"
     }
   ]

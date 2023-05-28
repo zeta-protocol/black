@@ -38,7 +38,7 @@ func TestGrpcAuctionsFilter(t *testing.T) {
 		).WithID(1),
 		types.NewCollateralAuction(
 			"sellerMod",
-			c("ublack", 12345678),
+			c("ufury", 12345678),
 			time.Date(1998, time.January, 1, 0, 0, 0, 0, time.UTC),
 			c("usdx", 12345678),
 			types.WeightedAddresses{

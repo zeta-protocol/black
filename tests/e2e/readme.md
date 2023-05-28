@@ -41,7 +41,7 @@ the sdk and evm chains, respectively.
 ### Creating a new account
 ```go
 // create an account on the Black network, initially funded with 10 BLACK
-acc := suite.Black.NewFundedAccount("account-name", sdk.NewCoins(sdk.NewCoin("ublack", 10e6)))
+acc := suite.Black.NewFundedAccount("account-name", sdk.NewCoins(sdk.NewCoin("ufury", 10e6)))
 
 // you can also access accounts by the name with which they were registered to the suite
 acc := suite.Black.GetAccount("account-name")

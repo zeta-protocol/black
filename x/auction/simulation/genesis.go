@@ -77,7 +77,7 @@ func RandomizedGenState(simState *module.SimulationState) {
 		types.NewDebtAuction(
 			cdptypes.LiquidatorMacc, // using cdp account rather than generic test one to avoid having to set permissions on the supply keeper
 			sdk.NewInt64Coin("usdx", 100),
-			sdk.NewInt64Coin("ublack", 1000000000000),
+			sdk.NewInt64Coin("ufury", 1000000000000),
 			simState.GenTimestamp.Add(time.Hour*5),
 			sdk.NewInt64Coin("debt", 100), // same as usdx
 		),

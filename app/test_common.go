@@ -165,7 +165,7 @@ func GenesisStateWithSingleValidator(
 	balances := []banktypes.Balance{
 		{
 			Address: acc.GetAddress().String(),
-			Coins:   sdk.NewCoins(sdk.NewCoin("ublack", sdkmath.NewInt(100000000000000))),
+			Coins:   sdk.NewCoins(sdk.NewCoin("ufury", sdkmath.NewInt(100000000000000))),
 		},
 	}
 
@@ -228,7 +228,7 @@ func genesisStateWithValSet(
 	}
 	// set validators and delegations
 	currentStakingGenesis := stakingtypes.GetGenesisStateFromAppState(app.appCodec, genesisState)
-	currentStakingGenesis.Params.BondDenom = "ublack"
+	currentStakingGenesis.Params.BondDenom = "ufury"
 
 	stakingGenesis := stakingtypes.NewGenesisState(
 		currentStakingGenesis.Params,
@@ -248,13 +248,13 @@ func genesisStateWithValSet(
 
 	for range delegations {
 		// add delegated tokens to total supply
-		totalSupply = totalSupply.Add(sdk.NewCoin("ublack", bondAmt))
+		totalSupply = totalSupply.Add(sdk.NewCoin("ufury", bondAmt))
 	}
 
 	// add bonded amount to bonded pool module account
 	balances = append(balances, banktypes.Balance{
 		Address: authtypes.NewModuleAddress(stakingtypes.BondedPoolName).String(),
-		Coins:   sdk.Coins{sdk.NewCoin("ublack", bondAmt)},
+		Coins:   sdk.Coins{sdk.NewCoin("ufury", bondAmt)},
 	})
 
 	bankGenesis := banktypes.NewGenesisState(

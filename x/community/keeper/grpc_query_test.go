@@ -47,7 +47,7 @@ func (suite *grpcQueryTestSuite) TestGrpcQueryBalance() {
 			name: "handles response with balance",
 			setup: func() {
 				expCoins = sdk.NewCoins(
-					sdk.NewCoin("ublack", sdkmath.NewInt(100)),
+					sdk.NewCoin("ufury", sdkmath.NewInt(100)),
 					sdk.NewCoin("usdx", sdkmath.NewInt(1000)),
 				)
 				suite.App.FundModuleAccount(suite.Ctx, types.ModuleName, expCoins)
@@ -81,7 +81,7 @@ func (suite *grpcQueryTestSuite) TestGrpcQueryTotalBalance() {
 			name: "handles response with balance",
 			setup: func() {
 				expCoins = sdk.NewDecCoins(
-					sdk.NewDecCoin("ublack", sdkmath.NewInt(100)),
+					sdk.NewDecCoin("ufury", sdkmath.NewInt(100)),
 					sdk.NewDecCoin("usdx", sdkmath.NewInt(1000)),
 				)
 
@@ -94,7 +94,7 @@ func (suite *grpcQueryTestSuite) TestGrpcQueryTotalBalance() {
 			name: "handles response with both x/community + x/distribution balance",
 			setup: func() {
 				decCoins1 := sdk.NewDecCoins(
-					sdk.NewDecCoin("ublack", sdkmath.NewInt(100)),
+					sdk.NewDecCoin("ufury", sdkmath.NewInt(100)),
 					sdk.NewDecCoin("usdx", sdkmath.NewInt(1000)),
 				)
 
@@ -104,7 +104,7 @@ func (suite *grpcQueryTestSuite) TestGrpcQueryTotalBalance() {
 				suite.Require().NoError(err)
 
 				decCoins2 := sdk.NewDecCoins(
-					sdk.NewDecCoin("ublack", sdkmath.NewInt(100)),
+					sdk.NewDecCoin("ufury", sdkmath.NewInt(100)),
 					sdk.NewDecCoin("usdc", sdkmath.NewInt(1000)),
 				)
 
@@ -121,7 +121,7 @@ func (suite *grpcQueryTestSuite) TestGrpcQueryTotalBalance() {
 			name: "handles response with only x/distribution balance",
 			setup: func() {
 				expCoins = sdk.NewDecCoins(
-					sdk.NewDecCoin("ublack", sdkmath.NewInt(100)),
+					sdk.NewDecCoin("ufury", sdkmath.NewInt(100)),
 					sdk.NewDecCoin("usdc", sdkmath.NewInt(1000)),
 				)
 

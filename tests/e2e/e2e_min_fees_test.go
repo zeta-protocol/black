@@ -33,7 +33,7 @@ func (suite *IntegrationTestSuite) TestEthGasPriceReturnsMinFee() {
 
 func (suite *IntegrationTestSuite) TestEvmRespectsMinFee() {
 	// setup sender & receiver
-	sender := suite.Black.NewFundedAccount("evm-min-fee-test-sender", sdk.NewCoins(ublack(2e6)))
+	sender := suite.Black.NewFundedAccount("evm-min-fee-test-sender", sdk.NewCoins(ufury(2e6)))
 	randoReceiver := util.SdkToEvmAddress(app.RandomAddress())
 
 	// get min gas price for evm (from app.toml)

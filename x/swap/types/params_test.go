@@ -19,7 +19,7 @@ import (
 
 func TestParams_UnmarshalJSON(t *testing.T) {
 	pools := types.NewAllowedPools(
-		types.NewAllowedPool("hard", "ublack"),
+		types.NewAllowedPool("hard", "ufury"),
 		types.NewAllowedPool("hard", "usdx"),
 	)
 	poolData, err := json.Marshal(pools)
@@ -45,7 +45,7 @@ func TestParams_UnmarshalJSON(t *testing.T) {
 
 func TestParams_MarshalYAML(t *testing.T) {
 	pools := types.NewAllowedPools(
-		types.NewAllowedPool("hard", "ublack"),
+		types.NewAllowedPool("hard", "ufury"),
 		types.NewAllowedPool("hard", "usdx"),
 	)
 	fee, err := sdk.NewDecFromStr("0.5")
@@ -134,9 +134,9 @@ func TestParams_Validation(t *testing.T) {
 			name: "duplicate pools",
 			key:  types.KeyAllowedPools,
 			testFn: func(params *types.Params) {
-				params.AllowedPools = types.NewAllowedPools(types.NewAllowedPool("ublack", "ublack"))
+				params.AllowedPools = types.NewAllowedPools(types.NewAllowedPool("ufury", "ufury"))
 			},
-			expectedErr: "pool cannot have two tokens of the same type, received 'ublack' and 'ublack'",
+			expectedErr: "pool cannot have two tokens of the same type, received 'ufury' and 'ufury'",
 		},
 		{
 			name: "nil swap fee",
@@ -212,8 +212,8 @@ func TestParams_Validation(t *testing.T) {
 func TestParams_String(t *testing.T) {
 	params := types.NewParams(
 		types.NewAllowedPools(
-			types.NewAllowedPool("hard", "ublack"),
-			types.NewAllowedPool("ublack", "usdx"),
+			types.NewAllowedPool("hard", "ufury"),
+			types.NewAllowedPool("ufury", "usdx"),
 		),
 		sdk.MustNewDecFromStr("0.5"),
 	)
@@ -221,8 +221,8 @@ func TestParams_String(t *testing.T) {
 	require.NoError(t, params.Validate())
 
 	output := params.String()
-	assert.Contains(t, output, types.PoolID("hard", "ublack"))
-	assert.Contains(t, output, types.PoolID("ublack", "usdx"))
+	assert.Contains(t, output, types.PoolID("hard", "ufury"))
+	assert.Contains(t, output, types.PoolID("ufury", "usdx"))
 	assert.Contains(t, output, "0.5")
 }
 
@@ -234,47 +234,47 @@ func TestAllowedPool_Validation(t *testing.T) {
 	}{
 		{
 			name:        "blank token a",
-			allowedPool: types.NewAllowedPool("", "ublack"),
+			allowedPool: types.NewAllowedPool("", "ufury"),
 			expectedErr: "invalid denom: ",
 		},
 		{
 			name:        "blank token b",
-			allowedPool: types.NewAllowedPool("ublack", ""),
+			allowedPool: types.NewAllowedPool("ufury", ""),
 			expectedErr: "invalid denom: ",
 		},
 		{
 			name:        "invalid token a",
-			allowedPool: types.NewAllowedPool("1ublack", "ublack"),
-			expectedErr: "invalid denom: 1ublack",
+			allowedPool: types.NewAllowedPool("1ufury", "ufury"),
+			expectedErr: "invalid denom: 1ufury",
 		},
 		{
 			name:        "invalid token b",
-			allowedPool: types.NewAllowedPool("ublack", "1ublack"),
-			expectedErr: "invalid denom: 1ublack",
+			allowedPool: types.NewAllowedPool("ufury", "1ufury"),
+			expectedErr: "invalid denom: 1ufury",
 		},
 		{
 			name:        "matching tokens",
-			allowedPool: types.NewAllowedPool("ublack", "ublack"),
-			expectedErr: "pool cannot have two tokens of the same type, received 'ublack' and 'ublack'",
+			allowedPool: types.NewAllowedPool("ufury", "ufury"),
+			expectedErr: "pool cannot have two tokens of the same type, received 'ufury' and 'ufury'",
 		},
 		{
 			name:        "invalid token order",
-			allowedPool: types.NewAllowedPool("usdx", "ublack"),
-			expectedErr: "invalid token order: 'ublack' must come before 'usdx'",
+			allowedPool: types.NewAllowedPool("usdx", "ufury"),
+			expectedErr: "invalid token order: 'ufury' must come before 'usdx'",
 		},
 		{
 			name:        "invalid token order due to capitalization",
-			allowedPool: types.NewAllowedPool("ublack", "UBLACK"),
-			expectedErr: "invalid token order: 'UBLACK' must come before 'ublack'",
+			allowedPool: types.NewAllowedPool("ufury", "UBLACK"),
+			expectedErr: "invalid token order: 'UBLACK' must come before 'ufury'",
 		},
 		{
 			name:        "invalid token a with colon",
-			allowedPool: types.NewAllowedPool("test:denom", "ublack"),
+			allowedPool: types.NewAllowedPool("test:denom", "ufury"),
 			expectedErr: "tokenA cannot have colons in the denom: test:denom",
 		},
 		{
 			name:        "invalid token b with colon",
-			allowedPool: types.NewAllowedPool("ublack", "u:black"),
+			allowedPool: types.NewAllowedPool("ufury", "u:black"),
 			expectedErr: "tokenB cannot have colons in the denom: u:black",
 		},
 	}
@@ -288,7 +288,7 @@ func TestAllowedPool_Validation(t *testing.T) {
 }
 
 func TestAllowedPool_TokenMatch_CaseSensitive(t *testing.T) {
-	allowedPool := types.NewAllowedPool("UBLACK", "ublack")
+	allowedPool := types.NewAllowedPool("UBLACK", "ufury")
 	err := allowedPool.Validate()
 	assert.NoError(t, err)
 
@@ -302,13 +302,13 @@ func TestAllowedPool_TokenMatch_CaseSensitive(t *testing.T) {
 }
 
 func TestAllowedPool_String(t *testing.T) {
-	allowedPool := types.NewAllowedPool("hard", "ublack")
+	allowedPool := types.NewAllowedPool("hard", "ufury")
 	require.NoError(t, allowedPool.Validate())
 
 	output := `AllowedPool:
-  Name: hard:ublack
+  Name: hard:ufury
 	Token A: hard
-	Token B: ublack
+	Token B: ufury
 `
 	assert.Equal(t, output, allowedPool.String())
 }
@@ -335,8 +335,8 @@ func TestAllowedPool_Name(t *testing.T) {
 			name:   "a001:a002",
 		},
 		{
-			tokens: "hard ublack",
-			name:   "hard:ublack",
+			tokens: "hard ufury",
+			name:   "hard:ufury",
 		},
 		{
 			tokens: "bnb hard",
@@ -370,15 +370,15 @@ func TestAllowedPools_Validate(t *testing.T) {
 		{
 			name: "duplicate pool",
 			allowedPools: types.NewAllowedPools(
-				types.NewAllowedPool("hard", "ublack"),
-				types.NewAllowedPool("hard", "ublack"),
+				types.NewAllowedPool("hard", "ufury"),
+				types.NewAllowedPool("hard", "ufury"),
 			),
-			expectedErr: "duplicate pool: hard:ublack",
+			expectedErr: "duplicate pool: hard:ufury",
 		},
 		{
 			name: "duplicate pools",
 			allowedPools: types.NewAllowedPools(
-				types.NewAllowedPool("hard", "ublack"),
+				types.NewAllowedPool("hard", "ufury"),
 				types.NewAllowedPool("bnb", "usdx"),
 				types.NewAllowedPool("btcb", "xrpb"),
 				types.NewAllowedPool("bnb", "usdx"),

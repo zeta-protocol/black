@@ -22,7 +22,7 @@ func (suite *KeeperTestSuite) TestCollectStakingRewards() {
 		suite.Ctx,
 		distrtypes.ModuleName,
 		sdk.NewCoins(
-			sdk.NewCoin("ublack", initialBalance),
+			sdk.NewCoin("ufury", initialBalance),
 		),
 	))
 
@@ -48,7 +48,7 @@ func (suite *KeeperTestSuite) TestCollectStakingRewards() {
 	liquidMacc := accKeeper.GetModuleAccount(suite.Ctx, types.ModuleAccountName)
 
 	// Add rewards
-	rewardCoins := sdk.NewDecCoins(sdk.NewDecCoin("ublack", sdkmath.NewInt(500e6)))
+	rewardCoins := sdk.NewDecCoins(sdk.NewDecCoin("ufury", sdkmath.NewInt(500e6)))
 	distrKeeper.AllocateTokensToValidator(suite.Ctx, validator, rewardCoins)
 
 	delegation, found := stakingKeeper.GetDelegation(suite.Ctx, liquidMacc.GetAddress(), valAddr1)
@@ -66,7 +66,7 @@ func (suite *KeeperTestSuite) TestCollectStakingRewards() {
 		suite.Require().NoError(err)
 		suite.Require().Equal(truncatedRewards, rewards)
 
-		suite.True(rewards.AmountOf("ublack").IsPositive())
+		suite.True(rewards.AmountOf("ufury").IsPositive())
 
 		// Check balances
 		suite.AccountBalanceEqual(liquidMacc.GetAddress(), rewards)

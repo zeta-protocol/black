@@ -44,7 +44,7 @@ func (suite *GenesisTestSuite) Test_InitExportGenesis() {
 	params := types.NewParams(
 		types.MoneyMarkets{
 			types.NewMoneyMarket(
-				"ublack",
+				"ufury",
 				types.NewBorrowLimit(
 					false,
 					sdk.NewDec(1e15),
@@ -68,10 +68,10 @@ func (suite *GenesisTestSuite) Test_InitExportGenesis() {
 	deposits := types.Deposits{
 		types.NewDeposit(
 			suite.addrs[0],
-			sdk.NewCoins(sdk.NewCoin("ublack", sdkmath.NewInt(1e8))), // 100 ublack
+			sdk.NewCoins(sdk.NewCoin("ufury", sdkmath.NewInt(1e8))), // 100 ufury
 			types.SupplyInterestFactors{
 				{
-					Denom: "ublack",
+					Denom: "ufury",
 					Value: sdk.NewDec(1),
 				},
 			},
@@ -86,10 +86,10 @@ func (suite *GenesisTestSuite) Test_InitExportGenesis() {
 	borrows := types.Borrows{
 		types.NewBorrow(
 			suite.addrs[1],
-			sdk.NewCoins(sdk.NewCoin("ublack", sdkmath.NewInt(1e7))), // 10 ublack
+			sdk.NewCoins(sdk.NewCoin("ufury", sdkmath.NewInt(1e7))), // 10 ufury
 			types.BorrowInterestFactors{
 				{
-					Denom: "ublack",
+					Denom: "ufury",
 					Value: sdk.NewDec(1),
 				},
 			},
@@ -104,7 +104,7 @@ func (suite *GenesisTestSuite) Test_InitExportGenesis() {
 	supplyInterestFactor := sdk.MustNewDecFromStr("1.0001")
 	borrowInterestFactor := sdk.MustNewDecFromStr("1.1234")
 	accuralTimes := types.GenesisAccumulationTimes{
-		types.NewGenesisAccumulationTime("ublack", suite.genTime, supplyInterestFactor, borrowInterestFactor),
+		types.NewGenesisAccumulationTime("ufury", suite.genTime, supplyInterestFactor, borrowInterestFactor),
 	}
 
 	hardGenesis := types.NewGenesisState(

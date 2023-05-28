@@ -31,9 +31,9 @@ import (
 // inverse price -- or the price of the other pool asset, appreciates by a larger amount.
 // It's this percent change we calculate and compare to the slippage limit provided.
 //
-// For example, if we have a pool with 100e6 ublack and 400e6 usdx.  The ublack price is 4 usdx and the
-// usdx price is 0.25 ublack.  If a depositor adds liquidity of 4e6 ublack and 14e6 usdx, a black price of
-// 3.50 usdx and a usdx price of 0.29 ublack.  This is a -12.5% slippage is the ublack price, and a 14.3%
+// For example, if we have a pool with 100e6 ufury and 400e6 usdx.  The ufury price is 4 usdx and the
+// usdx price is 0.25 ufury.  If a depositor adds liquidity of 4e6 ufury and 14e6 usdx, a black price of
+// 3.50 usdx and a usdx price of 0.29 ufury.  This is a -12.5% slippage is the ufury price, and a 14.3%
 // slippage in the usdx price.
 //
 // These slippages can be calculated by S_B = ((A/B')/(A/B) - 1) and S_A ((B/A')/(B/A) - 1), simplifying to

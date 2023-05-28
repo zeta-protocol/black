@@ -22,7 +22,7 @@ func (suite *IntegrationTestSuite) TestEthCallToGreeterContract() {
 	// this test manipulates state of the Greeter contract which means other tests shouldn't use it.
 
 	// setup funded account to interact with contract
-	user := suite.Black.NewFundedAccount("greeter-contract-user", sdk.NewCoins(ublack(10e6)))
+	user := suite.Black.NewFundedAccount("greeter-contract-user", sdk.NewCoins(ufury(10e6)))
 
 	greeterAddr := suite.Black.ContractAddrs["greeter"]
 	contract, err := greeter.NewGreeter(greeterAddr, suite.Black.EvmClient)
@@ -65,12 +65,12 @@ func (suite *IntegrationTestSuite) TestEthCallToErc20() {
 
 func (suite *IntegrationTestSuite) TestEip712BasicMessageAuthorization() {
 	// create new funded account
-	sender := suite.Black.NewFundedAccount("eip712-msgSend", sdk.NewCoins(ublack(10e6)))
+	sender := suite.Black.NewFundedAccount("eip712-msgSend", sdk.NewCoins(ufury(10e6)))
 	receiver := app.RandomAddress()
 
 	// setup message for sending 1BLACK to random receiver
 	msgs := []sdk.Msg{
-		banktypes.NewMsgSend(sender.SdkAddress, receiver, sdk.NewCoins(ublack(1e6))),
+		banktypes.NewMsgSend(sender.SdkAddress, receiver, sdk.NewCoins(ufury(1e6))),
 	}
 
 	// create tx
@@ -78,7 +78,7 @@ func (suite *IntegrationTestSuite) TestEip712BasicMessageAuthorization() {
 		sender,
 		suite.Black,
 		1e6,
-		sdk.NewCoins(ublack(1e4)),
+		sdk.NewCoins(ufury(1e4)),
 		msgs,
 		"this is a memo",
 	).GetTx()
@@ -100,7 +100,7 @@ func (suite *IntegrationTestSuite) TestEip712BasicMessageAuthorization() {
 	// check that the message was processed & the black is transferred.
 	balRes, err := suite.Black.Bank.Balance(context.Background(), &banktypes.QueryBalanceRequest{
 		Address: receiver.String(),
-		Denom:   "ublack",
+		Denom:   "ufury",
 	})
 	suite.NoError(err)
 	suite.Equal(sdk.NewInt(1e6), balRes.Balance.Amount)
@@ -112,7 +112,7 @@ func (suite *IntegrationTestSuite) TestEip712ConvertToCoinAndDepositToEarn() {
 	sdkDenom := "erc20/multichain/usdc"
 
 	// create new funded account
-	depositor := suite.Black.NewFundedAccount("eip712-earn-depositor", sdk.NewCoins(ublack(1e6)))
+	depositor := suite.Black.NewFundedAccount("eip712-earn-depositor", sdk.NewCoins(ufury(1e6)))
 	// give them erc20 balance to deposit
 	fundRes := suite.FundBlackErc20Balance(depositor.EvmAddress, amount.BigInt())
 	suite.NoError(fundRes.Err)
@@ -141,7 +141,7 @@ func (suite *IntegrationTestSuite) TestEip712ConvertToCoinAndDepositToEarn() {
 		depositor,
 		suite.Black,
 		1e6,
-		sdk.NewCoins(ublack(1e4)),
+		sdk.NewCoins(ufury(1e4)),
 		msgs,
 		"depositing my USDC into Earn!",
 	).GetTx()

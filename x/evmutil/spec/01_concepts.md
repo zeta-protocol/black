@@ -6,9 +6,9 @@ order: 1
 
 ## EVM Gas Denom
 
-In order to use the EVM and be compatible with existing clients, the gas denom used by the EVM must be in 18 decimals. Since `ublack` has 6 decimals of precision, it cannot be used as the EVM gas denom directly.
+In order to use the EVM and be compatible with existing clients, the gas denom used by the EVM must be in 18 decimals. Since `ufury` has 6 decimals of precision, it cannot be used as the EVM gas denom directly.
 
-To use the Black token on the EVM, the evmutil module provides an `EvmBankKeeper` that is responsible for the conversion of `ublack` and `afury`. A user's excess `afury` balance is stored in the `x/evmutil` store, while its `ublack` balance remains in the cosmos-sdk `x/bank` module.
+To use the Black token on the EVM, the evmutil module provides an `EvmBankKeeper` that is responsible for the conversion of `ufury` and `afury`. A user's excess `afury` balance is stored in the `x/evmutil` store, while its `ufury` balance remains in the cosmos-sdk `x/bank` module.
 
 ## `EvmBankKeeper` Overview
 
@@ -22,15 +22,15 @@ Since the EVM denom `afury` is required to use the `EvmBankKeeper`, it is necess
 
 ### Balance Calculation of `afury`
 
-The `afury` balance of an account is derived from an account's **spendable** `ublack` balance times 10^12 (to derive its `afury` equivalent), plus the account's excess `afury` balance that can be accessed via the module `Keeper`.
+The `afury` balance of an account is derived from an account's **spendable** `ufury` balance times 10^12 (to derive its `afury` equivalent), plus the account's excess `afury` balance that can be accessed via the module `Keeper`.
 
-### `afury` <> `ublack` Conversion
+### `afury` <> `ufury` Conversion
 
-When an account does not have sufficient `afury` to cover a transfer or burn, the `EvmBankKeeper` will try to swap 1 `ublack` to its equivalent `afury` amount. It does this by transferring 1 `ublack` from the sender to the `x/evmutil` module account, then adding the equivalent `afury` amount to the sender's balance in the module state.
+When an account does not have sufficient `afury` to cover a transfer or burn, the `EvmBankKeeper` will try to swap 1 `ufury` to its equivalent `afury` amount. It does this by transferring 1 `ufury` from the sender to the `x/evmutil` module account, then adding the equivalent `afury` amount to the sender's balance in the module state.
 
-In reverse, if an account has enough `afury` balance for one or more `ublack`, the excess `afury` balance will be converted to `ublack`. This is done by removing the excess `afury` balance in the module store, then transferring the equivalent `ublack` coins from the `x/evmutil` module account to the target account.
+In reverse, if an account has enough `afury` balance for one or more `ufury`, the excess `afury` balance will be converted to `ufury`. This is done by removing the excess `afury` balance in the module store, then transferring the equivalent `ufury` coins from the `x/evmutil` module account to the target account.
 
-The swap logic ensures that all `afury` is backed by the equivalent `ublack` balance stored in the module account.
+The swap logic ensures that all `afury` is backed by the equivalent `ufury` balance stored in the module account.
 
 ## ERC20 token <> sdk.Coin Conversion
 

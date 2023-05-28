@@ -21,7 +21,7 @@ WEBAPP_E2E_WHALE_ADDRESS="0x0252284098b19036F81bd22851f8699042fafac2"
 echo "sweet ocean blush coil mobile ten floor sample nuclear power legend where place swamp young marble grit observe enforce lake blossom lesson upon plug" | black keys add --recover --eth dev-erc20-deployer-wallet
 
 # fund evm-contract-deployer account (using issuance)
-black tx issuance issue 200000000ublack black1van3znl6597xgwwh46jgquutnqkwvwszjg04fz --from dev-wallet --gas-prices 0.5ublack -y
+black tx issuance issue 200000000ufury black1van3znl6597xgwwh46jgquutnqkwvwszjg04fz --from dev-wallet --gas-prices 0.5ufury -y
 
 # deploy and fund USDC ERC20 contract
 MULTICHAIN_USDC_CONTRACT_DEPLOY=$(npx hardhat --network "${ERC20_DEPLOYER_NETWORK_NAME}" deploy-erc20 "USD Coin" USDC 6)
@@ -87,8 +87,8 @@ npx hardhat --network "${ERC20_DEPLOYER_NETWORK_NAME}" mint-erc20 "$MULTICHAIN_U
 # give dev-wallet enough delegation power to pass proposals by itself
 
 # issue black to dev wallet for delegating to each validator
-black tx issuance issue 6000000000ublack black1vlpsrmdyuywvaqrv7rx6xga224sqfwz3fyfhwq \
-  --from dev-wallet --gas-prices 0.5ublack -y
+black tx issuance issue 6000000000ufury black1vlpsrmdyuywvaqrv7rx6xga224sqfwz3fyfhwq \
+  --from dev-wallet --gas-prices 0.5ufury -y
 
 # parse space seperated list of validators
 # into bash array
@@ -97,11 +97,11 @@ read -r -a GENESIS_VALIDATOR_ADDRESS_ARRAY <<< "$GENESIS_VALIDATOR_ADDRESSES"
 # delegate 300BLACK to each validator
 for validator in "${GENESIS_VALIDATOR_ADDRESS_ARRAY[@]}"
 do
-  black tx staking delegate "${validator}" 300000000ublack --from dev-wallet --gas-prices 0.5ublack -y
+  black tx staking delegate "${validator}" 300000000ufury --from dev-wallet --gas-prices 0.5ufury -y
 done
 
 # create a text proposal
-black tx gov submit-proposal --deposit 1000000000ublack --type "Text" --title "Example Proposal" --description "This is an example proposal" --gas auto --gas-adjustment 1.2 --from dev-wallet --gas-prices 0.01ublack -y
+black tx gov submit-proposal --deposit 1000000000ufury --type "Text" --title "Example Proposal" --description "This is an example proposal" --gas auto --gas-adjustment 1.2 --from dev-wallet --gas-prices 0.01ufury -y
 
 # setup god's wallet
 echo "${BLACK_TESTNET_GOD_MNEMONIC}" | black keys add --recover god
@@ -149,7 +149,7 @@ printf "original evm util module params\n %s" , "$originalEvmUtilParams"
 # make sure to update god committee member permissions for the module
 # and params being updated (see below for example)
 # https://github.com/Zeta-Protocol/black/pull/1556/files#diff-0bd6043650c708661f37bbe6fa5b29b52149e0ec0069103c3954168fc9f12612R900-R903
-black tx committee submit-proposal 1 "$proposalFileName" --gas 2000000 --gas-prices 0.01ublack --from god -y
+black tx committee submit-proposal 1 "$proposalFileName" --gas 2000000 --gas-prices 0.01ufury --from god -y
 
 # fetch current module params
 updatedEvmUtilParams=$(curl https://api.app.internal.testnet.us-east.production.black.io/black/evmutil/v1beta1/params)

@@ -88,7 +88,7 @@ func (suite *Suite) SetupTest() {
 	feemarketGenesis.Params.NoBaseFee = false
 
 	cdc := suite.App.AppCodec()
-	coins := sdk.NewCoins(sdk.NewInt64Coin("ublack", 1000_000_000_000_000_000))
+	coins := sdk.NewCoins(sdk.NewInt64Coin("ufury", 1000_000_000_000_000_000))
 	authGS := app.NewFundedGenStateWithSameCoins(cdc, coins, []sdk.AccAddress{
 		sdk.AccAddress(suite.Key1.PubKey().Address()),
 		sdk.AccAddress(suite.Key2.PubKey().Address()),
@@ -185,9 +185,9 @@ func (suite *Suite) ModuleBalance(denom string) sdk.Int {
 }
 
 func (suite *Suite) FundAccountWithBlack(addr sdk.AccAddress, coins sdk.Coins) {
-	ublack := coins.AmountOf("ublack")
-	if ublack.IsPositive() {
-		err := suite.App.FundAccount(suite.Ctx, addr, sdk.NewCoins(sdk.NewCoin("ublack", ublack)))
+	ufury := coins.AmountOf("ufury")
+	if ufury.IsPositive() {
+		err := suite.App.FundAccount(suite.Ctx, addr, sdk.NewCoins(sdk.NewCoin("ufury", ufury)))
 		suite.Require().NoError(err)
 	}
 	afury := coins.AmountOf("afury")
@@ -198,9 +198,9 @@ func (suite *Suite) FundAccountWithBlack(addr sdk.AccAddress, coins sdk.Coins) {
 }
 
 func (suite *Suite) FundModuleAccountWithBlack(moduleName string, coins sdk.Coins) {
-	ublack := coins.AmountOf("ublack")
-	if ublack.IsPositive() {
-		err := suite.App.FundModuleAccount(suite.Ctx, moduleName, sdk.NewCoins(sdk.NewCoin("ublack", ublack)))
+	ufury := coins.AmountOf("ufury")
+	if ufury.IsPositive() {
+		err := suite.App.FundModuleAccount(suite.Ctx, moduleName, sdk.NewCoins(sdk.NewCoin("ufury", ufury)))
 		suite.Require().NoError(err)
 	}
 	afury := coins.AmountOf("afury")
@@ -217,7 +217,7 @@ func (suite *Suite) DeployERC20() types.InternalEVMAddress {
 	suite.App.FundModuleAccount(
 		suite.Ctx,
 		types.ModuleName,
-		sdk.NewCoins(sdk.NewCoin("ublack", sdkmath.NewInt(0))),
+		sdk.NewCoins(sdk.NewCoin("ufury", sdkmath.NewInt(0))),
 	)
 
 	contractAddr, err := suite.Keeper.DeployTestMintableERC20Contract(suite.Ctx, "USDC", "USDC", uint8(18))
@@ -318,7 +318,7 @@ func (suite *Suite) SendTx(
 	// Mint the max gas to the FeeCollector to ensure balance in case of refund
 	suite.MintFeeCollector(sdk.NewCoins(
 		sdk.NewCoin(
-			"ublack",
+			"ufury",
 			sdkmath.NewInt(baseFee.Int64()*int64(gasRes.Gas*2)),
 		)))
 

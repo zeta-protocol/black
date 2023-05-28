@@ -24,10 +24,10 @@ func (suite *HandlerTestSuite) TestEarnLiquidClaim() {
 	valAddr2 := sdk.ValAddress(validatorAddr2)
 
 	authBuilder := suite.authBuilder().
-		WithSimpleAccount(userAddr1, cs(c("ublack", 1e12))).
-		WithSimpleAccount(userAddr2, cs(c("ublack", 1e12))).
-		WithSimpleAccount(validatorAddr1, cs(c("ublack", 1e12))).
-		WithSimpleAccount(validatorAddr2, cs(c("ublack", 1e12)))
+		WithSimpleAccount(userAddr1, cs(c("ufury", 1e12))).
+		WithSimpleAccount(userAddr2, cs(c("ufury", 1e12))).
+		WithSimpleAccount(validatorAddr1, cs(c("ufury", 1e12))).
+		WithSimpleAccount(validatorAddr2, cs(c("ufury", 1e12)))
 
 	incentBuilder := suite.incentiveBuilder().
 		WithSimpleEarnRewardPeriod("bblack", cs())
@@ -63,22 +63,22 @@ func (suite *HandlerTestSuite) TestEarnLiquidClaim() {
 	suite.Require().True(found)
 	suite.Require().Equal("bblack", period.CollateralType)
 
-	// Use ublack for mint denom
+	// Use ufury for mint denom
 	mParams := mk.GetParams(suite.Ctx)
-	mParams.MintDenom = "ublack"
+	mParams.MintDenom = "ufury"
 	mk.SetParams(suite.Ctx, mParams)
 
 	bblackDenom1 := lq.GetLiquidStakingTokenDenom(valAddr1)
 	bblackDenom2 := lq.GetLiquidStakingTokenDenom(valAddr2)
 
-	err := suite.App.FundModuleAccount(suite.Ctx, distrtypes.ModuleName, cs(c("ublack", 1e12)))
+	err := suite.App.FundModuleAccount(suite.Ctx, distrtypes.ModuleName, cs(c("ufury", 1e12)))
 	suite.NoError(err)
 
 	// Create validators
-	err = suite.DeliverMsgCreateValidator(valAddr1, c("ublack", 1e9))
+	err = suite.DeliverMsgCreateValidator(valAddr1, c("ufury", 1e9))
 	suite.Require().NoError(err)
 
-	err = suite.DeliverMsgCreateValidator(valAddr2, c("ublack", 1e9))
+	err = suite.DeliverMsgCreateValidator(valAddr2, c("ufury", 1e9))
 	suite.Require().NoError(err)
 
 	// new block required to bond validator
@@ -87,25 +87,25 @@ func (suite *HandlerTestSuite) TestEarnLiquidClaim() {
 	suite.NextBlockAfter(7 * time.Second)
 
 	// Create delegations from users
-	// User 1: 1e9 ublack to validator 1
-	// User 2: 99e9 ublack to validator 1 AND 2
-	err = suite.DeliverMsgDelegate(userAddr1, valAddr1, c("ublack", 1e9))
+	// User 1: 1e9 ufury to validator 1
+	// User 2: 99e9 ufury to validator 1 AND 2
+	err = suite.DeliverMsgDelegate(userAddr1, valAddr1, c("ufury", 1e9))
 	suite.Require().NoError(err)
 
-	err = suite.DeliverMsgDelegate(userAddr2, valAddr1, c("ublack", 99e9))
+	err = suite.DeliverMsgDelegate(userAddr2, valAddr1, c("ufury", 99e9))
 	suite.Require().NoError(err)
 
-	err = suite.DeliverMsgDelegate(userAddr2, valAddr2, c("ublack", 99e9))
+	err = suite.DeliverMsgDelegate(userAddr2, valAddr2, c("ufury", 99e9))
 	suite.Require().NoError(err)
 
 	// Mint liquid tokens
-	_, err = suite.DeliverMsgMintDerivative(userAddr1, valAddr1, c("ublack", 1e9))
+	_, err = suite.DeliverMsgMintDerivative(userAddr1, valAddr1, c("ufury", 1e9))
 	suite.Require().NoError(err)
 
-	_, err = suite.DeliverMsgMintDerivative(userAddr2, valAddr1, c("ublack", 99e9))
+	_, err = suite.DeliverMsgMintDerivative(userAddr2, valAddr1, c("ufury", 99e9))
 	suite.Require().NoError(err)
 
-	_, err = suite.DeliverMsgMintDerivative(userAddr2, valAddr2, c("ublack", 99e9))
+	_, err = suite.DeliverMsgMintDerivative(userAddr2, valAddr2, c("ufury", 99e9))
 	suite.Require().NoError(err)
 
 	// Deposit liquid tokens to earn
@@ -187,8 +187,8 @@ func (suite *HandlerTestSuite) TestEarnLiquidClaim() {
 	preClaimBal1 := suite.GetBalance(userAddr1)
 	preClaimBal2 := suite.GetBalance(userAddr2)
 
-	// Claim ublack staking rewards
-	denomsToClaim := map[string]string{"ublack": "large"}
+	// Claim ufury staking rewards
+	denomsToClaim := map[string]string{"ufury": "large"}
 	selections := types.NewSelectionsFromMap(denomsToClaim)
 
 	msg1 := types.NewMsgClaimEarnReward(userAddr1.String(), selections)
@@ -204,32 +204,32 @@ func (suite *HandlerTestSuite) TestEarnLiquidClaim() {
 	// User 1 gets 1% of rewards
 	// User 2 gets 99% of rewards
 	stakingRewards1 := delegationRewards.
-		AmountOf("ublack").
+		AmountOf("ufury").
 		Quo(sdk.NewDec(100)).
 		RoundInt()
-	suite.BalanceEquals(userAddr1, preClaimBal1.Add(sdk.NewCoin("ublack", stakingRewards1)))
+	suite.BalanceEquals(userAddr1, preClaimBal1.Add(sdk.NewCoin("ufury", stakingRewards1)))
 
 	// Total * 99 / 100
 	stakingRewards2 := delegationRewards.
-		AmountOf("ublack").
+		AmountOf("ufury").
 		Mul(sdk.NewDec(99)).
 		Quo(sdk.NewDec(100)).
 		RoundInt()
 
 	suite.BalanceInEpsilon(
 		userAddr2,
-		preClaimBal2.Add(sdk.NewCoin("ublack", stakingRewards2)),
-		// Highest precision to allow 1ublack margin of error
+		preClaimBal2.Add(sdk.NewCoin("ufury", stakingRewards2)),
+		// Highest precision to allow 1ufury margin of error
 		// 820778117815 vs 820778117814
 		1e-11,
 	)
 
 	suite.InEpsilonf(
-		delegationRewards.AmountOf("ublack").RoundInt().Int64(),
+		delegationRewards.AmountOf("ufury").RoundInt().Int64(),
 		stakingRewards1.Add(stakingRewards2).Int64(),
 		1e-11,
 		"expected rewards should add up to staking rewards within a margin of error (%v vs %v)",
-		delegationRewards.AmountOf("ublack").RoundInt().Int64(),
+		delegationRewards.AmountOf("ufury").RoundInt().Int64(),
 		stakingRewards1.Add(stakingRewards2).Int64(),
 	)
 

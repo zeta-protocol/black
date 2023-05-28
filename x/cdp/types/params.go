@@ -32,7 +32,7 @@ var (
 	}
 	DefaultCdpStartingID    = uint64(1)
 	DefaultDebtDenom        = "debt"
-	DefaultGovDenom         = "ublack"
+	DefaultGovDenom         = "ufury"
 	DefaultStableDenom      = "usdx"
 	DefaultSurplusThreshold = sdkmath.NewInt(500000000000)
 	DefaultDebtThreshold    = sdkmath.NewInt(100000000000)

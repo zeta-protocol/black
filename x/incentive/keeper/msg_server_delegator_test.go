@@ -14,7 +14,7 @@ func (suite *HandlerTestSuite) TestPayoutDelegatorClaimMultiDenom() {
 	receiverAddr := suite.addrs[1]
 
 	authBulder := suite.authBuilder().
-		WithSimpleAccount(userAddr, cs(c("ublack", 1e12))).
+		WithSimpleAccount(userAddr, cs(c("ufury", 1e12))).
 		WithSimpleAccount(receiverAddr, nil)
 
 	incentBuilder := suite.incentiveBuilder().
@@ -24,7 +24,7 @@ func (suite *HandlerTestSuite) TestPayoutDelegatorClaimMultiDenom() {
 
 	// create a delegation (need to create a validator first, which will have a self delegation)
 	suite.NoError(
-		suite.DeliverMsgCreateValidator(sdk.ValAddress(userAddr), c("ublack", 1e9)),
+		suite.DeliverMsgCreateValidator(sdk.ValAddress(userAddr), c("ufury", 1e9)),
 	)
 
 	// Delete genesis validator to not influence rewards
@@ -66,7 +66,7 @@ func (suite *HandlerTestSuite) TestPayoutDelegatorClaimSingleDenom() {
 	userAddr := suite.addrs[0]
 
 	authBulder := suite.authBuilder().
-		WithSimpleAccount(userAddr, cs(c("ublack", 1e12)))
+		WithSimpleAccount(userAddr, cs(c("ufury", 1e12)))
 
 	incentBuilder := suite.incentiveBuilder().
 		WithSimpleDelegatorRewardPeriod(types.BondDenom, cs(c("hard", 1e6), c("swap", 1e6)))
@@ -75,7 +75,7 @@ func (suite *HandlerTestSuite) TestPayoutDelegatorClaimSingleDenom() {
 
 	// create a delegation (need to create a validator first, which will have a self delegation)
 	suite.NoError(
-		suite.DeliverMsgCreateValidator(sdk.ValAddress(userAddr), c("ublack", 1e9)),
+		suite.DeliverMsgCreateValidator(sdk.ValAddress(userAddr), c("ufury", 1e9)),
 	)
 
 	// Delete genesis validator to not influence rewards

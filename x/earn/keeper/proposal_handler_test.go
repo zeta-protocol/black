@@ -28,13 +28,13 @@ func (suite *proposalTestSuite) TestCommunityDepositProposal() {
 	distKeeper := suite.App.GetDistrKeeper()
 	ctx := suite.Ctx
 	macc := distKeeper.GetDistributionAccount(ctx)
-	fundAmount := sdk.NewCoins(sdk.NewInt64Coin("ublack", 100000000))
-	depositAmount := sdk.NewCoin("ublack", sdkmath.NewInt(10000000))
+	fundAmount := sdk.NewCoins(sdk.NewInt64Coin("ufury", 100000000))
+	depositAmount := sdk.NewCoin("ufury", sdkmath.NewInt(10000000))
 	suite.Require().NoError(suite.App.FundModuleAccount(ctx, macc.GetName(), fundAmount))
 	feePool := distKeeper.GetFeePool(ctx)
 	feePool.CommunityPool = sdk.NewDecCoinsFromCoins(fundAmount...)
 	distKeeper.SetFeePool(ctx, feePool)
-	suite.CreateVault("ublack", types.StrategyTypes{types.STRATEGY_TYPE_SAVINGS}, false, nil)
+	suite.CreateVault("ufury", types.StrategyTypes{types.STRATEGY_TYPE_SAVINGS}, false, nil)
 	prop := types.NewCommunityPoolDepositProposal("test title",
 		"desc", depositAmount)
 	err := keeper.HandleCommunityPoolDepositProposal(ctx, suite.Keeper, prop)
@@ -52,14 +52,14 @@ func (suite *proposalTestSuite) TestCommunityWithdrawProposal() {
 	distKeeper := suite.App.GetDistrKeeper()
 	ctx := suite.Ctx
 	macc := distKeeper.GetDistributionAccount(ctx)
-	fundAmount := sdk.NewCoins(sdk.NewInt64Coin("ublack", 100000000))
-	depositAmount := sdk.NewCoin("ublack", sdkmath.NewInt(10000000))
+	fundAmount := sdk.NewCoins(sdk.NewInt64Coin("ufury", 100000000))
+	depositAmount := sdk.NewCoin("ufury", sdkmath.NewInt(10000000))
 	suite.Require().NoError(suite.App.FundModuleAccount(ctx, macc.GetName(), fundAmount))
 	feePool := distKeeper.GetFeePool(ctx)
 	feePool.CommunityPool = sdk.NewDecCoinsFromCoins(fundAmount...)
 	distKeeper.SetFeePool(ctx, feePool)
 	// TODO update to STRATEGY_TYPE_SAVINGS once implemented
-	suite.CreateVault("ublack", types.StrategyTypes{types.STRATEGY_TYPE_SAVINGS}, false, nil)
+	suite.CreateVault("ufury", types.StrategyTypes{types.STRATEGY_TYPE_SAVINGS}, false, nil)
 	deposit := types.NewCommunityPoolDepositProposal("test title",
 		"desc", depositAmount)
 	err := keeper.HandleCommunityPoolDepositProposal(ctx, suite.Keeper, deposit)

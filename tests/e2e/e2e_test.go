@@ -27,8 +27,8 @@ var (
 	minEvmGasPrice = big.NewInt(1e10) // afury
 )
 
-func ublack(amt int64) sdk.Coin {
-	return sdk.NewCoin("ublack", sdkmath.NewInt(amt))
+func ufury(amt int64) sdk.Coin {
+	return sdk.NewCoin("ufury", sdkmath.NewInt(amt))
 }
 
 type IntegrationTestSuite struct {
@@ -57,7 +57,7 @@ func (suite *IntegrationTestSuite) TestChainID() {
 
 // example test that funds a new account & queries its balance
 func (suite *IntegrationTestSuite) TestFundedAccount() {
-	funds := ublack(1e7)
+	funds := ufury(1e7)
 	acc := suite.Black.NewFundedAccount("example-acc", sdk.NewCoins(funds))
 
 	// check that the sdk & evm signers are for the same account
@@ -66,7 +66,7 @@ func (suite *IntegrationTestSuite) TestFundedAccount() {
 
 	// check balance via SDK query
 	res, err := suite.Black.Bank.Balance(context.Background(), banktypes.NewQueryBalanceRequest(
-		acc.SdkAddress, "ublack",
+		acc.SdkAddress, "ufury",
 	))
 	suite.NoError(err)
 	suite.Equal(funds, *res.Balance)
@@ -80,7 +80,7 @@ func (suite *IntegrationTestSuite) TestFundedAccount() {
 // example test that signs & broadcasts an EVM tx
 func (suite *IntegrationTestSuite) TestTransferOverEVM() {
 	// fund an account that can perform the transfer
-	initialFunds := ublack(1e7) // 10 BLACK
+	initialFunds := ufury(1e7) // 10 BLACK
 	acc := suite.Black.NewFundedAccount("evm-test-transfer", sdk.NewCoins(initialFunds))
 
 	// get a rando account to send black to
@@ -103,13 +103,13 @@ func (suite *IntegrationTestSuite) TestTransferOverEVM() {
 	suite.Equal(ethtypes.ReceiptStatusSuccessful, res.Receipt.Status)
 
 	// evm txs refund unused gas. so to know the expected balance we need to know how much gas was used.
-	ublackUsedForGas := sdkmath.NewIntFromBigInt(minEvmGasPrice).
+	ufuryUsedForGas := sdkmath.NewIntFromBigInt(minEvmGasPrice).
 		Mul(sdkmath.NewIntFromUint64(res.Receipt.GasUsed)).
-		QuoRaw(1e12) // convert afury to ublack
+		QuoRaw(1e12) // convert afury to ufury
 
 	// expect (9 - gas used) BLACK remaining in account.
 	balance := suite.Black.QuerySdkForBalances(acc.SdkAddress)
-	suite.Equal(sdkmath.NewInt(9e6).Sub(ublackUsedForGas), balance.AmountOf("ublack"))
+	suite.Equal(sdkmath.NewInt(9e6).Sub(ufuryUsedForGas), balance.AmountOf("ufury"))
 }
 
 // TestIbcTransfer transfers BLACK from the primary black chain (suite.Black) to the ibc chain (suite.Ibc).
@@ -119,15 +119,15 @@ func (suite *IntegrationTestSuite) TestIbcTransfer() {
 
 	// ARRANGE
 	// setup black account
-	funds := ublack(1e7) // 10 BLACK
+	funds := ufury(1e7) // 10 BLACK
 	blackAcc := suite.Black.NewFundedAccount("ibc-transfer-black-side", sdk.NewCoins(funds))
 	// setup ibc account
 	ibcAcc := suite.Ibc.NewFundedAccount("ibc-transfer-ibc-side", sdk.NewCoins())
 
 	gasLimit := int64(2e5)
-	fee := ublack(7500)
+	fee := ufury(7500)
 
-	fundsToSend := ublack(5e6) // 5 BLACK
+	fundsToSend := ufury(5e6) // 5 BLACK
 	transferMsg := ibctypes.NewMsgTransfer(
 		testutil.IbcPort,
 		testutil.IbcChannel,
@@ -157,7 +157,7 @@ func (suite *IntegrationTestSuite) TestIbcTransfer() {
 	// the balance should be deducted from black account
 	suite.Eventually(func() bool {
 		balance := suite.Black.QuerySdkForBalances(blackAcc.SdkAddress)
-		return balance.AmountOf("ublack").Equal(expectedSrcBalance.Amount)
+		return balance.AmountOf("ufury").Equal(expectedSrcBalance.Amount)
 	}, 10*time.Second, 1*time.Second)
 
 	// expect the balance to be transferred to the ibc chain!

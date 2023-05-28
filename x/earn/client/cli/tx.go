@@ -45,7 +45,7 @@ func getCmdDeposit() *cobra.Command {
 		Use:   "deposit [amount] [strategy]",
 		Short: "deposit coins to an earn vault",
 		Example: fmt.Sprintf(
-			`%s tx %s deposit 10000000ublack hard --from <key>`,
+			`%s tx %s deposit 10000000ufury hard --from <key>`,
 			version.AppName, types.ModuleName,
 		),
 		Args: cobra.ExactArgs(2),
@@ -81,7 +81,7 @@ func getCmdWithdraw() *cobra.Command {
 		Use:   "withdraw [amount] [strategy]",
 		Short: "withdraw coins from an earn vault",
 		Example: fmt.Sprintf(
-			`%s tx %s withdraw 10000000ublack hard --from <key>`,
+			`%s tx %s withdraw 10000000ufury hard --from <key>`,
 			version.AppName, types.ModuleName,
 		),
 		Args: cobra.ExactArgs(2),
@@ -129,12 +129,12 @@ Where proposal.json contains:
   "description": "Deposit some BLACK from community pool!",
   "amount": 
   	{
-			"denom": "ublack",
+			"denom": "ufury",
 			"amount": "100000000000"
 	},
 	"deposit": [
 		{
-			"denom": "ublack",
+			"denom": "ufury",
 			"amount": "1000000000"
 		}
 	]
@@ -187,12 +187,12 @@ Where proposal.json contains:
   "description": "Withdraw some BLACK from community pool!",
   "amount": 
   	{
-			"denom": "ublack",
+			"denom": "ufury",
 			"amount": "100000000000"
 	},
 	"deposit": [
 		{
-			"denom": "ublack",
+			"denom": "ufury",
 			"amount": "1000000000"
 		}
 	]

@@ -580,16 +580,16 @@ func (k *fakeLiquidKeeper) GetTotalDerivativeValue(ctx sdk.Context) (sdk.Coin, e
 		totalSupply = totalSupply.Add(supply)
 	}
 
-	return sdk.NewCoin("ublack", totalSupply), nil
+	return sdk.NewCoin("ufury", totalSupply), nil
 }
 
 func (k *fakeLiquidKeeper) GetDerivativeValue(ctx sdk.Context, denom string) (sdk.Coin, error) {
 	supply, found := k.derivatives[denom]
 	if !found {
-		return sdk.NewCoin("ublack", sdk.ZeroInt()), nil
+		return sdk.NewCoin("ufury", sdk.ZeroInt()), nil
 	}
 
-	return sdk.NewCoin("ublack", supply), nil
+	return sdk.NewCoin("ufury", supply), nil
 }
 
 func (k *fakeLiquidKeeper) CollectStakingRewardsByDenom(
@@ -599,7 +599,7 @@ func (k *fakeLiquidKeeper) CollectStakingRewardsByDenom(
 ) (sdk.Coins, error) {
 	amt := k.getRewardAmount(ctx, derivativeDenom)
 
-	return sdk.NewCoins(sdk.NewCoin("ublack", amt)), nil
+	return sdk.NewCoins(sdk.NewCoin("ufury", amt)), nil
 }
 
 func (k *fakeLiquidKeeper) getRewardAmount(
@@ -768,7 +768,7 @@ var nonEmptyMultiRewardIndexes = types.MultiRewardIndexes{
 				RewardFactor:   d("0.02"),
 			},
 			{
-				CollateralType: "ublack",
+				CollateralType: "ufury",
 				RewardFactor:   d("0.04"),
 			},
 		},
@@ -781,7 +781,7 @@ var nonEmptyMultiRewardIndexes = types.MultiRewardIndexes{
 				RewardFactor:   d("0.2"),
 			},
 			{
-				CollateralType: "ublack",
+				CollateralType: "ufury",
 				RewardFactor:   d("0.4"),
 			},
 		},
@@ -833,7 +833,7 @@ func appendUniqueMultiRewardIndex(indexes types.MultiRewardIndexes) types.MultiR
 				RewardFactor:   d("0.02"),
 			},
 			{
-				CollateralType: "ublack",
+				CollateralType: "ufury",
 				RewardFactor:   d("0.04"),
 			},
 		},

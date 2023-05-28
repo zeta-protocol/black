@@ -49,7 +49,7 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 		{
 			"valid: partial withdraw",
 			args{
-				allowedDenoms:             []string{"bnb", "btcb", "ublack"},
+				allowedDenoms:             []string{"bnb", "btcb", "ufury"},
 				depositor:                 sdk.AccAddress(crypto.AddressHash([]byte("test"))),
 				initialDepositorBalance:   sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(1000)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
 				depositAmount:             sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(200))),
@@ -67,7 +67,7 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 		{
 			"valid: partial bblack",
 			args{
-				allowedDenoms:             []string{"bnb", "btcb", "ublack", "bblack"},
+				allowedDenoms:             []string{"bnb", "btcb", "ufury", "bblack"},
 				depositor:                 sdk.AccAddress(crypto.AddressHash([]byte("test"))),
 				initialDepositorBalance:   sdk.NewCoins(sdk.NewCoin(bblackDenom, sdkmath.NewInt(1000)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
 				depositAmount:             sdk.NewCoins(sdk.NewCoin(bblackDenom, sdkmath.NewInt(200))),
@@ -85,7 +85,7 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 		{
 			"valid: full withdraw",
 			args{
-				allowedDenoms:             []string{"bnb", "btcb", "ublack"},
+				allowedDenoms:             []string{"bnb", "btcb", "ufury"},
 				initialDepositorBalance:   sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(1000)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
 				depositor:                 sdk.AccAddress(crypto.AddressHash([]byte("test"))),
 				depositAmount:             sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(200))),
@@ -103,7 +103,7 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 		{
 			"valid: withdraw exceeds deposit but is adjusted to match max deposit",
 			args{
-				allowedDenoms:             []string{"bnb", "btcb", "ublack"},
+				allowedDenoms:             []string{"bnb", "btcb", "ufury"},
 				initialDepositorBalance:   sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(1000)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
 				depositor:                 sdk.AccAddress(crypto.AddressHash([]byte("test"))),
 				depositAmount:             sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(200))),
@@ -121,7 +121,7 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 		{
 			"invalid: withdraw non-supplied coin type",
 			args{
-				allowedDenoms:             []string{"bnb", "btcb", "ublack"},
+				allowedDenoms:             []string{"bnb", "btcb", "ufury"},
 				depositor:                 sdk.AccAddress(crypto.AddressHash([]byte("test"))),
 				initialDepositorBalance:   sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(1000)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
 				depositAmount:             sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(200))),
@@ -153,7 +153,7 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 			)
 
 			stakingParams := stakingtypes.DefaultParams()
-			stakingParams.BondDenom = "ublack"
+			stakingParams.BondDenom = "ufury"
 
 			tApp.InitializeFromGenesisStates(authGS,
 				app.GenesisState{types.ModuleName: tApp.AppCodec().MustMarshalJSON(&savingsGS)},
@@ -166,8 +166,8 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 			bankKeeper := tApp.GetBankKeeper()
 
 			// Create validator and delegate for bblack
-			suite.CreateAccountWithAddress(valAccAddr, cs(c("ublack", 100e10)))
-			suite.CreateAccountWithAddress(delegator, cs(c("ublack", 100e10)))
+			suite.CreateAccountWithAddress(valAccAddr, cs(c("ufury", 100e10)))
+			suite.CreateAccountWithAddress(delegator, cs(c("ufury", 100e10)))
 
 			suite.CreateNewUnbondedValidator(valAddr, initialBalance)
 			suite.CreateDelegation(valAddr, delegator, initialBalance)

@@ -45,7 +45,7 @@ func TestAuthenticatedMempoolDecorator_AnteHandle_NotCheckTx(t *testing.T) {
 			banktypes.NewMsgSend(
 				testAddresses[0],
 				testAddresses[1],
-				sdk.NewCoins(sdk.NewInt64Coin("ublack", 100_000_000)),
+				sdk.NewCoins(sdk.NewInt64Coin("ufury", 100_000_000)),
 			),
 		},
 		sdk.NewCoins(), // no fee
@@ -80,12 +80,12 @@ func TestAuthenticatedMempoolDecorator_AnteHandle_Pass(t *testing.T) {
 			banktypes.NewMsgSend(
 				testAddresses[0],
 				testAddresses[1],
-				sdk.NewCoins(sdk.NewInt64Coin("ublack", 100_000_000)),
+				sdk.NewCoins(sdk.NewInt64Coin("ufury", 100_000_000)),
 			),
 			banktypes.NewMsgSend(
 				testAddresses[2],
 				testAddresses[1],
-				sdk.NewCoins(sdk.NewInt64Coin("ublack", 100_000_000)),
+				sdk.NewCoins(sdk.NewInt64Coin("ufury", 100_000_000)),
 			),
 		},
 		sdk.NewCoins(), // no fee
@@ -121,7 +121,7 @@ func TestAuthenticatedMempoolDecorator_AnteHandle_Reject(t *testing.T) {
 			banktypes.NewMsgSend(
 				testAddresses[0],
 				testAddresses[1],
-				sdk.NewCoins(sdk.NewInt64Coin("ublack", 100_000_000)),
+				sdk.NewCoins(sdk.NewInt64Coin("ufury", 100_000_000)),
 			),
 		},
 		sdk.NewCoins(), // no fee

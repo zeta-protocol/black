@@ -227,7 +227,7 @@
           "address": "black1xg3g4gadzvlgfqwnsfufnsv6r0gmtnhl9f09p5",
           "coins": [
             {
-              "denom": "ublack",
+              "denom": "ufury",
               "amount": "1000000000000000000"
             }
           ]
@@ -236,7 +236,7 @@
           "address": "black1fy5zeuutmxzwcx5hncu5q83ug3zcqmxcpwrjsn",
           "coins": [
             {
-              "denom": "ublack",
+              "denom": "ufury",
               "amount": "100000000000000"
             }
           ]
@@ -253,7 +253,7 @@
               "amount": "100000000000000"
             },
             {
-              "denom": "ublack",
+              "denom": "ufury",
               "amount": "100000000000000"
             }
           ]
@@ -262,7 +262,7 @@
           "address": "black1xcgtffvv2yeqmgs3yz4gv29kgjrj8usxw9ehkk",
           "coins": [
             {
-              "denom": "ublack",
+              "denom": "ufury",
               "amount": "1000000000"
             }
           ]
@@ -271,7 +271,7 @@
           "address": "black1g3kdcr8ah7rs07dk00elnkpmk34e6dcj94306a",
           "coins": [
             {
-              "denom": "ublack",
+              "denom": "ufury",
               "amount": "10000000000000000000000"
             }
           ]
@@ -320,7 +320,7 @@
               "amount": "5000000000"
             },
             {
-              "denom": "ublack",
+              "denom": "ufury",
               "amount": "10000000000000"
             },
             {
@@ -361,7 +361,7 @@
               "amount": "5000000000"
             },
             {
-              "denom": "ublack",
+              "denom": "ufury",
               "amount": "10000000000000"
             },
             {
@@ -374,7 +374,7 @@
           "address": "black1w66m9hdzwgd6uc8g93zqkcumgwzrpcw9e32lf8",
           "coins": [
             {
-              "denom": "ublack",
+              "denom": "ufury",
               "amount": "1000000000"
             }
           ]
@@ -383,7 +383,7 @@
           "address": "black1kq0kfnnffkna9hknzg8kgx89ljczjtjdt8qrv7",
           "coins": [
             {
-              "denom": "ublack",
+              "denom": "ufury",
               "amount": "1000000000000000000"
             }
           ]
@@ -404,7 +404,7 @@
               "amount": "5000000000"
             },
             {
-              "denom": "ublack",
+              "denom": "ufury",
               "amount": "5000000000"
             },
             {
@@ -433,7 +433,7 @@
               "amount": "5000000000"
             },
             {
-              "denom": "ublack",
+              "denom": "ufury",
               "amount": "10000000000000"
             },
             {
@@ -462,7 +462,7 @@
               "amount": "5000000000"
             },
             {
-              "denom": "ublack",
+              "denom": "ufury",
               "amount": "100000000000000"
             },
             {
@@ -585,7 +585,7 @@
       "cdps": [],
       "debt_denom": "debt",
       "deposits": [],
-      "gov_denom": "ublack",
+      "gov_denom": "ufury",
       "params": {
         "circuit_breaker": false,
         "collateral_params": [
@@ -681,7 +681,7 @@
               "amount": "2000000000000",
               "denom": "usdx"
             },
-            "denom": "ublack",
+            "denom": "ufury",
             "liquidation_market_id": "black:usd:30",
             "liquidation_penalty": "0.050000000000000000",
             "liquidation_ratio": "1.500000000000000000",
@@ -689,7 +689,7 @@
             "check_collateralization_index_count": "10",
             "spot_market_id": "black:usd",
             "stability_fee": "1.000000000782997700",
-            "type": "ublack-a"
+            "type": "ufury-a"
           },
           {
             "auction_size": "50000000000",
@@ -1061,7 +1061,7 @@
     },
     "crisis": {
       "constant_fee": {
-        "denom": "ublack",
+        "denom": "ufury",
         "amount": "1000"
       }
     },
@@ -1094,7 +1094,7 @@
             ]
           },
           {
-            "denom": "ublack",
+            "denom": "ufury",
             "strategies": [
               "STRATEGY_TYPE_SAVINGS"
             ]
@@ -1807,7 +1807,7 @@
                   "key": "e//2Cz3zvPXpYe2XJi1b8W7QdTc7Dmc0gCc0P8n78Ns="
                 },
                 "value": {
-                  "denom": "ublack",
+                  "denom": "ufury",
                   "amount": "500000000"
                 }
               }
@@ -1868,7 +1868,7 @@
                   "key": "DcSKRFZOtEnpW9M0sD8VVYh+aQF1P7ri3KSgjGAYHqc="
                 },
                 "value": {
-                  "denom": "ublack",
+                  "denom": "ufury",
                   "amount": "500000000"
                 }
               }
@@ -1914,7 +1914,7 @@
       "deposit_params": {
         "min_deposit": [
           {
-            "denom": "ublack",
+            "denom": "ufury",
             "amount": "10000000"
           }
         ],
@@ -2095,7 +2095,7 @@
             "keeper_reward_percentage": "0.020000000000000000"
           },
           {
-            "denom": "ublack",
+            "denom": "ufury",
             "borrow_limit": {
               "has_max_limit": true,
               "maximum_limit": "500000000000.000000000000000000",
@@ -2220,7 +2220,7 @@
             "end": "2024-10-16T14:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "478377"
               }
             ]
@@ -2232,7 +2232,7 @@
             "end": "2024-10-16T14:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "9567"
               }
             ]
@@ -2244,7 +2244,7 @@
             "end": "2024-11-11T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "4692"
               }
             ]
@@ -2256,7 +2256,7 @@
             "end": "2024-11-11T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "3049"
               }
             ]
@@ -2268,7 +2268,7 @@
             "end": "2024-11-11T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "938"
               }
             ]
@@ -2280,7 +2280,7 @@
             "end": "2024-11-11T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "4692"
               }
             ]
@@ -2292,19 +2292,19 @@
             "end": "2024-11-11T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "2580"
               }
             ]
           },
           {
             "active": true,
-            "collateral_type": "ublack",
+            "collateral_type": "ufury",
             "start": "2022-11-11T15:00:00Z",
             "end": "2024-11-11T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "938"
               }
             ]
@@ -2316,7 +2316,7 @@
             "end": "2024-11-11T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "989"
               }
             ]
@@ -2328,7 +2328,7 @@
             "end": "2024-11-11T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "787"
               }
             ]
@@ -2340,7 +2340,7 @@
             "end": "2024-11-11T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "787"
               }
             ]
@@ -2352,7 +2352,7 @@
             "end": "2024-11-11T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "787"
               }
             ]
@@ -2364,7 +2364,7 @@
             "end": "2024-11-11T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "787"
               }
             ]
@@ -2381,7 +2381,7 @@
             "end": "2025-08-29T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "2017"
               }
             ]
@@ -2393,7 +2393,7 @@
             "end": "2025-08-29T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "2459"
               }
             ]
@@ -2405,7 +2405,7 @@
             "end": "2025-08-29T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "9217"
               }
             ]
@@ -2417,7 +2417,7 @@
             "end": "2025-08-29T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "1586"
               }
             ]
@@ -2429,7 +2429,7 @@
             "end": "2025-08-29T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "422"
               }
             ]
@@ -2441,7 +2441,7 @@
             "end": "2025-08-29T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "1291"
               }
             ]
@@ -2453,7 +2453,7 @@
             "end": "2025-08-29T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "242"
               }
             ]
@@ -2465,19 +2465,19 @@
             "end": "2025-08-29T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "649"
               }
             ]
           },
           {
             "active": true,
-            "collateral_type": "ublack:usdx",
+            "collateral_type": "ufury:usdx",
             "start": "2022-11-11T15:00:00Z",
             "end": "2025-08-29T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "3765"
               }
             ]
@@ -2489,7 +2489,7 @@
             "end": "2025-08-29T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "1187"
               }
             ]
@@ -2503,7 +2503,7 @@
             "end": "2024-10-26T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "31891"
               }
             ]
@@ -2515,7 +2515,7 @@
             "end": "2024-12-29T23:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "5505"
               }
             ]
@@ -2527,7 +2527,7 @@
             "end": "2024-10-26T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "5505"
               }
             ]
@@ -2539,7 +2539,7 @@
             "end": "2024-11-11T15:00:00Z",
             "rewards_per_second": [
               {
-                "denom": "ublack",
+                "denom": "ufury",
                 "amount": "5505"
               }
             ]
@@ -2565,7 +2565,7 @@
             ]
           },
           {
-            "denom": "ublack",
+            "denom": "ufury",
             "multipliers": [
               {
                 "name": "large",
@@ -2626,7 +2626,7 @@
           },
           "reward_indexes": [
             {
-              "collateral_type": "ublack:usdx",
+              "collateral_type": "ufury:usdx",
               "reward_indexes": []
             }
           ]
@@ -2646,7 +2646,7 @@
               "reward_indexes": []
             },
             {
-              "collateral_type": "ublack:usdx",
+              "collateral_type": "ufury:usdx",
               "reward_indexes": []
             }
           ]
@@ -2659,7 +2659,7 @@
         "assets": [
           {
             "owner": "black1vlpsrmdyuywvaqrv7rx6xga224sqfwz3fyfhwq",
-            "denom": "ublack",
+            "denom": "ufury",
             "blocked_addresses": [],
             "paused": false,
             "blockable": false,
@@ -2795,7 +2795,7 @@
         "annual_provisions": "0.000000000000000000"
       },
       "params": {
-        "mint_denom": "ublack",
+        "mint_denom": "ufury",
         "inflation_rate_change": "0.130000000000000000",
         "inflation_max": "0.750000000000000000",
         "inflation_min": "0.750000000000000000",
@@ -3281,7 +3281,7 @@
       "params": {
         "supported_denoms": [
           "usdx",
-          "ublack",
+          "ufury",
           "hard",
           "swp",
           "bblack",
@@ -3308,7 +3308,7 @@
         "max_validators": 100,
         "max_entries": 7,
         "historical_entries": 10000,
-        "bond_denom": "ublack"
+        "bond_denom": "ufury"
       },
       "last_total_power": "0",
       "last_validator_powers": [],
@@ -3322,7 +3322,7 @@
       "params": {
         "allowed_pools": [
           {
-            "token_a": "ublack",
+            "token_a": "ufury",
             "token_b": "usdx"
           },
           {
@@ -3406,10 +3406,10 @@
           "total_shares": "2236067977"
         },
         {
-          "pool_id": "ublack:usdx",
+          "pool_id": "ufury:usdx",
           "reserves_a": {
             "amount": "5000000000",
-            "denom": "ublack"
+            "denom": "ufury"
           },
           "reserves_b": {
             "amount": "1000000000",
@@ -3436,7 +3436,7 @@
         },
         {
           "depositor": "black173w2zz287s36ewnnkf4mjansnthnnsz7rtrxqc",
-          "pool_id": "ublack:usdx",
+          "pool_id": "ufury:usdx",
           "shares_owned": "2236067977"
         }
       ]

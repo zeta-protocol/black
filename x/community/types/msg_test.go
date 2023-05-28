@@ -13,7 +13,7 @@ import (
 
 func TestFundCommunityPool_ValidateBasic(t *testing.T) {
 	validCoins := sdk.NewCoins(
-		sdk.NewCoin("ublack", sdkmath.NewIntFromUint64(1e6)),
+		sdk.NewCoin("ufury", sdkmath.NewIntFromUint64(1e6)),
 		sdk.NewCoin("some-denom", sdkmath.NewIntFromUint64(1e4)),
 	)
 	testCases := []struct {
@@ -56,7 +56,7 @@ func TestFundCommunityPool_ValidateBasic(t *testing.T) {
 			message: types.MsgFundCommunityPool{
 				Depositor: app.RandomAddress().String(),
 				Amount: sdk.NewCoins(
-					sdk.NewCoin("ublack", sdk.ZeroInt()),
+					sdk.NewCoin("ufury", sdk.ZeroInt()),
 				),
 			},
 		},

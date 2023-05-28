@@ -131,7 +131,7 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 			hardGS := types.NewGenesisState(types.NewParams(
 				types.MoneyMarkets{
 					types.NewMoneyMarket("usdx", types.NewBorrowLimit(false, sdk.NewDec(1000000000000000), loanToValue), "usdx:usd", sdkmath.NewInt(1000000), types.NewInterestRateModel(sdk.MustNewDecFromStr("0.05"), sdk.MustNewDecFromStr("2"), sdk.MustNewDecFromStr("0.8"), sdk.MustNewDecFromStr("10")), sdk.MustNewDecFromStr("0.05"), sdk.ZeroDec()),
-					types.NewMoneyMarket("ublack", types.NewBorrowLimit(false, sdk.NewDec(1000000000000000), loanToValue), "black:usd", sdkmath.NewInt(1000000), types.NewInterestRateModel(sdk.MustNewDecFromStr("0.05"), sdk.MustNewDecFromStr("2"), sdk.MustNewDecFromStr("0.8"), sdk.MustNewDecFromStr("10")), sdk.MustNewDecFromStr("0.05"), sdk.ZeroDec()),
+					types.NewMoneyMarket("ufury", types.NewBorrowLimit(false, sdk.NewDec(1000000000000000), loanToValue), "black:usd", sdkmath.NewInt(1000000), types.NewInterestRateModel(sdk.MustNewDecFromStr("0.05"), sdk.MustNewDecFromStr("2"), sdk.MustNewDecFromStr("0.8"), sdk.MustNewDecFromStr("10")), sdk.MustNewDecFromStr("0.05"), sdk.ZeroDec()),
 					types.NewMoneyMarket("bnb", types.NewBorrowLimit(false, sdk.NewDec(1000000000000000), loanToValue), "bnb:usd", sdkmath.NewInt(100000000), types.NewInterestRateModel(sdk.MustNewDecFromStr("0.05"), sdk.MustNewDecFromStr("2"), sdk.MustNewDecFromStr("0.8"), sdk.MustNewDecFromStr("10")), sdk.MustNewDecFromStr("0.05"), sdk.ZeroDec()),
 				},
 				sdk.NewDec(10),
@@ -244,11 +244,11 @@ func (suite *KeeperTestSuite) TestLtvWithdraw() {
 			"invalid: withdraw is outside loan-to-value range",
 			args{
 				borrower:             borrower,
-				initialModuleCoins:   sdk.NewCoins(sdk.NewCoin("ublack", sdkmath.NewInt(100*BLACK_CF))),
-				initialBorrowerCoins: sdk.NewCoins(sdk.NewCoin("ublack", sdkmath.NewInt(100*BLACK_CF)), sdk.NewCoin("usdx", sdkmath.NewInt(100*BLACK_CF))),
-				depositCoins:         sdk.NewCoins(sdk.NewCoin("ublack", sdkmath.NewInt(100*BLACK_CF))), // 100 * 2 = $200
-				borrowCoins:          sdk.NewCoins(sdk.NewCoin("ublack", sdkmath.NewInt(80*BLACK_CF))),  // 80 * 2 = $160
-				repayCoins:           sdk.NewCoins(sdk.NewCoin("ublack", sdkmath.NewInt(60*BLACK_CF))),  // 60 * 2 = $120
+				initialModuleCoins:   sdk.NewCoins(sdk.NewCoin("ufury", sdkmath.NewInt(100*BLACK_CF))),
+				initialBorrowerCoins: sdk.NewCoins(sdk.NewCoin("ufury", sdkmath.NewInt(100*BLACK_CF)), sdk.NewCoin("usdx", sdkmath.NewInt(100*BLACK_CF))),
+				depositCoins:         sdk.NewCoins(sdk.NewCoin("ufury", sdkmath.NewInt(100*BLACK_CF))), // 100 * 2 = $200
+				borrowCoins:          sdk.NewCoins(sdk.NewCoin("ufury", sdkmath.NewInt(80*BLACK_CF))),  // 80 * 2 = $160
+				repayCoins:           sdk.NewCoins(sdk.NewCoin("ufury", sdkmath.NewInt(60*BLACK_CF))),  // 60 * 2 = $120
 				futureTime:           oneMonthInSeconds,
 			},
 			errArgs{
@@ -274,7 +274,7 @@ func (suite *KeeperTestSuite) TestLtvWithdraw() {
 			// Harvest module genesis state
 			harvestGS := types.NewGenesisState(types.NewParams(
 				types.MoneyMarkets{
-					types.NewMoneyMarket("ublack",
+					types.NewMoneyMarket("ufury",
 						types.NewBorrowLimit(false, sdk.NewDec(100000000*BLACK_CF), sdk.MustNewDecFromStr("0.8")), // Borrow Limit
 						"black:usd",                     // Market ID
 						sdkmath.NewInt(BLACK_CF),        // Conversion Factor
@@ -348,7 +348,7 @@ func (suite *KeeperTestSuite) TestLtvWithdraw() {
 			suite.Require().NoError(err)
 
 			// Attempting to withdraw fails
-			err = suite.keeper.Withdraw(suite.ctx, tc.args.borrower, sdk.NewCoins(sdk.NewCoin("ublack", sdk.OneInt())))
+			err = suite.keeper.Withdraw(suite.ctx, tc.args.borrower, sdk.NewCoins(sdk.NewCoin("ufury", sdk.OneInt())))
 			suite.Require().Error(err)
 			suite.Require().True(strings.Contains(err.Error(), tc.errArgs.contains))
 
@@ -358,7 +358,7 @@ func (suite *KeeperTestSuite) TestLtvWithdraw() {
 			hard.BeginBlocker(liqCtx, suite.keeper)
 
 			// Attempted withdraw of 1 coin still fails
-			err = suite.keeper.Withdraw(suite.ctx, tc.args.borrower, sdk.NewCoins(sdk.NewCoin("ublack", sdk.OneInt())))
+			err = suite.keeper.Withdraw(suite.ctx, tc.args.borrower, sdk.NewCoins(sdk.NewCoin("ufury", sdk.OneInt())))
 			suite.Require().Error(err)
 			suite.Require().True(strings.Contains(err.Error(), tc.errArgs.contains))
 
@@ -372,7 +372,7 @@ func (suite *KeeperTestSuite) TestLtvWithdraw() {
 			suite.Require().True(strings.Contains(err.Error(), tc.errArgs.contains))
 
 			// Withdrawing 10% of the coins should succeed
-			withdrawCoins := sdk.NewCoins(sdk.NewCoin("ublack", tc.args.depositCoins[0].Amount.Quo(sdkmath.NewInt(10))))
+			withdrawCoins := sdk.NewCoins(sdk.NewCoin("ufury", tc.args.depositCoins[0].Amount.Quo(sdkmath.NewInt(10))))
 			err = suite.keeper.Withdraw(suite.ctx, tc.args.borrower, withdrawCoins)
 			suite.Require().NoError(err)
 		})

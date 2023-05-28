@@ -26,11 +26,11 @@ func TestGetProportionalRewardPeriod(t *testing.T) {
 				"",
 				time.Time{},
 				time.Time{},
-				cs(c("ublack", 100), c("hard", 200)),
+				cs(c("ufury", 100), c("hard", 200)),
 			),
 			i(100),
 			i(100),
-			toDcs(c("ublack", 100), c("hard", 200)),
+			toDcs(c("ufury", 100), c("hard", 200)),
 		},
 		{
 			"3/4 amount",
@@ -39,11 +39,11 @@ func TestGetProportionalRewardPeriod(t *testing.T) {
 				"",
 				time.Time{},
 				time.Time{},
-				cs(c("ublack", 100), c("hard", 200)),
+				cs(c("ufury", 100), c("hard", 200)),
 			),
 			i(10_000000),
 			i(7_500000),
-			toDcs(c("ublack", 75), c("hard", 150)),
+			toDcs(c("ufury", 75), c("hard", 150)),
 		},
 		{
 			"half amount",
@@ -52,11 +52,11 @@ func TestGetProportionalRewardPeriod(t *testing.T) {
 				"",
 				time.Time{},
 				time.Time{},
-				cs(c("ublack", 100), c("hard", 200)),
+				cs(c("ufury", 100), c("hard", 200)),
 			),
 			i(100),
 			i(50),
-			toDcs(c("ublack", 50), c("hard", 100)),
+			toDcs(c("ufury", 50), c("hard", 100)),
 		},
 		{
 			"under 1 unit",
@@ -65,11 +65,11 @@ func TestGetProportionalRewardPeriod(t *testing.T) {
 				"",
 				time.Time{},
 				time.Time{},
-				cs(c("ublack", 100), c("hard", 200)),
+				cs(c("ufury", 100), c("hard", 200)),
 			),
 			i(1000), // total bblack
 			i(1),    // bblack supply of this specific vault
-			dcs(dc("ublack", "0.1"), dc("hard", "0.2")), // rewards per second rounded to 0 if under 1ublack/1hard
+			dcs(dc("ufury", "0.1"), dc("hard", "0.2")), // rewards per second rounded to 0 if under 1ufury/1hard
 		},
 	}
 

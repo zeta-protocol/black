@@ -32,7 +32,7 @@ var rewardPeriodWithZeroRewardsPerSecond = types.NewRewardPeriod(
 	"bnb",
 	time.Date(2020, 10, 15, 14, 0, 0, 0, time.UTC),
 	time.Date(2024, 10, 15, 14, 0, 0, 0, time.UTC),
-	sdk.Coin{Denom: "ublack", Amount: sdk.ZeroInt()},
+	sdk.Coin{Denom: "ufury", Amount: sdk.ZeroInt()},
 )
 
 var rewardMultiPeriodWithInvalidRewardsPerSecond = types.NewMultiRewardPeriod(
@@ -112,7 +112,7 @@ func (suite *ParamTestSuite) TestParamValidation() {
 						},
 					},
 					{
-						Denom: "ublack",
+						Denom: "ufury",
 						Multipliers: types.Multipliers{
 							types.NewMultiplier("small", 1, sdk.MustNewDecFromStr("0.2")),
 							types.NewMultiplier("large", 12, sdk.MustNewDecFromStr("1.0")),
@@ -269,7 +269,7 @@ func (suite *ParamTestSuite) TestParamValidation() {
 			},
 			errArgs{
 				expectPass: false,
-				contains:   "reward amount cannot be zero: 0ublack",
+				contains:   "reward amount cannot be zero: 0ufury",
 			},
 		},
 	}

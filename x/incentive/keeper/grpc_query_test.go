@@ -55,7 +55,7 @@ func (suite *grpcQueryTestSuite) SetupTest() {
 	hardGS := hardtypes.NewGenesisState(
 		hardtypes.NewParams(
 			hardtypes.MoneyMarkets{
-				hardtypes.NewMoneyMarket("ublack", hardtypes.NewBorrowLimit(false, borrowLimit, loanToValue), "black:usd", sdkmath.NewInt(1000000), hardtypes.NewInterestRateModel(sdk.MustNewDecFromStr("0.05"), sdk.MustNewDecFromStr("2"), sdk.MustNewDecFromStr("0.8"), sdk.MustNewDecFromStr("10")), sdk.MustNewDecFromStr("0.05"), sdk.ZeroDec()),
+				hardtypes.NewMoneyMarket("ufury", hardtypes.NewBorrowLimit(false, borrowLimit, loanToValue), "black:usd", sdkmath.NewInt(1000000), hardtypes.NewInterestRateModel(sdk.MustNewDecFromStr("0.05"), sdk.MustNewDecFromStr("2"), sdk.MustNewDecFromStr("0.8"), sdk.MustNewDecFromStr("10")), sdk.MustNewDecFromStr("0.05"), sdk.ZeroDec()),
 				hardtypes.NewMoneyMarket("bnb", hardtypes.NewBorrowLimit(false, borrowLimit, loanToValue), "bnb:usd", sdkmath.NewInt(1000000), hardtypes.NewInterestRateModel(sdk.MustNewDecFromStr("0.05"), sdk.MustNewDecFromStr("2"), sdk.MustNewDecFromStr("0.8"), sdk.MustNewDecFromStr("10")), sdk.MustNewDecFromStr("0.05"), sdk.ZeroDec()),
 			},
 			sdk.NewDec(10),
@@ -70,16 +70,16 @@ func (suite *grpcQueryTestSuite) SetupTest() {
 
 	suite.genesisState = types.NewGenesisState(
 		types.NewParams(
-			types.RewardPeriods{types.NewRewardPeriod(true, "bnb-a", suite.genesisTime.Add(-1*oneYear), suite.genesisTime.Add(oneYear), c("ublack", 122354))},
+			types.RewardPeriods{types.NewRewardPeriod(true, "bnb-a", suite.genesisTime.Add(-1*oneYear), suite.genesisTime.Add(oneYear), c("ufury", 122354))},
 			types.MultiRewardPeriods{types.NewMultiRewardPeriod(true, "bnb", suite.genesisTime.Add(-1*oneYear), suite.genesisTime.Add(oneYear), cs(c("hard", 122354)))},
 			types.MultiRewardPeriods{types.NewMultiRewardPeriod(true, "bnb", suite.genesisTime.Add(-1*oneYear), suite.genesisTime.Add(oneYear), cs(c("hard", 122354)))},
-			types.MultiRewardPeriods{types.NewMultiRewardPeriod(true, "ublack", suite.genesisTime.Add(-1*oneYear), suite.genesisTime.Add(oneYear), cs(c("hard", 122354)))},
+			types.MultiRewardPeriods{types.NewMultiRewardPeriod(true, "ufury", suite.genesisTime.Add(-1*oneYear), suite.genesisTime.Add(oneYear), cs(c("hard", 122354)))},
 			types.MultiRewardPeriods{types.NewMultiRewardPeriod(true, "btcb/usdx", suite.genesisTime.Add(-1*oneYear), suite.genesisTime.Add(oneYear), cs(c("swp", 122354)))},
-			types.MultiRewardPeriods{types.NewMultiRewardPeriod(true, "ublack", suite.genesisTime.Add(-1*oneYear), suite.genesisTime.Add(oneYear), cs(c("hard", 122354)))},
-			types.MultiRewardPeriods{types.NewMultiRewardPeriod(true, "ublack", suite.genesisTime.Add(-1*oneYear), suite.genesisTime.Add(oneYear), cs(c("hard", 122354)))},
+			types.MultiRewardPeriods{types.NewMultiRewardPeriod(true, "ufury", suite.genesisTime.Add(-1*oneYear), suite.genesisTime.Add(oneYear), cs(c("hard", 122354)))},
+			types.MultiRewardPeriods{types.NewMultiRewardPeriod(true, "ufury", suite.genesisTime.Add(-1*oneYear), suite.genesisTime.Add(oneYear), cs(c("hard", 122354)))},
 			types.MultipliersPerDenoms{
 				{
-					Denom: "ublack",
+					Denom: "ufury",
 					Multipliers: types.Multipliers{
 						types.NewMultiplier("large", 12, d("1.0")),
 					},
@@ -106,7 +106,7 @@ func (suite *grpcQueryTestSuite) SetupTest() {
 				types.NewAccumulationTime("bnb-a", suite.genesisTime),
 			},
 			types.MultiRewardIndexes{
-				types.NewMultiRewardIndex("bnb-a", types.RewardIndexes{{CollateralType: "ublack", RewardFactor: d("0.3")}}),
+				types.NewMultiRewardIndex("bnb-a", types.RewardIndexes{{CollateralType: "ufury", RewardFactor: d("0.3")}}),
 			},
 		),
 		types.NewGenesisRewardState(
@@ -127,10 +127,10 @@ func (suite *grpcQueryTestSuite) SetupTest() {
 		),
 		types.NewGenesisRewardState(
 			types.AccumulationTimes{
-				types.NewAccumulationTime("ublack", suite.genesisTime.Add(-3*time.Hour)),
+				types.NewAccumulationTime("ufury", suite.genesisTime.Add(-3*time.Hour)),
 			},
 			types.MultiRewardIndexes{
-				types.NewMultiRewardIndex("ublack", types.RewardIndexes{{CollateralType: "hard", RewardFactor: d("0.2")}}),
+				types.NewMultiRewardIndex("ufury", types.RewardIndexes{{CollateralType: "hard", RewardFactor: d("0.2")}}),
 			},
 		),
 		types.NewGenesisRewardState(
@@ -143,10 +143,10 @@ func (suite *grpcQueryTestSuite) SetupTest() {
 		),
 		types.NewGenesisRewardState(
 			types.AccumulationTimes{
-				types.NewAccumulationTime("ublack", suite.genesisTime.Add(-3*time.Hour)),
+				types.NewAccumulationTime("ufury", suite.genesisTime.Add(-3*time.Hour)),
 			},
 			types.MultiRewardIndexes{
-				types.NewMultiRewardIndex("ublack", types.RewardIndexes{{CollateralType: "ublack", RewardFactor: d("0.2")}}),
+				types.NewMultiRewardIndex("ufury", types.RewardIndexes{{CollateralType: "ufury", RewardFactor: d("0.2")}}),
 			},
 		),
 		types.NewGenesisRewardState(
@@ -160,19 +160,19 @@ func (suite *grpcQueryTestSuite) SetupTest() {
 		types.USDXMintingClaims{
 			types.NewUSDXMintingClaim(
 				suite.addrs[0],
-				c("ublack", 1e9),
+				c("ufury", 1e9),
 				types.RewardIndexes{{CollateralType: "bnb-a", RewardFactor: d("0.3")}},
 			),
 			types.NewUSDXMintingClaim(
 				suite.addrs[1],
-				c("ublack", 1),
+				c("ufury", 1),
 				types.RewardIndexes{{CollateralType: "bnb-a", RewardFactor: d("0.001")}},
 			),
 		},
 		types.HardLiquidityProviderClaims{
 			types.NewHardLiquidityProviderClaim(
 				suite.addrs[0],
-				cs(c("ublack", 1e9), c("hard", 1e9)),
+				cs(c("ufury", 1e9), c("hard", 1e9)),
 				types.MultiRewardIndexes{{CollateralType: "bnb", RewardIndexes: types.RewardIndexes{{CollateralType: "hard", RewardFactor: d("0.01")}}}},
 				types.MultiRewardIndexes{{CollateralType: "bnb", RewardIndexes: types.RewardIndexes{{CollateralType: "hard", RewardFactor: d("0.0")}}}},
 			),
@@ -187,7 +187,7 @@ func (suite *grpcQueryTestSuite) SetupTest() {
 			types.NewDelegatorClaim(
 				suite.addrs[2],
 				cs(c("hard", 5)),
-				types.MultiRewardIndexes{{CollateralType: "ublack", RewardIndexes: types.RewardIndexes{{CollateralType: "hard", RewardFactor: d("0.2")}}}},
+				types.MultiRewardIndexes{{CollateralType: "ufury", RewardIndexes: types.RewardIndexes{{CollateralType: "hard", RewardFactor: d("0.2")}}}},
 			),
 		},
 		types.SwapClaims{
@@ -201,7 +201,7 @@ func (suite *grpcQueryTestSuite) SetupTest() {
 			types.NewSavingsClaim(
 				suite.addrs[3],
 				nil,
-				types.MultiRewardIndexes{{CollateralType: "ublack", RewardIndexes: types.RewardIndexes{{CollateralType: "ublack", RewardFactor: d("0.0")}}}},
+				types.MultiRewardIndexes{{CollateralType: "ufury", RewardIndexes: types.RewardIndexes{{CollateralType: "ufury", RewardFactor: d("0.0")}}}},
 			),
 		},
 		types.EarnClaims{

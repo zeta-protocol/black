@@ -44,29 +44,29 @@ func TestEvmMinGasFilter(t *testing.T) {
 			mustParseDecCoins(""),
 		},
 		{
-			"zero ublack gas price",
-			mustParseDecCoins("0ublack"),
-			mustParseDecCoins("0ublack"),
+			"zero ufury gas price",
+			mustParseDecCoins("0ufury"),
+			mustParseDecCoins("0ufury"),
 		},
 		{
-			"non-zero ublack gas price",
-			mustParseDecCoins("0.001ublack"),
-			mustParseDecCoins("0.001ublack"),
+			"non-zero ufury gas price",
+			mustParseDecCoins("0.001ufury"),
+			mustParseDecCoins("0.001ufury"),
 		},
 		{
-			"zero ublack gas price, min afury price",
-			mustParseDecCoins("0ublack;100000afury"),
-			mustParseDecCoins("0ublack"), // afury is removed
+			"zero ufury gas price, min afury price",
+			mustParseDecCoins("0ufury;100000afury"),
+			mustParseDecCoins("0ufury"), // afury is removed
 		},
 		{
-			"zero ublack gas price, min afury price, other token",
-			mustParseDecCoins("0ublack;100000afury;0.001other"),
-			mustParseDecCoins("0ublack;0.001other"), // afury is removed
+			"zero ufury gas price, min afury price, other token",
+			mustParseDecCoins("0ufury;100000afury;0.001other"),
+			mustParseDecCoins("0ufury;0.001other"), // afury is removed
 		},
 		{
-			"non-zero ublack gas price, min afury price",
-			mustParseDecCoins("0.25ublack;100000afury;0.001other"),
-			mustParseDecCoins("0.25ublack;0.001other"), // afury is removed
+			"non-zero ufury gas price, min afury price",
+			mustParseDecCoins("0.25ufury;100000afury;0.001other"),
+			mustParseDecCoins("0.25ufury;0.001other"), // afury is removed
 		},
 	}
 

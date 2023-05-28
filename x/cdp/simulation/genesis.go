@@ -34,7 +34,7 @@ package simulation
 // 			sdk.NewCoin("xrp", sdkmath.NewInt(int64(simState.Rand.Intn(100000000000)))),
 // 			sdk.NewCoin("btc", sdkmath.NewInt(int64(simState.Rand.Intn(500000000)))),
 // 			sdk.NewCoin("usdx", sdkmath.NewInt(int64(simState.Rand.Intn(1000000000)))),
-// 			sdk.NewCoin("ublack", sdkmath.NewInt(int64(simState.Rand.Intn(500000000000)))),
+// 			sdk.NewCoin("ufury", sdkmath.NewInt(int64(simState.Rand.Intn(500000000000)))),
 // 		)
 // 		err := acc.SetCoins(acc.GetCoins().Add(coinsToAdd...))
 // 		if err != nil {

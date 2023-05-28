@@ -33,10 +33,10 @@ type MsgMintDerivative struct {
   "sender": "black10wlnqzyss4accfqmyxwx5jy5x9nfkwh6qm7n4t",
   // validator the user has delegated to
   "validator": "blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42",
-  // amount of staked ublack to be converted into bblack
+  // amount of staked ufury to be converted into bblack
   "amount": {
     "amount": "1000000000",
-    "denom": "ublack"
+    "denom": "ufury"
   }
 }
 ```

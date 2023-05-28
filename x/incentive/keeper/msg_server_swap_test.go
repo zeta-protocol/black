@@ -91,7 +91,7 @@ func (suite *HandlerTestSuite) incentiveBuilder() testutil.IncentiveGenesisBuild
 				},
 			},
 			{
-				Denom: "ublack",
+				Denom: "ufury",
 				Multipliers: types.Multipliers{
 					types.NewMultiplier("small", 1, d("0.2")),
 					types.NewMultiplier("large", 12, d("1.0")),
@@ -104,16 +104,16 @@ func (suite *HandlerTestSuite) TestPayoutSwapClaimMultiDenom() {
 	userAddr := suite.addrs[0]
 
 	authBulder := suite.authBuilder().
-		WithSimpleAccount(userAddr, cs(c("ublack", 1e12), c("busd", 1e12)))
+		WithSimpleAccount(userAddr, cs(c("ufury", 1e12), c("busd", 1e12)))
 
 	incentBuilder := suite.incentiveBuilder().
-		WithSimpleSwapRewardPeriod("busd:ublack", cs(c("hard", 1e6), c("swap", 1e6)))
+		WithSimpleSwapRewardPeriod("busd:ufury", cs(c("hard", 1e6), c("swap", 1e6)))
 
 	suite.SetupWithGenState(authBulder, incentBuilder)
 
 	// deposit into a swap pool
 	suite.NoError(
-		suite.DeliverSwapMsgDeposit(userAddr, c("ublack", 1e9), c("busd", 1e9), d("1.0")),
+		suite.DeliverSwapMsgDeposit(userAddr, c("ufury", 1e9), c("busd", 1e9), d("1.0")),
 	)
 	// accumulate some swap rewards
 	suite.NextBlockAfter(7 * time.Second)
@@ -150,16 +150,16 @@ func (suite *HandlerTestSuite) TestPayoutSwapClaimSingleDenom() {
 	userAddr := suite.addrs[0]
 
 	authBulder := suite.authBuilder().
-		WithSimpleAccount(userAddr, cs(c("ublack", 1e12), c("busd", 1e12)))
+		WithSimpleAccount(userAddr, cs(c("ufury", 1e12), c("busd", 1e12)))
 
 	incentBuilder := suite.incentiveBuilder().
-		WithSimpleSwapRewardPeriod("busd:ublack", cs(c("hard", 1e6), c("swap", 1e6)))
+		WithSimpleSwapRewardPeriod("busd:ufury", cs(c("hard", 1e6), c("swap", 1e6)))
 
 	suite.SetupWithGenState(authBulder, incentBuilder)
 
 	// deposit into a swap pool
 	suite.NoError(
-		suite.DeliverSwapMsgDeposit(userAddr, c("ublack", 1e9), c("busd", 1e9), d("1.0")),
+		suite.DeliverSwapMsgDeposit(userAddr, c("ufury", 1e9), c("busd", 1e9), d("1.0")),
 	)
 
 	// accumulate some swap rewards

@@ -20,12 +20,12 @@ func TestMsgMintDerivative_Signing(t *testing.T) {
 	msg := types.NewMsgMintDerivative(
 		address,
 		validatorAddress,
-		sdk.NewCoin("ublack", sdkmath.NewInt(1e9)),
+		sdk.NewCoin("ufury", sdkmath.NewInt(1e9)),
 	)
 
 	// checking for the "type" field ensures the msg is registered on the amino codec
 	signBytes := []byte(
-		`{"type":"liquid/MsgMintDerivative","value":{"amount":{"amount":"1000000000","denom":"ublack"},"sender":"black1gepm4nwzz40gtpur93alv9f9wm5ht4l0hzzw9d","validator":"blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"}}`,
+		`{"type":"liquid/MsgMintDerivative","value":{"amount":{"amount":"1000000000","denom":"ufury"},"sender":"black1gepm4nwzz40gtpur93alv9f9wm5ht4l0hzzw9d","validator":"blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"}}`,
 	)
 
 	assert.Equal(t, []sdk.AccAddress{address}, msg.GetSigners())
@@ -54,7 +54,7 @@ func TestMsgBurnDerivative_Signing(t *testing.T) {
 func TestMsg_Validate(t *testing.T) {
 	validAddress := mustAccAddressFromBech32("black1gepm4nwzz40gtpur93alv9f9wm5ht4l0hzzw9d")
 	validValidatorAddress := mustValAddressFromBech32("blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42")
-	validCoin := sdk.NewInt64Coin("ublack", 1e9)
+	validCoin := sdk.NewInt64Coin("ufury", 1e9)
 
 	type msgArgs struct {
 		sender    string
@@ -115,7 +115,7 @@ func TestMsg_Validate(t *testing.T) {
 			msgArgs: msgArgs{
 				sender:    validAddress.String(),
 				validator: validValidatorAddress.String(),
-				amount:    sdk.NewInt64Coin("ublack", 0),
+				amount:    sdk.NewInt64Coin("ufury", 0),
 			},
 			expectedErr: sdkerrors.ErrInvalidCoins,
 		},

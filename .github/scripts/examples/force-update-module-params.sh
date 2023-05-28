@@ -81,7 +81,7 @@ printf "original evm util module params\n %s" , "$originalEvmUtilParams"
 # make sure to update god committee member permissions for the module
 # and params being updated (see below for example)
 # https://github.com/Zeta-Protocol/black/pull/1556/files#diff-0bd6043650c708661f37bbe6fa5b29b52149e0ec0069103c3954168fc9f12612R900-R903
-black tx committee submit-proposal 1 "$proposalFileName" --gas 2000000 --gas-prices 0.01ublack --from god -y
+black tx committee submit-proposal 1 "$proposalFileName" --gas 2000000 --gas-prices 0.01ufury --from god -y
 
 # fetch current module params
 updatedEvmUtilParams=$(curl https://api.app.internal.testnet.us-east.production.black.io/black/evmutil/v1beta1/params)

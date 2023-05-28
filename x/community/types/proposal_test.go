@@ -26,7 +26,7 @@ func TestLendProposals_ValidateBasic(t *testing.T) {
 			proposal: proposalData{
 				Title:       "I'm a lend proposal",
 				Description: "I interact with lend",
-				Amount:      sdk.NewCoins(sdk.NewInt64Coin("ublack", 1e10)),
+				Amount:      sdk.NewCoins(sdk.NewInt64Coin("ufury", 1e10)),
 			},
 			expectedErr: "",
 		},
@@ -60,7 +60,7 @@ func TestLendProposals_ValidateBasic(t *testing.T) {
 			proposal: proposalData{
 				Title:       "Error profoundly",
 				Description: "My coins are zero",
-				Amount:      sdk.NewCoins(sdk.NewCoin("ublack", sdk.ZeroInt())),
+				Amount:      sdk.NewCoins(sdk.NewCoin("ufury", sdk.ZeroInt())),
 			},
 			expectedErr: "invalid coins",
 		},
@@ -113,12 +113,12 @@ func TestCommunityPoolLendDepositProposal_Stringer(t *testing.T) {
 	proposal := types.NewCommunityPoolLendDepositProposal(
 		"Title",
 		"Description",
-		sdk.NewCoins(sdk.NewInt64Coin("ublack", 42)),
+		sdk.NewCoins(sdk.NewInt64Coin("ufury", 42)),
 	)
 	require.Equal(t, `Community Pool Lend Deposit Proposal:
   Title:       Title
   Description: Description
-  Amount:      42ublack
+  Amount:      42ufury
 `, proposal.String())
 }
 
@@ -126,12 +126,12 @@ func TestCommunityPoolLendWithdrawProposal_Stringer(t *testing.T) {
 	proposal := types.NewCommunityPoolLendWithdrawProposal(
 		"Title",
 		"Description",
-		sdk.NewCoins(sdk.NewInt64Coin("ublack", 42)),
+		sdk.NewCoins(sdk.NewInt64Coin("ufury", 42)),
 	)
 	require.Equal(t, `Community Pool Lend Withdraw Proposal:
   Title:       Title
   Description: Description
-  Amount:      42ublack
+  Amount:      42ufury
 `, proposal.String())
 }
 
@@ -153,7 +153,7 @@ func TestCommunityCDPRepayDebtProposal_ValidateBasic(t *testing.T) {
 				Title:          "Repay my debt plz",
 				Description:    "I interact with cdp",
 				CollateralType: "type-a",
-				Payment:        sdk.NewInt64Coin("ublack", 1e6),
+				Payment:        sdk.NewInt64Coin("ufury", 1e6),
 			},
 			expectedErr: "",
 		},
@@ -188,7 +188,7 @@ func TestCommunityCDPRepayDebtProposal_ValidateBasic(t *testing.T) {
 				Title:          "Error profoundly",
 				Description:    "My coins are zero",
 				CollateralType: "type-a",
-				Payment:        sdk.NewInt64Coin("ublack", 0),
+				Payment:        sdk.NewInt64Coin("ufury", 0),
 			},
 			expectedErr: "invalid coins",
 		},
@@ -222,13 +222,13 @@ func TestCommunityCDPRepayDebtProposal_Stringer(t *testing.T) {
 		"title",
 		"description",
 		"collateral-type",
-		sdk.NewInt64Coin("ublack", 42),
+		sdk.NewInt64Coin("ufury", 42),
 	)
 	require.Equal(t, `Community CDP Repay Debt Proposal:
   Title:           title
   Description:     description
   Collateral Type: collateral-type
-  Payment:         42ublack
+  Payment:         42ufury
 `, proposal.String())
 }
 
@@ -250,7 +250,7 @@ func TestCommunityCDPWithdrawCollateralProposal_ValidateBasic(t *testing.T) {
 				Title:          "withdraw my collateral plz",
 				Description:    "I interact with cdp",
 				CollateralType: "type-a",
-				Collateral:     sdk.NewInt64Coin("ublack", 1e6),
+				Collateral:     sdk.NewInt64Coin("ufury", 1e6),
 			},
 			expectedErr: "",
 		},
@@ -285,7 +285,7 @@ func TestCommunityCDPWithdrawCollateralProposal_ValidateBasic(t *testing.T) {
 				Title:          "Error profoundly",
 				Description:    "My coins are zero",
 				CollateralType: "type-a",
-				Collateral:     sdk.NewInt64Coin("ublack", 0),
+				Collateral:     sdk.NewInt64Coin("ufury", 0),
 			},
 			expectedErr: "invalid coins",
 		},
@@ -319,12 +319,12 @@ func TestCommunityCDPWithdrawCollateralProposal_Stringer(t *testing.T) {
 		"title",
 		"description",
 		"collateral-type",
-		sdk.NewInt64Coin("ublack", 42),
+		sdk.NewInt64Coin("ufury", 42),
 	)
 	require.Equal(t, `Community CDP Withdraw Collateral Proposal:
   Title:           title
   Description:     description
   Collateral Type: collateral-type
-  Collateral:      42ublack
+  Collateral:      42ufury
 `, proposal.String())
 }

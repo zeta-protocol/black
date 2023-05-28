@@ -6,15 +6,15 @@
       { "token_a": "busd", "token_b": "usdx" },
       { "token_a": "hard", "token_b": "usdx" },
       { "token_a": "swp", "token_b": "usdx" },
-      { "token_a": "ublack", "token_b": "usdx" },
+      { "token_a": "ufury", "token_b": "usdx" },
       { "token_a": "usdx", "token_b": "xrpb" }
     ],
     "swap_fee": "0.001500000000000000"
   },
   "pool_records": [
     {
-      "pool_id": "ublack:usdx",
-      "reserves_a": { "denom": "ublack", "amount": "583616549439" },
+      "pool_id": "ufury:usdx",
+      "reserves_a": { "denom": "ufury", "amount": "583616549439" },
       "reserves_b": { "denom": "usdx", "amount": "3431399443511" },
       "total_shares": "1398497336200"
     },
@@ -43,7 +43,7 @@
     },
     {
       "depositor": "black1ll3ndyv333aet6mzqltu5wdepqhyme8umv34es",
-      "pool_id": "ublack:usdx",
+      "pool_id": "ufury:usdx",
       "shares_owned": "3427014047"
     }
   ]

@@ -18,7 +18,7 @@ const (
 	BaseCommitteeType   = "black/BaseCommittee"
 	MemberCommitteeType = "black/MemberCommittee" // Committee is composed of member addresses that vote to enact proposals within their permissions
 	TokenCommitteeType  = "black/TokenCommittee"  // Committee is composed of token holders with voting power determined by total token balance
-	BondDenom           = "ublack"
+	BondDenom           = "ufury"
 )
 
 // Marshal needed for protobuf compatibility.

@@ -14,7 +14,7 @@ func (suite *keeperTestSuite) TestHandleCommunityPoolMultiSpendProposal() {
 
 	// add coins to the module account and fund fee pool
 	macc := distrKeeper.GetDistributionAccount(ctx)
-	fundAmount := sdk.NewCoins(sdk.NewInt64Coin("ublack", 1000000))
+	fundAmount := sdk.NewCoins(sdk.NewInt64Coin("ufury", 1000000))
 	suite.Require().NoError(suite.App.FundModuleAccount(ctx, macc.GetName(), fundAmount))
 	feePool := distrKeeper.GetFeePool(ctx)
 	feePool.CommunityPool = sdk.NewDecCoinsFromCoins(fundAmount...)
@@ -25,17 +25,17 @@ func (suite *keeperTestSuite) TestHandleCommunityPoolMultiSpendProposal() {
 	proposal := types.NewCommunityPoolMultiSpendProposal("test title", "description", []types.MultiSpendRecipient{
 		{
 			Address: addr.String(),
-			Amount:  sdk.NewCoins(sdk.NewInt64Coin("ublack", proposalAmount1)),
+			Amount:  sdk.NewCoins(sdk.NewInt64Coin("ufury", proposalAmount1)),
 		},
 		{
 			Address: addr.String(),
-			Amount:  sdk.NewCoins(sdk.NewInt64Coin("ublack", proposalAmount2)),
+			Amount:  sdk.NewCoins(sdk.NewInt64Coin("ufury", proposalAmount2)),
 		},
 	})
 	err := keeper.HandleCommunityPoolMultiSpendProposal(ctx, suite.Keeper, proposal)
 	suite.Require().Nil(err)
 
 	balances := suite.BankKeeper.GetAllBalances(ctx, addr)
-	expected := initBalances.AmountOf("ublack").Add(sdkmath.NewInt(proposalAmount1 + proposalAmount2))
-	suite.Require().Equal(expected, balances.AmountOf("ublack"))
+	expected := initBalances.AmountOf("ufury").Add(sdkmath.NewInt(proposalAmount1 + proposalAmount2))
+	suite.Require().Equal(expected, balances.AmountOf("ufury"))
 }

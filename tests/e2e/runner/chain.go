@@ -70,7 +70,7 @@ var (
 		EvmPort:  "8545",
 
 		ChainId:      "blacklocalnet_8888-1",
-		StakingDenom: "ublack",
+		StakingDenom: "ufury",
 	}
 	ibcChain = ChainDetails{
 		RpcPort:  "26658",

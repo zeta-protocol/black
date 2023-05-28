@@ -138,7 +138,7 @@ func (k Keeper) GetStakedTokensForDerivatives(ctx sdk.Context, coins sdk.Coins) 
 }
 
 // GetTotalDerivativeValue returns the total sum value of all derivative coins
-// for all validators denominated by the bond token (ublack).
+// for all validators denominated by the bond token (ufury).
 func (k Keeper) GetTotalDerivativeValue(ctx sdk.Context) (sdk.Coin, error) {
 	bblackCoins := sdk.NewCoins()
 
@@ -154,7 +154,7 @@ func (k Keeper) GetTotalDerivativeValue(ctx sdk.Context) (sdk.Coin, error) {
 }
 
 // GetDerivativeValue returns the total underlying value of the provided
-// derivative denominated by the bond token (ublack).
+// derivative denominated by the bond token (ufury).
 func (k Keeper) GetDerivativeValue(ctx sdk.Context, denom string) (sdk.Coin, error) {
 	return k.GetStakedTokensForDerivatives(ctx, sdk.NewCoins(k.bankKeeper.GetSupply(ctx, denom)))
 }

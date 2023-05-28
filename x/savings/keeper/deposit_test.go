@@ -49,7 +49,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 		{
 			"valid",
 			args{
-				allowedDenoms:             []string{"bnb", "btcb", "ublack"},
+				allowedDenoms:             []string{"bnb", "btcb", "ufury"},
 				depositor:                 sdk.AccAddress(crypto.AddressHash([]byte("test"))),
 				initialDepositorBalance:   sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(1000)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
 				depositAmount:             sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(100))),
@@ -66,7 +66,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 		{
 			"valid multi deposit",
 			args{
-				allowedDenoms:             []string{"bnb", "btcb", "ublack"},
+				allowedDenoms:             []string{"bnb", "btcb", "ufury"},
 				depositor:                 sdk.AccAddress(crypto.AddressHash([]byte("test"))),
 				initialDepositorBalance:   sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(1000)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
 				depositAmount:             sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(100))),
@@ -83,7 +83,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 		{
 			"valid bblack",
 			args{
-				allowedDenoms:             []string{"bnb", "btcb", "ublack", "bblack"},
+				allowedDenoms:             []string{"bnb", "btcb", "ufury", "bblack"},
 				depositor:                 sdk.AccAddress(crypto.AddressHash([]byte("test"))),
 				initialDepositorBalance:   sdk.NewCoins(sdk.NewCoin(bblackDenom, sdkmath.NewInt(1000)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
 				depositAmount:             sdk.NewCoins(sdk.NewCoin(bblackDenom, sdkmath.NewInt(100))),
@@ -100,7 +100,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 		{
 			"invalid deposit denom",
 			args{
-				allowedDenoms:             []string{"bnb", "btcb", "ublack"},
+				allowedDenoms:             []string{"bnb", "btcb", "ufury"},
 				depositor:                 sdk.AccAddress(crypto.AddressHash([]byte("test"))),
 				initialDepositorBalance:   sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(1000)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
 				depositAmount:             sdk.NewCoins(sdk.NewCoin("fake", sdkmath.NewInt(100))),
@@ -117,7 +117,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 		{
 			"invalid bblack",
 			args{
-				allowedDenoms:             []string{"bnb", "btcb", "ublack", "bblack"},
+				allowedDenoms:             []string{"bnb", "btcb", "ufury", "bblack"},
 				depositor:                 sdk.AccAddress(crypto.AddressHash([]byte("test"))),
 				initialDepositorBalance:   sdk.NewCoins(sdk.NewCoin(invalidBblackDenom, sdkmath.NewInt(1000)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
 				depositAmount:             sdk.NewCoins(sdk.NewCoin(invalidBblackDenom, sdkmath.NewInt(100))),
@@ -134,7 +134,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 		{
 			"insufficient funds",
 			args{
-				allowedDenoms:             []string{"bnb", "btcb", "ublack"},
+				allowedDenoms:             []string{"bnb", "btcb", "ufury"},
 				depositor:                 sdk.AccAddress(crypto.AddressHash([]byte("test"))),
 				initialDepositorBalance:   sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(1000)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
 				depositAmount:             sdk.NewCoins(sdk.NewCoin("bnb", sdkmath.NewInt(10000))),
@@ -167,7 +167,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 			)
 
 			stakingParams := stakingtypes.DefaultParams()
-			stakingParams.BondDenom = "ublack"
+			stakingParams.BondDenom = "ufury"
 
 			tApp.InitializeFromGenesisStates(authGS,
 				app.GenesisState{types.ModuleName: tApp.AppCodec().MustMarshalJSON(&savingsGS)},
@@ -179,8 +179,8 @@ func (suite *KeeperTestSuite) TestDeposit() {
 			suite.keeper = keeper
 
 			// Create validator and delegate for bblack
-			suite.CreateAccountWithAddress(valAccAddr, cs(c("ublack", 100e10)))
-			suite.CreateAccountWithAddress(delegator, cs(c("ublack", 100e10)))
+			suite.CreateAccountWithAddress(valAccAddr, cs(c("ufury", 100e10)))
+			suite.CreateAccountWithAddress(delegator, cs(c("ufury", 100e10)))
 
 			suite.CreateNewUnbondedValidator(valAddr, initialBalance)
 			suite.CreateDelegation(valAddr, delegator, initialBalance)

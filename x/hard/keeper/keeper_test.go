@@ -184,12 +184,12 @@ func (suite *KeeperTestSuite) TestIterateInterestRateModels() {
 }
 
 func (suite *KeeperTestSuite) TestGetSetBorrowedCoins() {
-	suite.keeper.SetBorrowedCoins(suite.ctx, sdk.Coins{c("ublack", 123)})
+	suite.keeper.SetBorrowedCoins(suite.ctx, sdk.Coins{c("ufury", 123)})
 
 	coins, found := suite.keeper.GetBorrowedCoins(suite.ctx)
 	suite.Require().True(found)
 	suite.Require().Len(coins, 1)
-	suite.Require().Equal(coins, cs(c("ublack", 123)))
+	suite.Require().Equal(coins, cs(c("ufury", 123)))
 }
 
 func (suite *KeeperTestSuite) TestGetSetBorrowedCoins_Empty() {

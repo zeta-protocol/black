@@ -367,14 +367,14 @@ func (suite *CdpTestSuite) TestCdpOwnerIndex() {
 }
 
 func (suite *CdpTestSuite) TestMarketStatus() {
-	suite.keeper.SetMarketStatus(suite.ctx, "ublack:usd", true)
-	status := suite.keeper.GetMarketStatus(suite.ctx, "ublack:usd")
+	suite.keeper.SetMarketStatus(suite.ctx, "ufury:usd", true)
+	status := suite.keeper.GetMarketStatus(suite.ctx, "ufury:usd")
 	suite.Require().True(status)
-	suite.keeper.SetMarketStatus(suite.ctx, "ublack:usd", false)
-	status = suite.keeper.GetMarketStatus(suite.ctx, "ublack:usd")
+	suite.keeper.SetMarketStatus(suite.ctx, "ufury:usd", false)
+	status = suite.keeper.GetMarketStatus(suite.ctx, "ufury:usd")
 	suite.Require().False(status)
-	suite.keeper.SetMarketStatus(suite.ctx, "ublack:usd", true)
-	status = suite.keeper.GetMarketStatus(suite.ctx, "ublack:usd")
+	suite.keeper.SetMarketStatus(suite.ctx, "ufury:usd", true)
+	status = suite.keeper.GetMarketStatus(suite.ctx, "ufury:usd")
 	suite.Require().True(status)
 
 	status = suite.keeper.GetMarketStatus(suite.ctx, "unknown:usd")

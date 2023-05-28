@@ -86,7 +86,7 @@ func (suite *QuerierTestSuite) TestGetStakingAPR() {
 				Start:          suite.ctx.BlockTime().Add(-time.Hour),
 				End:            suite.ctx.BlockTime().Add(time.Hour),
 				RewardsPerSecond: sdk.NewCoins(
-					sdk.NewCoin("ublack", sdkmath.NewInt(190258)),
+					sdk.NewCoin("ufury", sdkmath.NewInt(190258)),
 				),
 			},
 			{
@@ -95,7 +95,7 @@ func (suite *QuerierTestSuite) TestGetStakingAPR() {
 				Start:          suite.ctx.BlockTime().Add(-time.Hour),
 				End:            suite.ctx.BlockTime().Add(time.Hour),
 				RewardsPerSecond: sdk.NewCoins(
-					sdk.NewCoin("ublack", sdkmath.NewInt(5284)),
+					sdk.NewCoin("ufury", sdkmath.NewInt(5284)),
 				),
 			},
 		},

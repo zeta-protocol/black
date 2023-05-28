@@ -62,7 +62,7 @@ func (s *migrateTestSuite) TestMigrate_JSON() {
 		},
 		"supplies": [
 			{
-				"current_supply": { "denom": "ublack", "amount": "100" },
+				"current_supply": { "denom": "ufury", "amount": "100" },
 				"time_elapsed": "3600000000000"
 			},
 			{
@@ -95,7 +95,7 @@ func (s *migrateTestSuite) TestMigrate_JSON() {
 		},
 		"supplies": [
 			{
-				"current_supply": { "denom": "ublack", "amount": "100" },
+				"current_supply": { "denom": "ufury", "amount": "100" },
 				"time_elapsed": "3600s"
 			},
 			{
@@ -114,7 +114,7 @@ func (s *migrateTestSuite) TestMigrate_Params() {
 		Assets: v015issuance.Assets{
 			{
 				Owner:            s.addresses[0],
-				Denom:            "ublack",
+				Denom:            "ufury",
 				BlockedAddresses: s.addresses[1:2],
 				Paused:           true,
 				Blockable:        true,
@@ -130,7 +130,7 @@ func (s *migrateTestSuite) TestMigrate_Params() {
 		Assets: []v016issuance.Asset{
 			{
 				Owner:            s.addresses[0].String(),
-				Denom:            "ublack",
+				Denom:            "ufury",
 				BlockedAddresses: []string{s.addresses[1].String()},
 				Paused:           true,
 				Blockable:        true,
@@ -149,7 +149,7 @@ func (s *migrateTestSuite) TestMigrate_Params() {
 func (s *migrateTestSuite) TestMigrate_Supplies() {
 	s.v15genstate.Supplies = v015issuance.AssetSupplies{
 		{
-			CurrentSupply: sdk.NewCoin("ublack", sdkmath.NewInt(100)),
+			CurrentSupply: sdk.NewCoin("ufury", sdkmath.NewInt(100)),
 			TimeElapsed:   time.Duration(1 * time.Hour),
 		},
 		{
@@ -159,7 +159,7 @@ func (s *migrateTestSuite) TestMigrate_Supplies() {
 	}
 	expected := []v016issuance.AssetSupply{
 		{
-			CurrentSupply: sdk.NewCoin("ublack", sdkmath.NewInt(100)),
+			CurrentSupply: sdk.NewCoin("ufury", sdkmath.NewInt(100)),
 			TimeElapsed:   time.Duration(1 * time.Hour),
 		},
 		{

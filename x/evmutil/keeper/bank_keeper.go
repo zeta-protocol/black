@@ -17,10 +17,10 @@ const (
 	EvmDenom = "afury"
 
 	// CosmosDenom is the gas denom used by the black app
-	CosmosDenom = "ublack"
+	CosmosDenom = "ufury"
 )
 
-// ConversionMultiplier is the conversion multiplier between afury and ublack
+// ConversionMultiplier is the conversion multiplier between afury and ufury
 var ConversionMultiplier = sdkmath.NewInt(1_000_000_000_000)
 
 var _ evmtypes.BankKeeper = EvmBankKeeper{}
@@ -29,7 +29,7 @@ var _ evmtypes.BankKeeper = EvmBankKeeper{}
 // of the 18 decimal afury coin on the evm.
 // x/evm consumes gas and send coins by minting and burning afury coins in its module
 // account and then sending the funds to the target account.
-// This keeper uses both the ublack coin and a separate afury balance to manage the
+// This keeper uses both the ufury coin and a separate afury balance to manage the
 // extra percision needed by the evm.
 type EvmBankKeeper struct {
 	afuryKeeper Keeper
@@ -52,9 +52,9 @@ func (k EvmBankKeeper) GetBalance(ctx sdk.Context, addr sdk.AccAddress, denom st
 	}
 
 	spendableCoins := k.bk.SpendableCoins(ctx, addr)
-	ublack := spendableCoins.AmountOf(CosmosDenom)
+	ufury := spendableCoins.AmountOf(CosmosDenom)
 	afury := k.afuryKeeper.GetBalance(ctx, addr)
-	total := ublack.Mul(ConversionMultiplier).Add(afury)
+	total := ufury.Mul(ConversionMultiplier).Add(afury)
 	return sdk.NewCoin(EvmDenom, total)
 }
 
@@ -70,13 +70,13 @@ func (k EvmBankKeeper) SendCoins(ctx sdk.Context, senderAddr sdk.AccAddress, rec
 // It will panic if the module account does not exist. An error is returned if the recipient
 // address is black-listed or if sending the tokens fails.
 func (k EvmBankKeeper) SendCoinsFromModuleToAccount(ctx sdk.Context, senderModule string, recipientAddr sdk.AccAddress, amt sdk.Coins) error {
-	ublack, afury, err := SplitAfuryCoins(amt)
+	ufury, afury, err := SplitAfuryCoins(amt)
 	if err != nil {
 		return err
 	}
 
-	if ublack.Amount.IsPositive() {
-		if err := k.bk.SendCoinsFromModuleToAccount(ctx, senderModule, recipientAddr, sdk.NewCoins(ublack)); err != nil {
+	if ufury.Amount.IsPositive() {
+		if err := k.bk.SendCoinsFromModuleToAccount(ctx, senderModule, recipientAddr, sdk.NewCoins(ufury)); err != nil {
 			return err
 		}
 	}
@@ -96,13 +96,13 @@ func (k EvmBankKeeper) SendCoinsFromModuleToAccount(ctx sdk.Context, senderModul
 // SendCoinsFromAccountToModule transfers afury coins from an AccAddress to a ModuleAccount.
 // It will panic if the module account does not exist.
 func (k EvmBankKeeper) SendCoinsFromAccountToModule(ctx sdk.Context, senderAddr sdk.AccAddress, recipientModule string, amt sdk.Coins) error {
-	ublack, afuryNeeded, err := SplitAfuryCoins(amt)
+	ufury, afuryNeeded, err := SplitAfuryCoins(amt)
 	if err != nil {
 		return err
 	}
 
-	if ublack.IsPositive() {
-		if err := k.bk.SendCoinsFromAccountToModule(ctx, senderAddr, recipientModule, sdk.NewCoins(ublack)); err != nil {
+	if ufury.IsPositive() {
+		if err := k.bk.SendCoinsFromAccountToModule(ctx, senderAddr, recipientModule, sdk.NewCoins(ufury)); err != nil {
 			return err
 		}
 	}
@@ -119,16 +119,16 @@ func (k EvmBankKeeper) SendCoinsFromAccountToModule(ctx sdk.Context, senderAddr 
 	return k.ConvertAfuryToUblack(ctx, recipientAddr)
 }
 
-// MintCoins mints afury coins by minting the equivalent ublack coins and any remaining afury coins.
+// MintCoins mints afury coins by minting the equivalent ufury coins and any remaining afury coins.
 // It will panic if the module account does not exist or is unauthorized.
 func (k EvmBankKeeper) MintCoins(ctx sdk.Context, moduleName string, amt sdk.Coins) error {
-	ublack, afury, err := SplitAfuryCoins(amt)
+	ufury, afury, err := SplitAfuryCoins(amt)
 	if err != nil {
 		return err
 	}
 
-	if ublack.IsPositive() {
-		if err := k.bk.MintCoins(ctx, moduleName, sdk.NewCoins(ublack)); err != nil {
+	if ufury.IsPositive() {
+		if err := k.bk.MintCoins(ctx, moduleName, sdk.NewCoins(ufury)); err != nil {
 			return err
 		}
 	}
@@ -141,16 +141,16 @@ func (k EvmBankKeeper) MintCoins(ctx sdk.Context, moduleName string, amt sdk.Coi
 	return k.ConvertAfuryToUblack(ctx, recipientAddr)
 }
 
-// BurnCoins burns afury coins by burning the equivalent ublack coins and any remaining afury coins.
+// BurnCoins burns afury coins by burning the equivalent ufury coins and any remaining afury coins.
 // It will panic if the module account does not exist or is unauthorized.
 func (k EvmBankKeeper) BurnCoins(ctx sdk.Context, moduleName string, amt sdk.Coins) error {
-	ublack, afury, err := SplitAfuryCoins(amt)
+	ufury, afury, err := SplitAfuryCoins(amt)
 	if err != nil {
 		return err
 	}
 
-	if ublack.IsPositive() {
-		if err := k.bk.BurnCoins(ctx, moduleName, sdk.NewCoins(ublack)); err != nil {
+	if ufury.IsPositive() {
+		if err := k.bk.BurnCoins(ctx, moduleName, sdk.NewCoins(ufury)); err != nil {
 			return err
 		}
 	}
@@ -163,7 +163,7 @@ func (k EvmBankKeeper) BurnCoins(ctx sdk.Context, moduleName string, amt sdk.Coi
 	return k.afuryKeeper.RemoveBalance(ctx, moduleAddr, afury)
 }
 
-// ConvertOneUblackToAfuryIfNeeded converts 1 ublack to afury for an address if
+// ConvertOneUblackToAfuryIfNeeded converts 1 ufury to afury for an address if
 // its afury balance is smaller than the afuryNeeded amount.
 func (k EvmBankKeeper) ConvertOneUblackToAfuryIfNeeded(ctx sdk.Context, addr sdk.AccAddress, afuryNeeded sdkmath.Int) error {
 	afuryBal := k.afuryKeeper.GetBalance(ctx, addr)
@@ -171,12 +171,12 @@ func (k EvmBankKeeper) ConvertOneUblackToAfuryIfNeeded(ctx sdk.Context, addr sdk
 		return nil
 	}
 
-	ublackToStore := sdk.NewCoins(sdk.NewCoin(CosmosDenom, sdk.OneInt()))
-	if err := k.bk.SendCoinsFromAccountToModule(ctx, addr, types.ModuleName, ublackToStore); err != nil {
+	ufuryToStore := sdk.NewCoins(sdk.NewCoin(CosmosDenom, sdk.OneInt()))
+	if err := k.bk.SendCoinsFromAccountToModule(ctx, addr, types.ModuleName, ufuryToStore); err != nil {
 		return err
 	}
 
-	// add 1ublack equivalent of afury to addr
+	// add 1ufury equivalent of afury to addr
 	afuryToReceive := ConversionMultiplier
 	if err := k.afuryKeeper.AddBalance(ctx, addr, afuryToReceive); err != nil {
 		return err
@@ -185,29 +185,29 @@ func (k EvmBankKeeper) ConvertOneUblackToAfuryIfNeeded(ctx sdk.Context, addr sdk
 	return nil
 }
 
-// ConvertAfuryToUblack converts all available afury to ublack for a given AccAddress.
+// ConvertAfuryToUblack converts all available afury to ufury for a given AccAddress.
 func (k EvmBankKeeper) ConvertAfuryToUblack(ctx sdk.Context, addr sdk.AccAddress) error {
 	totalAfury := k.afuryKeeper.GetBalance(ctx, addr)
-	ublack, _, err := SplitAfuryCoins(sdk.NewCoins(sdk.NewCoin(EvmDenom, totalAfury)))
+	ufury, _, err := SplitAfuryCoins(sdk.NewCoins(sdk.NewCoin(EvmDenom, totalAfury)))
 	if err != nil {
 		return err
 	}
 
-	// do nothing if account does not have enough afury for a single ublack
-	ublackToReceive := ublack.Amount
-	if !ublackToReceive.IsPositive() {
+	// do nothing if account does not have enough afury for a single ufury
+	ufuryToReceive := ufury.Amount
+	if !ufuryToReceive.IsPositive() {
 		return nil
 	}
 
-	// remove afury used for converting to ublack
-	afuryToBurn := ublackToReceive.Mul(ConversionMultiplier)
+	// remove afury used for converting to ufury
+	afuryToBurn := ufuryToReceive.Mul(ConversionMultiplier)
 	finalBal := totalAfury.Sub(afuryToBurn)
 	if err := k.afuryKeeper.SetBalance(ctx, addr, finalBal); err != nil {
 		return err
 	}
 
 	fromAddr := k.GetModuleAddress(types.ModuleName)
-	if err := k.bk.SendCoins(ctx, fromAddr, addr, sdk.NewCoins(ublack)); err != nil {
+	if err := k.bk.SendCoins(ctx, fromAddr, addr, sdk.NewCoins(ufury)); err != nil {
 		return err
 	}
 
@@ -222,18 +222,18 @@ func (k EvmBankKeeper) GetModuleAddress(moduleName string) sdk.AccAddress {
 	return addr
 }
 
-// SplitAfuryCoins splits afury coins to the equivalent ublack coins and any remaining afury balance.
+// SplitAfuryCoins splits afury coins to the equivalent ufury coins and any remaining afury balance.
 // An error will be returned if the coins are not valid or if the coins are not the afury denom.
 func SplitAfuryCoins(coins sdk.Coins) (sdk.Coin, sdkmath.Int, error) {
 	afury := sdk.ZeroInt()
-	ublack := sdk.NewCoin(CosmosDenom, sdk.ZeroInt())
+	ufury := sdk.NewCoin(CosmosDenom, sdk.ZeroInt())
 
 	if len(coins) == 0 {
-		return ublack, afury, nil
+		return ufury, afury, nil
 	}
 
 	if err := ValidateEvmCoins(coins); err != nil {
-		return ublack, afury, err
+		return ufury, afury, err
 	}
 
 	// note: we should always have len(coins) == 1 here since coins cannot have dup denoms after we validate.
@@ -242,12 +242,12 @@ func SplitAfuryCoins(coins sdk.Coins) (sdk.Coin, sdkmath.Int, error) {
 	if remainingBalance.IsPositive() {
 		afury = remainingBalance
 	}
-	ublackAmount := coin.Amount.Quo(ConversionMultiplier)
-	if ublackAmount.IsPositive() {
-		ublack = sdk.NewCoin(CosmosDenom, ublackAmount)
+	ufuryAmount := coin.Amount.Quo(ConversionMultiplier)
+	if ufuryAmount.IsPositive() {
+		ufury = sdk.NewCoin(CosmosDenom, ufuryAmount)
 	}
 
-	return ublack, afury, nil
+	return ufury, afury, nil
 }
 
 // ValidateEvmCoins validates the coins from evm is valid and is the EvmDenom (afury).

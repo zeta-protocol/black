@@ -34,7 +34,7 @@ func (s *migrateTestSuite) SetupTest() {
 		Deposits:                  v015cdp.Deposits{},
 		StartingCdpID:             1,
 		DebtDenom:                 "usdx",
-		GovDenom:                  "ublack",
+		GovDenom:                  "ufury",
 		PreviousAccumulationTimes: v015cdp.GenesisAccumulationTimes{},
 		TotalPrincipals:           v015cdp.GenesisTotalPrincipals{},
 	}
@@ -68,7 +68,7 @@ func (s *migrateTestSuite) TestMigrate_GenState() {
 	s.v15genstate = v015cdp.GenesisState{
 		StartingCdpID: 2,
 		DebtDenom:     "usdx",
-		GovDenom:      "ublack",
+		GovDenom:      "ufury",
 		Params: v015cdp.Params{
 			CollateralParams: v015cdp.CollateralParams{
 				{
@@ -119,7 +119,7 @@ func (s *migrateTestSuite) TestMigrate_GenState() {
 			{
 				CdpID:     2,
 				Depositor: s.addresses[1],
-				Amount:    sdk.NewCoin("ublack", sdkmath.NewInt(1200)),
+				Amount:    sdk.NewCoin("ufury", sdkmath.NewInt(1200)),
 			},
 		},
 		PreviousAccumulationTimes: v015cdp.GenesisAccumulationTimes{
@@ -139,7 +139,7 @@ func (s *migrateTestSuite) TestMigrate_GenState() {
 	expected := v016cdp.GenesisState{
 		StartingCdpID: 2,
 		DebtDenom:     "usdx",
-		GovDenom:      "ublack",
+		GovDenom:      "ufury",
 		Params: v016cdp.Params{
 			CollateralParams: v016cdp.CollateralParams{
 				{
@@ -190,7 +190,7 @@ func (s *migrateTestSuite) TestMigrate_GenState() {
 			{
 				CdpID:     2,
 				Depositor: s.addresses[1],
-				Amount:    sdk.NewCoin("ublack", sdkmath.NewInt(1200)),
+				Amount:    sdk.NewCoin("ufury", sdkmath.NewInt(1200)),
 			},
 		},
 		PreviousAccumulationTimes: v016cdp.GenesisAccumulationTimes{

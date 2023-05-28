@@ -40,16 +40,16 @@ func (suite *genesisTestSuite) Test_InitAndExportGenesis() {
 	// slices are sorted by key as stored in the data store, so init and export can be compared with equal
 	state := types.NewGenesisState(
 		types.Params{
-			AllowedPools: types.AllowedPools{types.NewAllowedPool("ublack", "usdx")},
+			AllowedPools: types.AllowedPools{types.NewAllowedPool("ufury", "usdx")},
 			SwapFee:      sdk.MustNewDecFromStr("0.00255"),
 		},
 		types.PoolRecords{
 			types.NewPoolRecord(sdk.NewCoins(sdk.NewCoin("hard", sdkmath.NewInt(1e6)), sdk.NewCoin("usdx", sdkmath.NewInt(2e6))), sdkmath.NewInt(1e6)),
-			types.NewPoolRecord(sdk.NewCoins(sdk.NewCoin("ublack", sdkmath.NewInt(1e6)), sdk.NewCoin("usdx", sdkmath.NewInt(5e6))), sdkmath.NewInt(3e6)),
+			types.NewPoolRecord(sdk.NewCoins(sdk.NewCoin("ufury", sdkmath.NewInt(1e6)), sdk.NewCoin("usdx", sdkmath.NewInt(5e6))), sdkmath.NewInt(3e6)),
 		},
 		types.ShareRecords{
 			types.NewShareRecord(depositor_2, types.PoolID("hard", "usdx"), sdkmath.NewInt(1e6)),
-			types.NewShareRecord(depositor_1, types.PoolID("ublack", "usdx"), sdkmath.NewInt(3e6)),
+			types.NewShareRecord(depositor_1, types.PoolID("ufury", "usdx"), sdkmath.NewInt(3e6)),
 		},
 	)
 
@@ -58,12 +58,12 @@ func (suite *genesisTestSuite) Test_InitAndExportGenesis() {
 
 	poolRecord1, _ := suite.Keeper.GetPool(suite.Ctx, types.PoolID("hard", "usdx"))
 	suite.Equal(state.PoolRecords[0], poolRecord1)
-	poolRecord2, _ := suite.Keeper.GetPool(suite.Ctx, types.PoolID("ublack", "usdx"))
+	poolRecord2, _ := suite.Keeper.GetPool(suite.Ctx, types.PoolID("ufury", "usdx"))
 	suite.Equal(state.PoolRecords[1], poolRecord2)
 
 	shareRecord1, _ := suite.Keeper.GetDepositorShares(suite.Ctx, depositor_2, types.PoolID("hard", "usdx"))
 	suite.Equal(state.ShareRecords[0], shareRecord1)
-	shareRecord2, _ := suite.Keeper.GetDepositorShares(suite.Ctx, depositor_1, types.PoolID("ublack", "usdx"))
+	shareRecord2, _ := suite.Keeper.GetDepositorShares(suite.Ctx, depositor_1, types.PoolID("ufury", "usdx"))
 	suite.Equal(state.ShareRecords[1], shareRecord2)
 
 	exportedState := swap.ExportGenesis(suite.Ctx, suite.Keeper)
@@ -79,16 +79,16 @@ func (suite *genesisTestSuite) Test_Marshall() {
 	// slices are sorted by key as stored in the data store, so init and export can be compared with equal
 	state := types.NewGenesisState(
 		types.Params{
-			AllowedPools: types.AllowedPools{types.NewAllowedPool("ublack", "usdx")},
+			AllowedPools: types.AllowedPools{types.NewAllowedPool("ufury", "usdx")},
 			SwapFee:      sdk.MustNewDecFromStr("0.00255"),
 		},
 		types.PoolRecords{
 			types.NewPoolRecord(sdk.NewCoins(sdk.NewCoin("hard", sdkmath.NewInt(1e6)), sdk.NewCoin("usdx", sdkmath.NewInt(2e6))), sdkmath.NewInt(1e6)),
-			types.NewPoolRecord(sdk.NewCoins(sdk.NewCoin("ublack", sdkmath.NewInt(1e6)), sdk.NewCoin("usdx", sdkmath.NewInt(5e6))), sdkmath.NewInt(3e6)),
+			types.NewPoolRecord(sdk.NewCoins(sdk.NewCoin("ufury", sdkmath.NewInt(1e6)), sdk.NewCoin("usdx", sdkmath.NewInt(5e6))), sdkmath.NewInt(3e6)),
 		},
 		types.ShareRecords{
 			types.NewShareRecord(depositor_2, types.PoolID("hard", "usdx"), sdkmath.NewInt(1e6)),
-			types.NewShareRecord(depositor_1, types.PoolID("ublack", "usdx"), sdkmath.NewInt(3e6)),
+			types.NewShareRecord(depositor_1, types.PoolID("ufury", "usdx"), sdkmath.NewInt(3e6)),
 		},
 	)
 
@@ -114,16 +114,16 @@ func (suite *genesisTestSuite) Test_LegacyJSONConversion() {
 	// slices are sorted by key as stored in the data store, so init and export can be compared with equal
 	state := types.NewGenesisState(
 		types.Params{
-			AllowedPools: types.AllowedPools{types.NewAllowedPool("ublack", "usdx")},
+			AllowedPools: types.AllowedPools{types.NewAllowedPool("ufury", "usdx")},
 			SwapFee:      sdk.MustNewDecFromStr("0.00255"),
 		},
 		types.PoolRecords{
 			types.NewPoolRecord(sdk.NewCoins(sdk.NewCoin("hard", sdkmath.NewInt(1e6)), sdk.NewCoin("usdx", sdkmath.NewInt(2e6))), sdkmath.NewInt(1e6)),
-			types.NewPoolRecord(sdk.NewCoins(sdk.NewCoin("ublack", sdkmath.NewInt(1e6)), sdk.NewCoin("usdx", sdkmath.NewInt(5e6))), sdkmath.NewInt(3e6)),
+			types.NewPoolRecord(sdk.NewCoins(sdk.NewCoin("ufury", sdkmath.NewInt(1e6)), sdk.NewCoin("usdx", sdkmath.NewInt(5e6))), sdkmath.NewInt(3e6)),
 		},
 		types.ShareRecords{
 			types.NewShareRecord(depositor_2, types.PoolID("hard", "usdx"), sdkmath.NewInt(1e6)),
-			types.NewShareRecord(depositor_1, types.PoolID("ublack", "usdx"), sdkmath.NewInt(3e6)),
+			types.NewShareRecord(depositor_1, types.PoolID("ufury", "usdx"), sdkmath.NewInt(3e6)),
 		},
 	)
 

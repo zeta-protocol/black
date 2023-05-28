@@ -60,7 +60,7 @@ message GenesisState {
 
 An `Account` is a struct representing the excess `afury` balance of an address.
 
-Since an address's total `afury` balance is derived from its `ublack` balance and the excess `afury` balance stored by the `Account` struct, the `afury` balance here should never exceed 1 `ublack` (10^12 `afury`).
+Since an address's total `afury` balance is derived from its `ufury` balance and the excess `afury` balance stored by the `Account` struct, the `afury` balance here should never exceed 1 `ufury` (10^12 `afury`).
 
 ```protobuf
 message Account {

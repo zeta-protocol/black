@@ -19,7 +19,7 @@ var _ GenesisBuilder = (*MintGenesisBuilder)(nil)
 
 func NewMintGenesisBuilder() MintGenesisBuilder {
 	gen := minttypes.DefaultGenesisState()
-	gen.Params.MintDenom = "ublack"
+	gen.Params.MintDenom = "ufury"
 
 	return MintGenesisBuilder{
 		GenesisState: *gen,
