@@ -82,7 +82,7 @@ func (k EvmBankKeeper) SendCoinsFromModuleToAccount(ctx sdk.Context, senderModul
 	}
 
 	senderAddr := k.GetModuleAddress(senderModule)
-	if err := k.ConvertOneUblackToAfuryIfNeeded(ctx, senderAddr, afury); err != nil {
+	if err := k.ConvertOneUfuryToAfuryIfNeeded(ctx, senderAddr, afury); err != nil {
 		return err
 	}
 
@@ -90,7 +90,7 @@ func (k EvmBankKeeper) SendCoinsFromModuleToAccount(ctx sdk.Context, senderModul
 		return err
 	}
 
-	return k.ConvertAfuryToUblack(ctx, recipientAddr)
+	return k.ConvertAfuryToUfury(ctx, recipientAddr)
 }
 
 // SendCoinsFromAccountToModule transfers afury coins from an AccAddress to a ModuleAccount.
@@ -107,7 +107,7 @@ func (k EvmBankKeeper) SendCoinsFromAccountToModule(ctx sdk.Context, senderAddr 
 		}
 	}
 
-	if err := k.ConvertOneUblackToAfuryIfNeeded(ctx, senderAddr, afuryNeeded); err != nil {
+	if err := k.ConvertOneUfuryToAfuryIfNeeded(ctx, senderAddr, afuryNeeded); err != nil {
 		return err
 	}
 
@@ -116,7 +116,7 @@ func (k EvmBankKeeper) SendCoinsFromAccountToModule(ctx sdk.Context, senderAddr 
 		return err
 	}
 
-	return k.ConvertAfuryToUblack(ctx, recipientAddr)
+	return k.ConvertAfuryToUfury(ctx, recipientAddr)
 }
 
 // MintCoins mints afury coins by minting the equivalent ufury coins and any remaining afury coins.
@@ -138,7 +138,7 @@ func (k EvmBankKeeper) MintCoins(ctx sdk.Context, moduleName string, amt sdk.Coi
 		return err
 	}
 
-	return k.ConvertAfuryToUblack(ctx, recipientAddr)
+	return k.ConvertAfuryToUfury(ctx, recipientAddr)
 }
 
 // BurnCoins burns afury coins by burning the equivalent ufury coins and any remaining afury coins.
@@ -156,16 +156,16 @@ func (k EvmBankKeeper) BurnCoins(ctx sdk.Context, moduleName string, amt sdk.Coi
 	}
 
 	moduleAddr := k.GetModuleAddress(moduleName)
-	if err := k.ConvertOneUblackToAfuryIfNeeded(ctx, moduleAddr, afury); err != nil {
+	if err := k.ConvertOneUfuryToAfuryIfNeeded(ctx, moduleAddr, afury); err != nil {
 		return err
 	}
 
 	return k.afuryKeeper.RemoveBalance(ctx, moduleAddr, afury)
 }
 
-// ConvertOneUblackToAfuryIfNeeded converts 1 ufury to afury for an address if
+// ConvertOneUfuryToAfuryIfNeeded converts 1 ufury to afury for an address if
 // its afury balance is smaller than the afuryNeeded amount.
-func (k EvmBankKeeper) ConvertOneUblackToAfuryIfNeeded(ctx sdk.Context, addr sdk.AccAddress, afuryNeeded sdkmath.Int) error {
+func (k EvmBankKeeper) ConvertOneUfuryToAfuryIfNeeded(ctx sdk.Context, addr sdk.AccAddress, afuryNeeded sdkmath.Int) error {
 	afuryBal := k.afuryKeeper.GetBalance(ctx, addr)
 	if afuryBal.GTE(afuryNeeded) {
 		return nil
@@ -185,8 +185,8 @@ func (k EvmBankKeeper) ConvertOneUblackToAfuryIfNeeded(ctx sdk.Context, addr sdk
 	return nil
 }
 
-// ConvertAfuryToUblack converts all available afury to ufury for a given AccAddress.
-func (k EvmBankKeeper) ConvertAfuryToUblack(ctx sdk.Context, addr sdk.AccAddress) error {
+// ConvertAfuryToUfury converts all available afury to ufury for a given AccAddress.
+func (k EvmBankKeeper) ConvertAfuryToUfury(ctx sdk.Context, addr sdk.AccAddress) error {
 	totalAfury := k.afuryKeeper.GetBalance(ctx, addr)
 	ufury, _, err := SplitAfuryCoins(sdk.NewCoins(sdk.NewCoin(EvmDenom, totalAfury)))
 	if err != nil {

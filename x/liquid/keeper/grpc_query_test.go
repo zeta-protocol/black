@@ -182,7 +182,7 @@ func (suite *grpcQueryTestSuite) TestQueryTotalSupply() {
 			expectedErr:   nil,
 		},
 		{
-			name: "returns TVL from one bblack denom",
+			name: "returns TVL from one bfury denom",
 			setup: func() {
 				initBalance := suite.NewBondCoin(i(1e9))
 				valAcc := suite.CreateAccount(sdk.NewCoins(initBalance), 0)
@@ -204,7 +204,7 @@ func (suite *grpcQueryTestSuite) TestQueryTotalSupply() {
 			expectedErr:   nil,
 		},
 		{
-			name: "returns TVL from multiple bblack denoms",
+			name: "returns TVL from multiple bfury denoms",
 			setup: func() {
 				initBalance := suite.NewBondCoin(i(1e9))
 				val1Acc := suite.CreateAccount(sdk.NewCoins(initBalance), 0)

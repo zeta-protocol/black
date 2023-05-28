@@ -113,8 +113,8 @@ func (s queryServer) TotalSupply(ctx context.Context, req *types.QueryTotalSuppl
 
 	s.keeper.IterateDeposits(sdkCtx, func(deposit types.Deposit) (stop bool) {
 		for _, c := range deposit.Amount {
-			// separate out bblack denoms
-			if strings.HasPrefix(c.Denom, bblackPrefix) {
+			// separate out bfury denoms
+			if strings.HasPrefix(c.Denom, bfuryPrefix) {
 				liquidStakedDerivatives = liquidStakedDerivatives.Add(c)
 			} else {
 				totalSupply = totalSupply.Add(c)
@@ -123,7 +123,7 @@ func (s queryServer) TotalSupply(ctx context.Context, req *types.QueryTotalSuppl
 		return false
 	})
 
-	// determine underlying value of bblack denoms
+	// determine underlying value of bfury denoms
 	if len(liquidStakedDerivatives) > 0 {
 		underlyingValue, err := s.keeper.liquidKeeper.GetStakedTokensForDerivatives(
 			sdkCtx,
@@ -132,7 +132,7 @@ func (s queryServer) TotalSupply(ctx context.Context, req *types.QueryTotalSuppl
 		if err != nil {
 			return nil, err
 		}
-		totalSupply = totalSupply.Add(sdk.NewCoin(bblackDenom, underlyingValue.Amount))
+		totalSupply = totalSupply.Add(sdk.NewCoin(bfuryDenom, underlyingValue.Amount))
 	}
 
 	return &types.QueryTotalSupplyResponse{

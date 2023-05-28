@@ -378,11 +378,11 @@ func (suite *evmBankKeeperTestSuite) TestSendCoinsFromAccountToModule() {
 }
 
 func (suite *evmBankKeeperTestSuite) TestBurnCoins() {
-	startingUblack := sdkmath.NewInt(100)
+	startingUfury := sdkmath.NewInt(100)
 	tests := []struct {
 		name       string
 		burnCoins  sdk.Coins
-		expUblack   sdkmath.Int
+		expUfury   sdkmath.Int
 		expAfury   sdkmath.Int
 		hasErr     bool
 		afuryStart sdkmath.Int
@@ -414,7 +414,7 @@ func (suite *evmBankKeeperTestSuite) TestBurnCoins() {
 		{
 			"burn no afury",
 			sdk.NewCoins(sdk.NewInt64Coin("afury", 0)),
-			startingUblack,
+			startingUfury,
 			sdk.ZeroInt(),
 			false,
 			sdk.ZeroInt(),
@@ -422,7 +422,7 @@ func (suite *evmBankKeeperTestSuite) TestBurnCoins() {
 		{
 			"errors if burning other coins",
 			sdk.NewCoins(sdk.NewInt64Coin("afury", 500), sdk.NewInt64Coin("busd", 1000)),
-			startingUblack,
+			startingUfury,
 			sdkmath.NewInt(100),
 			true,
 			sdkmath.NewInt(100),
@@ -433,7 +433,7 @@ func (suite *evmBankKeeperTestSuite) TestBurnCoins() {
 				sdk.NewInt64Coin("afury", 12_000_000_000_000),
 				sdk.NewInt64Coin("afury", 2_000_000_000_000),
 			},
-			startingUblack,
+			startingUfury,
 			sdk.ZeroInt(),
 			true,
 			sdk.ZeroInt(),
@@ -441,7 +441,7 @@ func (suite *evmBankKeeperTestSuite) TestBurnCoins() {
 		{
 			"errors if burn amount is negative",
 			sdk.Coins{sdk.Coin{Denom: "afury", Amount: sdkmath.NewInt(-100)}},
-			startingUblack,
+			startingUfury,
 			sdkmath.NewInt(50),
 			true,
 			sdkmath.NewInt(50),
@@ -476,7 +476,7 @@ func (suite *evmBankKeeperTestSuite) TestBurnCoins() {
 		suite.Run(tt.name, func() {
 			suite.SetupTest()
 			startingCoins := sdk.NewCoins(
-				sdk.NewCoin("ufury", startingUblack),
+				sdk.NewCoin("ufury", startingUfury),
 				sdk.NewCoin("afury", tt.afuryStart),
 			)
 			suite.FundModuleAccountWithBlack(evmtypes.ModuleName, startingCoins)
@@ -491,7 +491,7 @@ func (suite *evmBankKeeperTestSuite) TestBurnCoins() {
 
 			// check ufury
 			ufuryActual := suite.BankKeeper.GetBalance(suite.Ctx, suite.EvmModuleAddr, "ufury")
-			suite.Require().Equal(tt.expUblack, ufuryActual.Amount)
+			suite.Require().Equal(tt.expUfury, ufuryActual.Amount)
 
 			// check afury
 			afuryActual := suite.Keeper.GetBalance(suite.Ctx, suite.EvmModuleAddr)
@@ -650,7 +650,7 @@ func (suite *evmBankKeeperTestSuite) TestValidateEvmCoins() {
 	}
 }
 
-func (suite *evmBankKeeperTestSuite) TestConvertOneUblackToAfuryIfNeeded() {
+func (suite *evmBankKeeperTestSuite) TestConvertOneUfuryToAfuryIfNeeded() {
 	afuryNeeded := sdkmath.NewInt(200)
 	tests := []struct {
 		name          string
@@ -682,7 +682,7 @@ func (suite *evmBankKeeperTestSuite) TestConvertOneUblackToAfuryIfNeeded() {
 			suite.SetupTest()
 
 			suite.FundAccountWithBlack(suite.Addrs[0], tt.startingCoins)
-			err := suite.EvmBankKeeper.ConvertOneUblackToAfuryIfNeeded(suite.Ctx, suite.Addrs[0], afuryNeeded)
+			err := suite.EvmBankKeeper.ConvertOneUfuryToAfuryIfNeeded(suite.Ctx, suite.Addrs[0], afuryNeeded)
 			moduleBlack := suite.BankKeeper.GetBalance(suite.Ctx, suite.AccountKeeper.GetModuleAddress(types.ModuleName), "ufury")
 			if tt.success {
 				suite.Require().NoError(err)
@@ -702,7 +702,7 @@ func (suite *evmBankKeeperTestSuite) TestConvertOneUblackToAfuryIfNeeded() {
 	}
 }
 
-func (suite *evmBankKeeperTestSuite) TestConvertAfuryToUblack() {
+func (suite *evmBankKeeperTestSuite) TestConvertAfuryToUfury() {
 	tests := []struct {
 		name          string
 		startingCoins sdk.Coins
@@ -731,7 +731,7 @@ func (suite *evmBankKeeperTestSuite) TestConvertAfuryToUblack() {
 			err := suite.App.FundModuleAccount(suite.Ctx, types.ModuleName, sdk.NewCoins(sdk.NewInt64Coin("ufury", 10)))
 			suite.Require().NoError(err)
 			suite.FundAccountWithBlack(suite.Addrs[0], tt.startingCoins)
-			err = suite.EvmBankKeeper.ConvertAfuryToUblack(suite.Ctx, suite.Addrs[0])
+			err = suite.EvmBankKeeper.ConvertAfuryToUfury(suite.Ctx, suite.Addrs[0])
 			suite.Require().NoError(err)
 			afury := suite.Keeper.GetBalance(suite.Ctx, suite.Addrs[0])
 			suite.Require().Equal(tt.expectedCoins.AmountOf("afury"), afury)

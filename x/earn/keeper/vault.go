@@ -40,7 +40,7 @@ func (k *Keeper) GetVaultTotalValue(
 		return sdk.Coin{}, types.ErrInvalidVaultStrategy
 	}
 
-	// Denom can be different from allowedVault.Denom for bblack
+	// Denom can be different from allowedVault.Denom for bfury
 	return strategy.GetEstimatedTotalAssets(ctx, denom)
 }
 

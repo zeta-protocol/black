@@ -298,7 +298,7 @@ func (suite *KeeperTestSuite) TestMintDerivative() {
 				return
 			}
 
-			derivative := sdk.NewCoins(sdk.NewCoin(fmt.Sprintf("bblack-%s", valAddr), tc.expectedDerivatives))
+			derivative := sdk.NewCoins(sdk.NewCoin(fmt.Sprintf("bfury-%s", valAddr), tc.expectedDerivatives))
 			suite.AccountBalanceEqual(delegator, derivative)
 
 			suite.DelegationSharesEqual(valAddr, delegator, tc.expectedSharesRemaining)
@@ -351,7 +351,7 @@ func (suite *KeeperTestSuite) TestIsDerivativeDenom() {
 		},
 		{
 			name:        "invalid - invalid val addr",
-			denom:       "bblack-asdfasdf",
+			denom:       "bfury-asdfasdf",
 			wantIsDenom: false,
 		},
 		{
@@ -360,13 +360,13 @@ func (suite *KeeperTestSuite) TestIsDerivativeDenom() {
 			wantIsDenom: false,
 		},
 		{
-			name:        "invalid - plain bblack",
-			denom:       "bblack",
+			name:        "invalid - plain bfury",
+			denom:       "bfury",
 			wantIsDenom: false,
 		},
 		{
-			name:        "invalid - bblack prefix",
-			denom:       "bblack-",
+			name:        "invalid - bfury prefix",
+			denom:       "bfury-",
 			wantIsDenom: false,
 		},
 	}
@@ -546,6 +546,6 @@ func (suite *KeeperTestSuite) TestDerivativeFromTokens() {
 
 	derivatives, err := suite.Keeper.DerivativeFromTokens(suite.Ctx, valAddr, suite.NewBondCoin(initialBalance))
 	suite.NoError(err)
-	expected := sdk.NewCoin(fmt.Sprintf("bblack-%s", valAddr), initialBalance)
+	expected := sdk.NewCoin(fmt.Sprintf("bfury-%s", valAddr), initialBalance)
 	suite.Equal(expected, derivatives)
 }

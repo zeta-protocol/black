@@ -244,7 +244,7 @@ func (suite *withdrawTestSuite) TestWithdraw_Partial() {
 }
 
 func (suite *withdrawTestSuite) TestWithdraw_bBlack() {
-	vaultDenom := "bblack"
+	vaultDenom := "bfury"
 	coinDenom := testutil.TestBblackDenoms[0]
 
 	startBalance := sdk.NewInt64Coin(coinDenom, 1000)
@@ -252,7 +252,7 @@ func (suite *withdrawTestSuite) TestWithdraw_bBlack() {
 
 	acc1 := suite.CreateAccount(sdk.NewCoins(startBalance), 0)
 
-	// vault denom is only "bblack" which has it's own special handler
+	// vault denom is only "bfury" which has it's own special handler
 	suite.CreateVault(
 		vaultDenom,
 		types.StrategyTypes{types.STRATEGY_TYPE_SAVINGS},
@@ -263,12 +263,12 @@ func (suite *withdrawTestSuite) TestWithdraw_bBlack() {
 	err := suite.Keeper.Deposit(suite.Ctx, acc1.GetAddress(), depositAmount, types.STRATEGY_TYPE_SAVINGS)
 	suite.Require().NoError(
 		err,
-		"should be able to deposit bblack derivative denom in bblack vault",
+		"should be able to deposit bfury derivative denom in bfury vault",
 	)
 
 	_, err = suite.Keeper.Withdraw(suite.Ctx, acc1.GetAddress(), depositAmount, types.STRATEGY_TYPE_SAVINGS)
 	suite.Require().NoError(
 		err,
-		"should be able to withdraw bblack derivative denom from bblack vault",
+		"should be able to withdraw bfury derivative denom from bfury vault",
 	)
 }

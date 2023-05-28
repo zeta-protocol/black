@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	bblackDenom  = "bblack"
-	bblackPrefix = bblackDenom + "-"
+	bfuryDenom  = "bfury"
+	bfuryPrefix = bfuryDenom + "-"
 )
 
 // GetParams returns the params from the store

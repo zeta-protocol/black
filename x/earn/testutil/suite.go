@@ -33,9 +33,9 @@ import (
 )
 
 var TestBblackDenoms = []string{
-	"bblack-blackvaloper15gqc744d05xacn4n6w2furuads9fu4pqn6zxlu",
-	"bblack-blackvaloper15qdefkmwswysgg4qxgqpqr35k3m49pkx8yhpte",
-	"bblack-blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42",
+	"bfury-blackvaloper15gqc744d05xacn4n6w2furuads9fu4pqn6zxlu",
+	"bfury-blackvaloper15qdefkmwswysgg4qxgqpqr35k3m49pkx8yhpte",
+	"bfury-blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42",
 }
 
 // Suite implements a test suite for the earn module integration tests

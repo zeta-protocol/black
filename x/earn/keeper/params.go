@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	bblackDenom  = "bblack"
-	bblackPrefix = bblackDenom + "-"
+	bfuryDenom  = "bfury"
+	bfuryPrefix = bfuryDenom + "-"
 )
 
 // GetParams returns the params from the store
@@ -47,15 +47,15 @@ func (k Keeper) getAllowedVaultRaw(
 }
 
 // GetAllowedVault returns the AllowedVault that corresponds to the
-// given denom. If the denom starts with "bblack-" where it will return the
-// "bblack" AllowedVault. Otherwise, it will return the exact match for the
+// given denom. If the denom starts with "bfury-" where it will return the
+// "bfury" AllowedVault. Otherwise, it will return the exact match for the
 // corresponding AllowedVault denom.
 func (k *Keeper) GetAllowedVault(
 	ctx sdk.Context,
 	vaultDenom string,
 ) (types.AllowedVault, bool) {
-	if strings.HasPrefix(vaultDenom, bblackPrefix) {
-		return k.getAllowedVaultRaw(ctx, bblackDenom)
+	if strings.HasPrefix(vaultDenom, bfuryPrefix) {
+		return k.getAllowedVaultRaw(ctx, bfuryDenom)
 	}
 
 	return k.getAllowedVaultRaw(ctx, vaultDenom)

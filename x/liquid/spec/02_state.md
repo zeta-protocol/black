@@ -13,4 +13,4 @@ The liquid module does not require any module specific genesis state.
 
 ## Store
 
-The liquid module does not store any module specific data. All `bblack` token receipts are minted directly to the delegators account, and the delegation object is transferred to the liquid module account. 
+The liquid module does not store any module specific data. All `bfury` token receipts are minted directly to the delegators account, and the delegation object is transferred to the liquid module account. 

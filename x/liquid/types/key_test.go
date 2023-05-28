@@ -22,7 +22,7 @@ func TestParseLiquidStakingTokenDenom(t *testing.T) {
 	}{
 		{
 			name:        "valid denom",
-			giveDenom:   "bblack-blackvaloper1ze7y9qwdddejmy7jlw4cymqqlt2wh05y6cpt5a",
+			giveDenom:   "bfury-blackvaloper1ze7y9qwdddejmy7jlw4cymqqlt2wh05y6cpt5a",
 			wantAddress: mustValAddressFromBech32("blackvaloper1ze7y9qwdddejmy7jlw4cymqqlt2wh05y6cpt5a"),
 			wantErr:     nil,
 		},
@@ -34,7 +34,7 @@ func TestParseLiquidStakingTokenDenom(t *testing.T) {
 		},
 		{
 			name:        "invalid validator address",
-			giveDenom:   "bblack-blackvaloper1ze7y9qw",
+			giveDenom:   "bfury-blackvaloper1ze7y9qw",
 			wantAddress: sdk.ValAddress{},
 			wantErr:     fmt.Errorf("invalid denom validator address: decoding bech32 failed: invalid checksum"),
 		},

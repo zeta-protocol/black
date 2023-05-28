@@ -99,11 +99,11 @@ jq '.app_state.earn.params.allowed_vaults =  [
         strategies: ["STRATEGY_TYPE_HARD"],
     },
     {
-        denom: "bblack",
+        denom: "bfury",
         strategies: ["STRATEGY_TYPE_SAVINGS"],
     }]' $DATA/config/genesis.json | sponge $DATA/config/genesis.json
 
-jq '.app_state.savings.params.supported_denoms = ["bblack-blackvaloper1ffv7nhd3z6sych2qpqkk03ec6hzkmufyz4scd0"]' $DATA/config/genesis.json | sponge $DATA/config/genesis.json
+jq '.app_state.savings.params.supported_denoms = ["bfury-blackvaloper1ffv7nhd3z6sych2qpqkk03ec6hzkmufyz4scd0"]' $DATA/config/genesis.json | sponge $DATA/config/genesis.json
 
 
 $BINARY config broadcast-mode block

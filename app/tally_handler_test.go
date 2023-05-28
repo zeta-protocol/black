@@ -97,7 +97,7 @@ func (suite *tallyHandlerSuite) TestVotePower_UserOverridesValidator() {
 
 	proposal := suite.createProposal()
 
-	// Validator votes, inheriting user's stake and bblack.
+	// Validator votes, inheriting user's stake and bfury.
 	suite.voteOnProposal(validator.GetOperator().Bytes(), proposal.Id, govv1beta1.OptionYes)
 
 	// use wrapped context to discard the state changes

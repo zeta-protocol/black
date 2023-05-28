@@ -39,12 +39,12 @@ func TestMsgBurnDerivative_Signing(t *testing.T) {
 	msg := types.NewMsgBurnDerivative(
 		address,
 		validatorAddress,
-		sdk.NewCoin("bblack-blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42", sdkmath.NewInt(1e9)),
+		sdk.NewCoin("bfury-blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42", sdkmath.NewInt(1e9)),
 	)
 
 	// checking for the "type" field ensures the msg is registered on the amino codec
 	signBytes := []byte(
-		`{"type":"liquid/MsgBurnDerivative","value":{"amount":{"amount":"1000000000","denom":"bblack-blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"},"sender":"black1gepm4nwzz40gtpur93alv9f9wm5ht4l0hzzw9d","validator":"blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"}}`,
+		`{"type":"liquid/MsgBurnDerivative","value":{"amount":{"amount":"1000000000","denom":"bfury-blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"},"sender":"black1gepm4nwzz40gtpur93alv9f9wm5ht4l0hzzw9d","validator":"blackvaloper1ypjp0m04pyp73hwgtc0dgkx0e9rrydeckewa42"}}`,
 	)
 
 	assert.Equal(t, []sdk.AccAddress{address}, msg.GetSigners())

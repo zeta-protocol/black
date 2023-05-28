@@ -178,7 +178,7 @@ func (suite *msgServerTestSuite) TestMintDepositAndWithdrawBurn_TransferEntireBa
 	suite.VaultAccountValueEqual(user, sdk.NewInt64Coin(derivativeDenom, 999_999_998)) // 2 lost in conversion
 
 	// Query the full black balance of the earn deposit and convert all to a delegation
-	deposit := suite.QueryEarn_VaultValue(user, "bblack")
+	deposit := suite.QueryEarn_VaultValue(user, "bfury")
 	suite.Equal(suite.NewBondCoins(sdkmath.NewInt(333_333_332)), deposit.Value) // 1 lost due to lost shares
 
 	msgWithdraw := types.NewMsgWithdrawBurn(
@@ -243,7 +243,7 @@ func (suite *msgServerTestSuite) TestDelegateMintDepositAndWithdrawBurnUndelegat
 	suite.VaultAccountValueEqual(user, sdk.NewInt64Coin(derivativeDenom, 166_666_666))
 
 	// Query the full black balance of the earn deposit and convert all to a delegation
-	deposit := suite.QueryEarn_VaultValue(user, "bblack")
+	deposit := suite.QueryEarn_VaultValue(user, "bfury")
 	suite.Equal(suite.NewBondCoins(sdkmath.NewInt(99_999_999)), deposit.Value) // 1 lost due to truncating shares to derivatives
 
 	msgWithdraw := types.NewMsgWithdrawBurnUndelegate(
@@ -296,8 +296,8 @@ func (suite *msgServerTestSuite) setupValidatorAndDelegation() (sdk.AccAddress, 
 }
 
 func (suite *msgServerTestSuite) setupEarnForDeposits(valAddr sdk.ValAddress) string {
-	suite.CreateVault("bblack", earntypes.StrategyTypes{earntypes.STRATEGY_TYPE_SAVINGS}, false, nil)
-	derivativeDenom := fmt.Sprintf("bblack-%s", valAddr)
+	suite.CreateVault("bfury", earntypes.StrategyTypes{earntypes.STRATEGY_TYPE_SAVINGS}, false, nil)
+	derivativeDenom := fmt.Sprintf("bfury-%s", valAddr)
 	suite.SetSavingsSupportedDenoms([]string{derivativeDenom})
 	return derivativeDenom
 }
@@ -314,7 +314,7 @@ func (suite *msgServerTestSuite) setupDerivatives() (sdk.AccAddress, sdk.ValAddr
 	_, err := suite.msgServer.MintDeposit(sdk.WrapSDKContext(suite.Ctx), msg)
 	suite.Require().NoError(err)
 
-	derivativeDenom := fmt.Sprintf("bblack-%s", valAddr)
+	derivativeDenom := fmt.Sprintf("bfury-%s", valAddr)
 	derivatives, err := suite.EarnKeeper.GetVaultAccountValue(suite.Ctx, derivativeDenom, user)
 	suite.Require().NoError(err)
 

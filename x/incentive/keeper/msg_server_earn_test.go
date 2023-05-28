@@ -30,14 +30,14 @@ func (suite *HandlerTestSuite) TestEarnLiquidClaim() {
 		WithSimpleAccount(validatorAddr2, cs(c("ufury", 1e12)))
 
 	incentBuilder := suite.incentiveBuilder().
-		WithSimpleEarnRewardPeriod("bblack", cs())
+		WithSimpleEarnRewardPeriod("bfury", cs())
 
 	savingsBuilder := testutil.NewSavingsGenesisBuilder().
-		WithSupportedDenoms("bblack")
+		WithSupportedDenoms("bfury")
 
 	earnBuilder := testutil.NewEarnGenesisBuilder().
 		WithAllowedVaults(earntypes.AllowedVault{
-			Denom:             "bblack",
+			Denom:             "bfury",
 			Strategies:        earntypes.StrategyTypes{earntypes.STRATEGY_TYPE_SAVINGS},
 			IsPrivateVault:    false,
 			AllowedDepositors: nil,
@@ -59,17 +59,17 @@ func (suite *HandlerTestSuite) TestEarnLiquidClaim() {
 	ik := suite.App.GetIncentiveKeeper()
 
 	iParams := ik.GetParams(suite.Ctx)
-	period, found := iParams.EarnRewardPeriods.GetMultiRewardPeriod("bblack")
+	period, found := iParams.EarnRewardPeriods.GetMultiRewardPeriod("bfury")
 	suite.Require().True(found)
-	suite.Require().Equal("bblack", period.CollateralType)
+	suite.Require().Equal("bfury", period.CollateralType)
 
 	// Use ufury for mint denom
 	mParams := mk.GetParams(suite.Ctx)
 	mParams.MintDenom = "ufury"
 	mk.SetParams(suite.Ctx, mParams)
 
-	bblackDenom1 := lq.GetLiquidStakingTokenDenom(valAddr1)
-	bblackDenom2 := lq.GetLiquidStakingTokenDenom(valAddr2)
+	bfuryDenom1 := lq.GetLiquidStakingTokenDenom(valAddr1)
+	bfuryDenom2 := lq.GetLiquidStakingTokenDenom(valAddr2)
 
 	err := suite.App.FundModuleAccount(suite.Ctx, distrtypes.ModuleName, cs(c("ufury", 1e12)))
 	suite.NoError(err)
@@ -109,12 +109,12 @@ func (suite *HandlerTestSuite) TestEarnLiquidClaim() {
 	suite.Require().NoError(err)
 
 	// Deposit liquid tokens to earn
-	err = suite.DeliverEarnMsgDeposit(userAddr1, c(bblackDenom1, 1e9), earntypes.STRATEGY_TYPE_SAVINGS)
+	err = suite.DeliverEarnMsgDeposit(userAddr1, c(bfuryDenom1, 1e9), earntypes.STRATEGY_TYPE_SAVINGS)
 	suite.Require().NoError(err)
 
-	err = suite.DeliverEarnMsgDeposit(userAddr2, c(bblackDenom1, 99e9), earntypes.STRATEGY_TYPE_SAVINGS)
+	err = suite.DeliverEarnMsgDeposit(userAddr2, c(bfuryDenom1, 99e9), earntypes.STRATEGY_TYPE_SAVINGS)
 	suite.Require().NoError(err)
-	err = suite.DeliverEarnMsgDeposit(userAddr2, c(bblackDenom2, 99e9), earntypes.STRATEGY_TYPE_SAVINGS)
+	err = suite.DeliverEarnMsgDeposit(userAddr2, c(bfuryDenom2, 99e9), earntypes.STRATEGY_TYPE_SAVINGS)
 	suite.Require().NoError(err)
 
 	// BeginBlocker to update minter annual provisions as it starts at 0 which results in no minted coins

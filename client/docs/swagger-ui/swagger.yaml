@@ -7070,7 +7070,7 @@ paths:
           required: false
           type: string
         - name: value_in_staked_tokens
-          description: respond with vault value in ufury for bblack vaults.
+          description: respond with vault value in ufury for bfury vaults.
           in: query
           required: false
           type: boolean

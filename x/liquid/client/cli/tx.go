@@ -80,7 +80,7 @@ func getCmdBurnDerivative() *cobra.Command {
 		Short: "burns staking derivative to redeem a delegation",
 		Long:  "Burn removes some staking derivative from a user's account and converts it back to a staking delegation.",
 		Example: fmt.Sprintf(
-			`%s tx %s burn 10000000bblack-blackvaloper16lnfpgn6llvn4fstg5nfrljj6aaxyee9z59jqd --from <key>`, version.AppName, types.ModuleName,
+			`%s tx %s burn 10000000bfury-blackvaloper16lnfpgn6llvn4fstg5nfrljj6aaxyee9z59jqd --from <key>`, version.AppName, types.ModuleName,
 		),
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {

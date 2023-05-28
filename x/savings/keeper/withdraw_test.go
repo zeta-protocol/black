@@ -23,7 +23,7 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 	valAddr := sdk.ValAddress(valAccAddr)
 	initialBalance := sdkmath.NewInt(1e9)
 
-	bblackDenom := fmt.Sprintf("bblack-%s", valAddr.String())
+	bfuryDenom := fmt.Sprintf("bfury-%s", valAddr.String())
 
 	type args struct {
 		allowedDenoms             []string
@@ -65,16 +65,16 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 			},
 		},
 		{
-			"valid: partial bblack",
+			"valid: partial bfury",
 			args{
-				allowedDenoms:             []string{"bnb", "btcb", "ufury", "bblack"},
+				allowedDenoms:             []string{"bnb", "btcb", "ufury", "bfury"},
 				depositor:                 sdk.AccAddress(crypto.AddressHash([]byte("test"))),
-				initialDepositorBalance:   sdk.NewCoins(sdk.NewCoin(bblackDenom, sdkmath.NewInt(1000)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
-				depositAmount:             sdk.NewCoins(sdk.NewCoin(bblackDenom, sdkmath.NewInt(200))),
-				withdrawAmount:            sdk.NewCoins(sdk.NewCoin(bblackDenom, sdkmath.NewInt(100))),
-				expectedAccountBalance:    sdk.NewCoins(sdk.NewCoin(bblackDenom, sdkmath.NewInt(900)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
-				expectedModAccountBalance: sdk.NewCoins(sdk.NewCoin(bblackDenom, sdkmath.NewInt(100))),
-				expectedDepositCoins:      sdk.NewCoins(sdk.NewCoin(bblackDenom, sdkmath.NewInt(100))),
+				initialDepositorBalance:   sdk.NewCoins(sdk.NewCoin(bfuryDenom, sdkmath.NewInt(1000)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
+				depositAmount:             sdk.NewCoins(sdk.NewCoin(bfuryDenom, sdkmath.NewInt(200))),
+				withdrawAmount:            sdk.NewCoins(sdk.NewCoin(bfuryDenom, sdkmath.NewInt(100))),
+				expectedAccountBalance:    sdk.NewCoins(sdk.NewCoin(bfuryDenom, sdkmath.NewInt(900)), sdk.NewCoin("btcb", sdkmath.NewInt(1000))),
+				expectedModAccountBalance: sdk.NewCoins(sdk.NewCoin(bfuryDenom, sdkmath.NewInt(100))),
+				expectedDepositCoins:      sdk.NewCoins(sdk.NewCoin(bfuryDenom, sdkmath.NewInt(100))),
 			},
 			errArgs{
 				expectPass:   true,
@@ -165,7 +165,7 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 			suite.keeper = keeper
 			bankKeeper := tApp.GetBankKeeper()
 
-			// Create validator and delegate for bblack
+			// Create validator and delegate for bfury
 			suite.CreateAccountWithAddress(valAccAddr, cs(c("ufury", 100e10)))
 			suite.CreateAccountWithAddress(delegator, cs(c("ufury", 100e10)))
 

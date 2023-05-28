@@ -67,8 +67,8 @@ func TestGetProportionalRewardPeriod(t *testing.T) {
 				time.Time{},
 				cs(c("ufury", 100), c("hard", 200)),
 			),
-			i(1000), // total bblack
-			i(1),    // bblack supply of this specific vault
+			i(1000), // total bfury
+			i(1),    // bfury supply of this specific vault
 			dcs(dc("ufury", "0.1"), dc("hard", "0.2")), // rewards per second rounded to 0 if under 1ufury/1hard
 		},
 	}

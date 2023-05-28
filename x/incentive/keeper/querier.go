@@ -385,7 +385,7 @@ func queryGetAPYs(ctx sdk.Context, req abci.RequestQuery, k Keeper, legacyQuerie
 	params := k.GetParams(ctx)
 	var apys types.APYs
 
-	// bblack APY (staking + incentive rewards)
+	// bfury APY (staking + incentive rewards)
 	stakingAPR, err := GetStakingAPR(ctx, k, params)
 	if err != nil {
 		return nil, err
@@ -395,7 +395,7 @@ func queryGetAPYs(ctx sdk.Context, req abci.RequestQuery, k Keeper, legacyQuerie
 
 	// Incentive only APYs
 	for _, param := range params.EarnRewardPeriods {
-		// Skip bblack as it's calculated earlier with staking rewards
+		// Skip bfury as it's calculated earlier with staking rewards
 		if param.CollateralType == liquidtypes.DefaultDerivativeDenom {
 			continue
 		}
@@ -438,14 +438,14 @@ func GetStakingAPR(ctx sdk.Context, k Keeper, params types.Params) (sdk.Dec, err
 			Quo(sdk.NewDecFromInt(circulatingSupply.Amount)))
 
 	// Get incentive APR
-	bblackRewardPeriod, found := params.EarnRewardPeriods.GetMultiRewardPeriod(liquidtypes.DefaultDerivativeDenom)
+	bfuryRewardPeriod, found := params.EarnRewardPeriods.GetMultiRewardPeriod(liquidtypes.DefaultDerivativeDenom)
 	if !found {
-		// No incentive rewards for bblack, only staking rewards
+		// No incentive rewards for bfury, only staking rewards
 		return stakingAPR, nil
 	}
 
-	// Total amount of bblack in earn vaults, this may be lower than total bank
-	// supply of bblack as some bblack may not be deposited in earn vaults
+	// Total amount of bfury in earn vaults, this may be lower than total bank
+	// supply of bfury as some bfury may not be deposited in earn vaults
 	totalEarnBblackDeposited := sdk.ZeroInt()
 
 	var iterErr error
@@ -470,8 +470,8 @@ func GetStakingAPR(ctx sdk.Context, k Keeper, params types.Params) (sdk.Dec, err
 	}
 
 	// Incentive APR = rewards per second * seconds per year / total supplied to earn vaults
-	// Override collateral type to use "black" instead of "bblack" when fetching
-	incentiveAPY, err := GetAPYFromMultiRewardPeriod(ctx, k, types.BondDenom, bblackRewardPeriod, totalEarnBblackDeposited)
+	// Override collateral type to use "black" instead of "bfury" when fetching
+	incentiveAPY, err := GetAPYFromMultiRewardPeriod(ctx, k, types.BondDenom, bfuryRewardPeriod, totalEarnBblackDeposited)
 	if err != nil {
 		return sdk.ZeroDec(), err
 	}
@@ -531,7 +531,7 @@ func GetAPYFromMultiRewardPeriod(
 func getMarketID(denom string) string {
 	// Rewrite denoms as pricefeed has different names for some assets,
 	// e.g. "ufury" -> "black", "erc20/multichain/usdc" -> "usdc"
-	// bblack is not included as it is handled separately
+	// bfury is not included as it is handled separately
 
 	// TODO: Replace hardcoded conversion with possible params set somewhere
 	// to be more flexible. E.g. a map of denoms to pricefeed market denoms in

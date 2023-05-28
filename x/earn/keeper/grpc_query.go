@@ -62,13 +62,13 @@ func (s queryServer) Vaults(
 
 	var vaultRecordsErr error
 
-	// Iterate over vault records instead of AllowedVaults to get all bblack-*
+	// Iterate over vault records instead of AllowedVaults to get all bfury-*
 	// vaults
 	s.keeper.IterateVaultRecords(sdkCtx, func(record types.VaultRecord) bool {
-		// Check if bblack, use allowed vault
+		// Check if bfury, use allowed vault
 		allowedVaultDenom := record.TotalShares.Denom
-		if strings.HasPrefix(record.TotalShares.Denom, bblackPrefix) {
-			allowedVaultDenom = bblackDenom
+		if strings.HasPrefix(record.TotalShares.Denom, bfuryPrefix) {
+			allowedVaultDenom = bfuryDenom
 		}
 
 		allowedVault, found := allowedVaultsMap[allowedVaultDenom]
@@ -155,12 +155,12 @@ func (s queryServer) Vault(
 		return nil, status.Errorf(codes.NotFound, "vault not found with specified denom")
 	}
 
-	// Handle bblack separately to get total of **all** bblack vaults
-	if req.Denom == bblackDenom {
+	// Handle bfury separately to get total of **all** bfury vaults
+	if req.Denom == bfuryDenom {
 		return s.getAggregateBblackVault(sdkCtx, allowedVault)
 	}
 
-	// Must be req.Denom and not allowedVault.Denom to get full "bblack" denom
+	// Must be req.Denom and not allowedVault.Denom to get full "bfury" denom
 	vaultRecord, found := s.keeper.GetVaultRecord(sdkCtx, req.Denom)
 	if !found {
 		// No supply yet, no error just set it to zero
@@ -173,7 +173,7 @@ func (s queryServer) Vault(
 	}
 
 	vault := types.VaultResponse{
-		// VaultRecord denom instead of AllowedVault.Denom for full bblack denom
+		// VaultRecord denom instead of AllowedVault.Denom for full bfury denom
 		Denom:             vaultRecord.TotalShares.Denom,
 		Strategies:        allowedVault.Strategies,
 		IsPrivateVault:    allowedVault.IsPrivateVault,
@@ -187,7 +187,7 @@ func (s queryServer) Vault(
 	}, nil
 }
 
-// getAggregateBblackVault returns a VaultResponse of the total of all bblack
+// getAggregateBblackVault returns a VaultResponse of the total of all bfury
 // vaults.
 func (s queryServer) getAggregateBblackVault(
 	ctx sdk.Context,
@@ -197,8 +197,8 @@ func (s queryServer) getAggregateBblackVault(
 
 	var iterErr error
 	s.keeper.IterateVaultRecords(ctx, func(record types.VaultRecord) (stop bool) {
-		// Skip non bblack vaults
-		if !strings.HasPrefix(record.TotalShares.Denom, bblackPrefix) {
+		// Skip non bfury vaults
+		if !strings.HasPrefix(record.TotalShares.Denom, bfuryPrefix) {
 			return false
 		}
 
@@ -224,7 +224,7 @@ func (s queryServer) getAggregateBblackVault(
 
 	return &types.QueryVaultResponse{
 		Vault: types.VaultResponse{
-			Denom:             bblackDenom,
+			Denom:             bfuryDenom,
 			Strategies:        allowedVault.Strategies,
 			IsPrivateVault:    allowedVault.IsPrivateVault,
 			AllowedDepositors: addressSliceToStringSlice(allowedVault.AllowedDepositors),
@@ -250,8 +250,8 @@ func (s queryServer) Deposits(
 
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
 
-	// bblack aggregate total
-	if req.Denom == bblackDenom {
+	// bfury aggregate total
+	if req.Denom == bfuryDenom {
 		return s.getOneAccountBblackVaultDeposit(sdkCtx, req)
 	}
 
@@ -273,7 +273,7 @@ func (s queryServer) TotalSupply(
 	totalSupply := sdk.NewCoins()
 	liquidStakedDerivatives := sdk.NewCoins()
 
-	// allowed vaults param contains info on allowed strategies, but bblack is aggregated
+	// allowed vaults param contains info on allowed strategies, but bfury is aggregated
 	allowedVaults := s.keeper.GetAllowedVaults(sdkCtx)
 	allowedVaultByDenom := make(map[string]types.AllowedVault)
 	for _, av := range allowedVaults {
@@ -284,11 +284,11 @@ func (s queryServer) TotalSupply(
 	// iterate actual records to properly enumerate all denoms
 	s.keeper.IterateVaultRecords(sdkCtx, func(vault types.VaultRecord) (stop bool) {
 		isLiquidStakingDenom := false
-		// find allowed vault to get parameters. handle translating bblack denoms to allowed vault denom
+		// find allowed vault to get parameters. handle translating bfury denoms to allowed vault denom
 		allowedVaultDenom := vault.TotalShares.Denom
-		if strings.HasPrefix(vault.TotalShares.Denom, bblackPrefix) {
+		if strings.HasPrefix(vault.TotalShares.Denom, bfuryPrefix) {
 			isLiquidStakingDenom = true
-			allowedVaultDenom = bblackDenom
+			allowedVaultDenom = bfuryDenom
 		}
 		allowedVault, found := allowedVaultByDenom[allowedVaultDenom]
 		if !found {
@@ -318,7 +318,7 @@ func (s queryServer) TotalSupply(
 		return false
 	})
 
-	// determine underlying value of bblack denoms
+	// determine underlying value of bfury denoms
 	if len(liquidStakedDerivatives) > 0 {
 		underlyingValue, err := s.keeper.liquidKeeper.GetStakedTokensForDerivatives(
 			sdkCtx,
@@ -327,7 +327,7 @@ func (s queryServer) TotalSupply(
 		if err != nil {
 			return nil, err
 		}
-		totalSupply = totalSupply.Add(sdk.NewCoin(bblackDenom, underlyingValue.Amount))
+		totalSupply = totalSupply.Add(sdk.NewCoin(bfuryDenom, underlyingValue.Amount))
 	}
 
 	return &types.QueryTotalSupplyResponse{
@@ -402,7 +402,7 @@ func (s queryServer) getOneAccountOneVaultDeposit(
 	}, nil
 }
 
-// getOneAccountBblackVaultDeposit returns deposits for the aggregated bblack vault
+// getOneAccountBblackVaultDeposit returns deposits for the aggregated bfury vault
 // and a specific account
 func (s queryServer) getOneAccountBblackVaultDeposit(
 	ctx sdk.Context,
@@ -428,13 +428,13 @@ func (s queryServer) getOneAccountBblackVaultDeposit(
 		}, nil
 	}
 
-	// Get all account deposit values to add up bblack
+	// Get all account deposit values to add up bfury
 	totalAccountValue, err := getAccountTotalValue(ctx, s.keeper, depositor, shareRecord.Shares)
 	if err != nil {
 		return nil, err
 	}
 
-	// Remove non-bblack coins, GetStakedTokensForDerivatives expects only bblack
+	// Remove non-bfury coins, GetStakedTokensForDerivatives expects only bfury
 	totalBblackValue := sdk.NewCoins()
 	for _, coin := range totalAccountValue {
 		if s.keeper.liquidKeeper.IsDerivativeDenom(ctx, coin.Denom) {
@@ -442,7 +442,7 @@ func (s queryServer) getOneAccountBblackVaultDeposit(
 		}
 	}
 
-	// Use account value with only the aggregate bblack converted to underlying staked tokens
+	// Use account value with only the aggregate bfury converted to underlying staked tokens
 	stakedValue, err := s.keeper.liquidKeeper.GetStakedTokensForDerivatives(ctx, totalBblackValue)
 	if err != nil {
 		return nil, err
@@ -495,7 +495,7 @@ func (s queryServer) getOneAccountAllDeposits(
 		var valueInStakedTokens []sdk.Coin
 
 		for _, coin := range value {
-			// Skip non-bblack coins
+			// Skip non-bfury coins
 			if !s.keeper.liquidKeeper.IsDerivativeDenom(ctx, coin.Denom) {
 				continue
 			}
@@ -511,7 +511,7 @@ func (s queryServer) getOneAccountAllDeposits(
 
 		var filteredShares types.VaultShares
 		for _, share := range accountShare.Shares {
-			// Remove non-bblack coins from shares as they are used to
+			// Remove non-bfury coins from shares as they are used to
 			// determine which value is mapped to which denom
 			// These should be in the same order as valueInStakedTokens
 			if !s.keeper.liquidKeeper.IsDerivativeDenom(ctx, share.Denom) {

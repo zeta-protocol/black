@@ -1366,7 +1366,7 @@
             "allowed_depositors": []
           },
           {
-            "denom": "bblack",
+            "denom": "bfury",
             "strategies": [
               "STRATEGY_TYPE_SAVINGS"
             ]
@@ -2623,7 +2623,7 @@
         "earn_reward_periods": [
           {
             "active": true,
-            "collateral_type": "bblack",
+            "collateral_type": "bfury",
             "start": "2022-10-26T15:00:00Z",
             "end": "2024-10-26T15:00:00Z",
             "rewards_per_second": [
@@ -3409,9 +3409,9 @@
           "ufury",
           "hard",
           "swp",
-          "bblack",
-          "bblack-blackvaloper1xcgtffvv2yeqmgs3yz4gv29kgjrj8usxrnrlwp",
-          "bblack-blackvaloper1w66m9hdzwgd6uc8g93zqkcumgwzrpcw958sh3s",
+          "bfury",
+          "bfury-blackvaloper1xcgtffvv2yeqmgs3yz4gv29kgjrj8usxrnrlwp",
+          "bfury-blackvaloper1w66m9hdzwgd6uc8g93zqkcumgwzrpcw958sh3s",
           "erc20/multichain/usdc"
         ]
       }

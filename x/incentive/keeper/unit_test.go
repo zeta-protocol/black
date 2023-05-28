@@ -563,7 +563,7 @@ func (k *fakeLiquidKeeper) addDerivative(
 }
 
 func (k *fakeLiquidKeeper) IsDerivativeDenom(ctx sdk.Context, denom string) bool {
-	return strings.HasPrefix(denom, "bblack-")
+	return strings.HasPrefix(denom, "bfury-")
 }
 
 func (k *fakeLiquidKeeper) GetAllDerivativeDenoms(ctx sdk.Context) (denoms []string) {
