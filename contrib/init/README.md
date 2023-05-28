@@ -1,6 +1,6 @@
 Sample configuration files for:
 
 ```
-SystemD: kvd.service
-macOS:  io.black.kvd.plist
+SystemD: bkd.service
+macOS:  io.black.bkd.plist
 ```

@@ -1,12 +1,12 @@
 #!/usr/bin/env sh
 
-BINARY=/kvd/linux/${BINARY:-kvd}
+BINARY=/bkd/linux/${BINARY:-bkd}
 echo "binary: ${BINARY}"
 ID=${ID:-0}
-LOG=${LOG:-kvd.log}
+LOG=${LOG:-bkd.log}
 
 if ! [ -f "${BINARY}" ]; then
-	echo "The binary $(basename "${BINARY}") cannot be found. Please add the binary to the shared folder. Please use the BINARY environment variable if the name of the binary is not 'kvd' E.g.: -e BINARY=kvd_my_test_version"
+	echo "The binary $(basename "${BINARY}") cannot be found. Please add the binary to the shared folder. Please use the BINARY environment variable if the name of the binary is not 'bkd' E.g.: -e BINARY=bkd_my_test_version"
 	exit 1
 fi
 
@@ -17,10 +17,10 @@ if [ -z "${BINARY_CHECK}" ]; then
 	exit 1
 fi
 
-export KVDHOME="/kvd/node${ID}/kvd"
+export BKDHOME="/bkd/node${ID}/bkd"
 
-if [ -d "$(dirname "${KVDHOME}"/"${LOG}")" ]; then
-  "${BINARY}" --home "${KVDHOME}" "$@" | tee "${KVDHOME}/${LOG}"
+if [ -d "$(dirname "${BKDHOME}"/"${LOG}")" ]; then
+  "${BINARY}" --home "${BKDHOME}" "$@" | tee "${BKDHOME}/${LOG}"
 else
-  "${BINARY}" --home "${KVDHOME}" "$@"
+  "${BINARY}" --home "${BKDHOME}" "$@"
 fi

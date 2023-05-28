@@ -11,14 +11,14 @@ This guide will walk you through interacting with the blockchains and transferri
 We'll be using Black's CLI to build, sign, and broadcast the transactions:
 
 ```bash
-    # Download kvcli
+    # Download bkcli
     make install
 ```
 
 Before making a request, query account information for the signing account. Note the 'accountnumber' and 'sequence' fields, we'll need them later in order to send our request:
 
 ```bash
-    kvcli q auth account $(kvcli keys show testuser -a)
+    bkcli q auth account $(bkcli keys show testuser -a)
 ```
 
 ### Create swap
@@ -31,7 +31,7 @@ WARNING: Don't use `calc-rnh` for the generation of secrets in production. These
 
 ```bash
     # Generate a sample random number, timestamp, and random number hash
-    kvcli q bep3 calc-rnh now
+    bkcli q bep3 calc-rnh now
 
     # Expected output:
     # Random number: 110802331073994018312675691928205725441742309715720953510374321628333109608728
@@ -59,10 +59,10 @@ Once each parameter is populated, it's time to create our swap:
     curl -H "Content-Type: application/json" -X POST -d @./contrib/testnet-5000/rest_examples/create-swap.json http://127.0.0.1:1317/bep3/swap/create | jq > ./contrib/testnet-5000/rest_examples/create-swap-unsigned.json
 
     # Sign the request
-    kvcli tx sign ./contrib/testnet-5000/rest_examples/create-swap-unsigned.json --from testnetdeputy --offline --chain-id testing --sequence 0 --account-number 5 | jq > ./contrib/testnet-5000/rest_examples/broadcast-create-swap.json
+    bkcli tx sign ./contrib/testnet-5000/rest_examples/create-swap-unsigned.json --from testnetdeputy --offline --chain-id testing --sequence 0 --account-number 5 | jq > ./contrib/testnet-5000/rest_examples/broadcast-create-swap.json
 
     # Broadcast the request
-    kvcli tx broadcast ./contrib/testnet-5000/rest_examples/broadcast-create-swap.json
+    bkcli tx broadcast ./contrib/testnet-5000/rest_examples/broadcast-create-swap.json
 ```
 
 The tx broadcast will log information in the terminal, including the txhash. This tx hash can be used to get information about the transaction, including the swap creation event that includes the swap's ID:
@@ -95,10 +95,10 @@ Once the `swap_id` parameter is populated, it's time to claim our swap:
     curl -H "Content-Type: application/json" -X POST -d @./contrib/testnet-5000/rest_examples/claim-swap.json http://127.0.0.1:1317/bep3/swap/claim | jq > ./contrib/testnet-5000/rest_examples/claim-swap-unsigned.json
 
     # Sign the request
-    kvcli tx sign ./contrib/testnet-5000/rest_examples/claim-swap-unsigned.json --from user --offline --chain-id testing --sequence 0 --account-number 1 | jq  > ./contrib/testnet-5000/rest_examples/broadcast-claim-swap.json
+    bkcli tx sign ./contrib/testnet-5000/rest_examples/claim-swap-unsigned.json --from user --offline --chain-id testing --sequence 0 --account-number 1 | jq  > ./contrib/testnet-5000/rest_examples/broadcast-claim-swap.json
 
     # Broadcast the request
-    kvcli tx broadcast ./contrib/testnet-5000/rest_examples/broadcast-claim-swap.json
+    bkcli tx broadcast ./contrib/testnet-5000/rest_examples/broadcast-claim-swap.json
 ```
 
 # Refund swap
@@ -118,8 +118,8 @@ Once the `swap_id` parameter is populated, it's time to refund our swap:
     curl -H "Content-Type: application/json" -X POST -d @./contrib/testnet-5000/rest_examples/refund-swap.json http://127.0.0.1:1317/bep3/swap/refund | jq > ./contrib/testnet-5000/rest_examples/refund-swap-unsigned.json
 
     # Sign the request
-    kvcli tx sign ./contrib/testnet-5000/rest_examples/refund-swap-unsigned.json --from user --offline --chain-id testing --sequence 0 --account-number 1 | jq  > ./contrib/testnet-5000/rest_examples/broadcast-refund-swap.json
+    bkcli tx sign ./contrib/testnet-5000/rest_examples/refund-swap-unsigned.json --from user --offline --chain-id testing --sequence 0 --account-number 1 | jq  > ./contrib/testnet-5000/rest_examples/broadcast-refund-swap.json
 
     # Broadcast the request
-    kvcli tx broadcast ./contrib/testnet-5000/rest_examples/broadcast-refund-swap.json
+    bkcli tx broadcast ./contrib/testnet-5000/rest_examples/broadcast-refund-swap.json
 ```

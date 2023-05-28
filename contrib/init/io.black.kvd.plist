@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>io.black.kvd</string>
+	<string>io.black.bkd</string>
 	<key>ProgramArguments</key>
 	<array>
 		<!--Assumes user is "black"-->
-		<string>/Users/black/go/bin/kvd</string>
+		<string>/Users/black/go/bin/bkd</string>
     <string>start</string>
 	</array>
 	<key>RunAtLoad</key>

@@ -6,7 +6,7 @@ After=network-online.target
 
 # Run as black:black
 User=black
-ExecStart=/home/black/go/bin/kvd start
+ExecStart=/home/black/go/bin/bkd start
 Restart=on-failure
 RestartSec=3
 LimitNOFILE=4096

@@ -1,58 +1,58 @@
 version: '3'
 
 services:
-  kvdnode0:
-    container_name: kvdnode0
+  bkdnode0:
+    container_name: bkdnode0
     image: "black/blacknode"
     ports:
       - "26656-26657:26656-26657"
     environment:
       - ID=0
-      - LOG=${LOG:-kvd.log}
+      - LOG=${LOG:-bkd.log}
     volumes:
-      - ./build:/kvd:Z
+      - ./build:/bkd:Z
     networks:
       localnet:
         ipv4_address: 192.168.10.2
 
-  kvdnode1:
-    container_name: kvdnode1
+  bkdnode1:
+    container_name: bkdnode1
     image: "black/blacknode"
     ports:
       - "26659-26660:26656-26657"
     environment:
       - ID=1
-      - LOG=${LOG:-kvd.log}
+      - LOG=${LOG:-bkd.log}
     volumes:
-      - ./build:/kvd:Z
+      - ./build:/bkd:Z
     networks:
       localnet:
         ipv4_address: 192.168.10.3
 
-  kvdnode2:
-    container_name: kvdnode2
+  bkdnode2:
+    container_name: bkdnode2
     image: "black/blacknode"
     environment:
       - ID=2
-      - LOG=${LOG:-kvd.log}
+      - LOG=${LOG:-bkd.log}
     ports:
       - "26661-26662:26656-26657"
     volumes:
-      - ./build:/kvd:Z
+      - ./build:/bkd:Z
     networks:
       localnet:
         ipv4_address: 192.168.10.4
 
-  kvdnode3:
-    container_name: kvdnode3
+  bkdnode3:
+    container_name: bkdnode3
     image: "black/blacknode"
     environment:
       - ID=3
-      - LOG=${LOG:-kvd.log}
+      - LOG=${LOG:-bkd.log}
     ports:
       - "26663-26664:26656-26657"
     volumes:
-      - ./build:/kvd:Z
+      - ./build:/bkd:Z
     networks:
       localnet:
         ipv4_address: 192.168.10.5

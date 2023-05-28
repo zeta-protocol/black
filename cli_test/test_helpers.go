@@ -77,13 +77,13 @@ func init() {
 type Fixtures struct {
 	BuildDir    string
 	RootDir     string
-	KvdBinary   string
-	KvcliBinary string
+	BkdBinary   string
+	BkcliBinary string
 	ChainID     string
 	RPCAddr     string
 	Port        string
-	KvdHome     string
-	KvcliHome   string
+	BkdHome     string
+	BkcliHome   string
 	P2PAddr     string
 	T           *testing.T
 
@@ -113,10 +113,10 @@ func NewFixtures(t *testing.T) *Fixtures {
 		T:           t,
 		BuildDir:    buildDir,
 		RootDir:     tmpDir,
-		KvdBinary:   filepath.Join(buildDir, "kvd"),
-		KvcliBinary: filepath.Join(buildDir, "kvcli"),
-		KvdHome:     filepath.Join(tmpDir, ".kvd"),
-		KvcliHome:   filepath.Join(tmpDir, ".kvcli"),
+		BkdBinary:   filepath.Join(buildDir, "bkd"),
+		BkcliBinary: filepath.Join(buildDir, "bkcli"),
+		BkdHome:     filepath.Join(tmpDir, ".bkd"),
+		BkcliHome:   filepath.Join(tmpDir, ".bkcli"),
 		RPCAddr:     servAddr,
 		P2PAddr:     p2pAddr,
 		Port:        port,
@@ -126,7 +126,7 @@ func NewFixtures(t *testing.T) *Fixtures {
 
 // GenesisFile returns the path of the genesis file
 func (f Fixtures) GenesisFile() string {
-	return filepath.Join(f.KvdHome, "config", "genesis.json")
+	return filepath.Join(f.BkdHome, "config", "genesis.json")
 }
 
 // GenesisState returns the application's genesis state
@@ -197,7 +197,7 @@ func (f *Fixtures) Cleanup(dirs ...string) {
 
 // Flags returns the flags necessary for making most CLI calls
 func (f *Fixtures) Flags() string {
-	return fmt.Sprintf("--home=%s --node=%s", f.KvcliHome, f.RPCAddr)
+	return fmt.Sprintf("--home=%s --node=%s", f.BkcliHome, f.RPCAddr)
 }
 
 //___________________________________________________________________________________
@@ -205,16 +205,16 @@ func (f *Fixtures) Flags() string {
 
 // UnsafeResetAll is blackd unsafe-reset-all
 func (f *Fixtures) UnsafeResetAll(flags ...string) {
-	cmd := fmt.Sprintf("%s --home=%s unsafe-reset-all", f.KvdBinary, f.KvdHome)
+	cmd := fmt.Sprintf("%s --home=%s unsafe-reset-all", f.BkdBinary, f.BkdHome)
 	executeWrite(f.T, addFlags(cmd, flags))
-	err := os.RemoveAll(filepath.Join(f.KvdHome, "config", "gentx"))
+	err := os.RemoveAll(filepath.Join(f.BkdHome, "config", "gentx"))
 	require.NoError(f.T, err)
 }
 
 // KvInit is blackd init
 // NOTE: KvInit sets the ChainID for the Fixtures instance
 func (f *Fixtures) KvInit(moniker string, flags ...string) {
-	cmd := fmt.Sprintf("%s init -o --home=%s %s", f.KvdBinary, f.KvdHome, moniker)
+	cmd := fmt.Sprintf("%s init -o --home=%s %s", f.BkdBinary, f.BkdHome, moniker)
 	_, stderr := tests.ExecuteT(f.T, addFlags(cmd, flags), clientkeys.DefaultKeyPass)
 
 	var chainID string
@@ -231,25 +231,25 @@ func (f *Fixtures) KvInit(moniker string, flags ...string) {
 
 // AddGenesisAccount is blackd add-genesis-account
 func (f *Fixtures) AddGenesisAccount(address sdk.AccAddress, coins sdk.Coins, flags ...string) {
-	cmd := fmt.Sprintf("%s add-genesis-account %s %s --home=%s --keyring-backend=test", f.KvdBinary, address, coins, f.KvdHome)
+	cmd := fmt.Sprintf("%s add-genesis-account %s %s --home=%s --keyring-backend=test", f.BkdBinary, address, coins, f.BkdHome)
 	executeWriteCheckErr(f.T, addFlags(cmd, flags))
 }
 
 // GenTx is blackd gentx
 func (f *Fixtures) GenTx(name string, flags ...string) {
-	cmd := fmt.Sprintf("%s gentx --name=%s --home=%s --home-client=%s --keyring-backend=test", f.KvdBinary, name, f.KvdHome, f.KvcliHome)
+	cmd := fmt.Sprintf("%s gentx --name=%s --home=%s --home-client=%s --keyring-backend=test", f.BkdBinary, name, f.BkdHome, f.BkcliHome)
 	executeWriteCheckErr(f.T, addFlags(cmd, flags))
 }
 
 // CollectGenTxs is blackd collect-gentxs
 func (f *Fixtures) CollectGenTxs(flags ...string) {
-	cmd := fmt.Sprintf("%s collect-gentxs --home=%s", f.KvdBinary, f.KvdHome)
+	cmd := fmt.Sprintf("%s collect-gentxs --home=%s", f.BkdBinary, f.BkdHome)
 	executeWriteCheckErr(f.T, addFlags(cmd, flags))
 }
 
 // GDStart runs blackd start with the appropriate flags and returns a process
 func (f *Fixtures) GDStart(flags ...string) *tests.Process {
-	cmd := fmt.Sprintf("%s start --home=%s --rpc.laddr=%v --p2p.laddr=%v --pruning=everything", f.KvdBinary, f.KvdHome, f.RPCAddr, f.P2PAddr)
+	cmd := fmt.Sprintf("%s start --home=%s --rpc.laddr=%v --p2p.laddr=%v --pruning=everything", f.BkdBinary, f.BkdHome, f.RPCAddr, f.P2PAddr)
 	proc := tests.GoExecuteTWithStdout(f.T, addFlags(cmd, flags))
 	tests.WaitForTMStart(f.Port)
 	tests.WaitForNextNBlocksTM(1, f.Port)
@@ -258,7 +258,7 @@ func (f *Fixtures) GDStart(flags ...string) *tests.Process {
 
 // GDTendermint returns the results of blackd tendermint [query]
 func (f *Fixtures) GDTendermint(query string) string {
-	cmd := fmt.Sprintf("%s tendermint %s --home=%s", f.KvdBinary, query, f.KvdHome)
+	cmd := fmt.Sprintf("%s tendermint %s --home=%s", f.BkdBinary, query, f.BkdHome)
 	success, stdout, stderr := executeWriteRetStdStreams(f.T, cmd)
 	require.Empty(f.T, stderr)
 	require.True(f.T, success)
@@ -267,45 +267,45 @@ func (f *Fixtures) GDTendermint(query string) string {
 
 // ValidateGenesis runs blackd validate-genesis
 func (f *Fixtures) ValidateGenesis() {
-	cmd := fmt.Sprintf("%s validate-genesis --home=%s", f.KvdBinary, f.KvdHome)
+	cmd := fmt.Sprintf("%s validate-genesis --home=%s", f.BkdBinary, f.BkdHome)
 	executeWriteCheckErr(f.T, cmd)
 }
 
 //___________________________________________________________________________________
-// kvcli keys
+// bkcli keys
 
-// KeysDelete is kvcli keys delete
+// KeysDelete is bkcli keys delete
 func (f *Fixtures) KeysDelete(name string, flags ...string) {
-	cmd := fmt.Sprintf("%s keys delete --keyring-backend=test --home=%s %s", f.KvcliBinary,
-		f.KvcliHome, name)
+	cmd := fmt.Sprintf("%s keys delete --keyring-backend=test --home=%s %s", f.BkcliBinary,
+		f.BkcliHome, name)
 	executeWrite(f.T, addFlags(cmd, append(append(flags, "-y"), "-f")))
 }
 
-// KeysAdd is kvcli keys add
+// KeysAdd is bkcli keys add
 func (f *Fixtures) KeysAdd(name string, flags ...string) {
-	cmd := fmt.Sprintf("%s keys add --keyring-backend=test --home=%s %s", f.KvcliBinary,
-		f.KvcliHome, name)
+	cmd := fmt.Sprintf("%s keys add --keyring-backend=test --home=%s %s", f.BkcliBinary,
+		f.BkcliHome, name)
 	executeWriteCheckErr(f.T, addFlags(cmd, flags))
 }
 
-// KeysAddRecover prepares kvcli keys add --recover
+// KeysAddRecover prepares bkcli keys add --recover
 func (f *Fixtures) KeysAddRecover(name, mnemonic string, flags ...string) (exitSuccess bool, stdout, stderr string) {
 	cmd := fmt.Sprintf("%s keys add --keyring-backend=test --home=%s --recover %s",
-		f.KvcliBinary, f.KvcliHome, name)
+		f.BkcliBinary, f.BkcliHome, name)
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), mnemonic)
 }
 
-// KeysAddRecoverHDPath prepares kvcli keys add --recover --account --index
+// KeysAddRecoverHDPath prepares bkcli keys add --recover --account --index
 func (f *Fixtures) KeysAddRecoverHDPath(name, mnemonic string, account uint32, index uint32, flags ...string) {
 	cmd := fmt.Sprintf("%s keys add --keyring-backend=test --home=%s --recover %s --account %d"+
-		" --index %d", f.KvcliBinary, f.KvcliHome, name, account, index)
+		" --index %d", f.BkcliBinary, f.BkcliHome, name, account, index)
 	executeWriteCheckErr(f.T, addFlags(cmd, flags), mnemonic)
 }
 
-// KeysShow is kvcli keys show
+// KeysShow is bkcli keys show
 func (f *Fixtures) KeysShow(name string, flags ...string) keys.KeyOutput {
-	cmd := fmt.Sprintf("%s keys show --keyring-backend=test --home=%s %s", f.KvcliBinary,
-		f.KvcliHome, name)
+	cmd := fmt.Sprintf("%s keys show --keyring-backend=test --home=%s %s", f.BkcliBinary,
+		f.BkcliHome, name)
 	out, _ := tests.ExecuteT(f.T, addFlags(cmd, flags), "")
 	var ko keys.KeyOutput
 	err := clientkeys.UnmarshalJSON([]byte(out), &ko)
@@ -322,101 +322,101 @@ func (f *Fixtures) KeyAddress(name string) sdk.AccAddress {
 }
 
 //___________________________________________________________________________________
-// kvcli config
+// bkcli config
 
-// CLIConfig is kvcli config
+// CLIConfig is bkcli config
 func (f *Fixtures) CLIConfig(key, value string, flags ...string) {
-	cmd := fmt.Sprintf("%s config --home=%s %s %s", f.KvcliBinary, f.KvcliHome, key, value)
+	cmd := fmt.Sprintf("%s config --home=%s %s %s", f.BkcliBinary, f.BkcliHome, key, value)
 	executeWriteCheckErr(f.T, addFlags(cmd, flags))
 }
 
 //___________________________________________________________________________________
-// kvcli tx send/sign/broadcast
+// bkcli tx send/sign/broadcast
 
-// Status is kvcli status
+// Status is bkcli status
 func (f *Fixtures) Status(flags ...string) (bool, string, string) {
-	cmd := fmt.Sprintf("%s status %s", f.KvcliBinary, f.Flags())
+	cmd := fmt.Sprintf("%s status %s", f.BkcliBinary, f.Flags())
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), clientkeys.DefaultKeyPass)
 }
 
-// TxSend is kvcli tx send
+// TxSend is bkcli tx send
 func (f *Fixtures) TxSend(from string, to sdk.AccAddress, amount sdk.Coin, flags ...string) (bool, string, string) {
-	cmd := fmt.Sprintf("%s tx send --keyring-backend=test %s %s %s %v", f.KvcliBinary, from,
+	cmd := fmt.Sprintf("%s tx send --keyring-backend=test %s %s %s %v", f.BkcliBinary, from,
 		to, amount, f.Flags())
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), clientkeys.DefaultKeyPass)
 }
 
-// TxSign is kvcli tx sign
+// TxSign is bkcli tx sign
 func (f *Fixtures) TxSign(signer, fileName string, flags ...string) (bool, string, string) {
-	cmd := fmt.Sprintf("%s tx sign %v --keyring-backend=test --from=%s %v", f.KvcliBinary,
+	cmd := fmt.Sprintf("%s tx sign %v --keyring-backend=test --from=%s %v", f.BkcliBinary,
 		f.Flags(), signer, fileName)
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), clientkeys.DefaultKeyPass)
 }
 
-// TxBroadcast is kvcli tx broadcast
+// TxBroadcast is bkcli tx broadcast
 func (f *Fixtures) TxBroadcast(fileName string, flags ...string) (bool, string, string) {
-	cmd := fmt.Sprintf("%s tx broadcast %v %v", f.KvcliBinary, f.Flags(), fileName)
+	cmd := fmt.Sprintf("%s tx broadcast %v %v", f.BkcliBinary, f.Flags(), fileName)
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), clientkeys.DefaultKeyPass)
 }
 
-// TxEncode is kvcli tx encode
+// TxEncode is bkcli tx encode
 func (f *Fixtures) TxEncode(fileName string, flags ...string) (bool, string, string) {
-	cmd := fmt.Sprintf("%s tx encode %v %v", f.KvcliBinary, f.Flags(), fileName)
+	cmd := fmt.Sprintf("%s tx encode %v %v", f.BkcliBinary, f.Flags(), fileName)
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), clientkeys.DefaultKeyPass)
 }
 
-// TxMultisign is kvcli tx multisign
+// TxMultisign is bkcli tx multisign
 func (f *Fixtures) TxMultisign(fileName, name string, signaturesFiles []string,
 	flags ...string,
 ) (bool, string, string) {
-	cmd := fmt.Sprintf("%s tx multisign --keyring-backend=test %v %s %s %s", f.KvcliBinary, f.Flags(),
+	cmd := fmt.Sprintf("%s tx multisign --keyring-backend=test %v %s %s %s", f.BkcliBinary, f.Flags(),
 		fileName, name, strings.Join(signaturesFiles, " "),
 	)
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags))
 }
 
 //___________________________________________________________________________________
-// kvcli tx staking
+// bkcli tx staking
 
-// TxStakingCreateValidator is kvcli tx staking create-validator
+// TxStakingCreateValidator is bkcli tx staking create-validator
 func (f *Fixtures) TxStakingCreateValidator(from, consPubKey string, amount sdk.Coin, flags ...string) (bool, string, string) {
 	cmd := fmt.Sprintf("%s tx staking create-validator %v --keyring-backend=test --from=%s"+
-		" --pubkey=%s", f.KvcliBinary, f.Flags(), from, consPubKey)
+		" --pubkey=%s", f.BkcliBinary, f.Flags(), from, consPubKey)
 	cmd += fmt.Sprintf(" --amount=%v --moniker=%v --commission-rate=%v", amount, from, "0.05")
 	cmd += fmt.Sprintf(" --commission-max-rate=%v --commission-max-change-rate=%v", "0.20", "0.10")
 	cmd += fmt.Sprintf(" --min-self-delegation=%v", "1")
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), clientkeys.DefaultKeyPass)
 }
 
-// TxStakingUnbond is kvcli tx staking unbond
+// TxStakingUnbond is bkcli tx staking unbond
 func (f *Fixtures) TxStakingUnbond(from, shares string, validator sdk.ValAddress, flags ...string) bool {
 	cmd := fmt.Sprintf("%s tx staking unbond --keyring-backend=test %s %v --from=%s %v",
-		f.KvcliBinary, validator, shares, from, f.Flags())
+		f.BkcliBinary, validator, shares, from, f.Flags())
 	return executeWrite(f.T, addFlags(cmd, flags), clientkeys.DefaultKeyPass)
 }
 
 //___________________________________________________________________________________
-// kvcli tx gov
+// bkcli tx gov
 
-// TxGovSubmitProposal is kvcli tx gov submit-proposal
+// TxGovSubmitProposal is bkcli tx gov submit-proposal
 func (f *Fixtures) TxGovSubmitProposal(from, typ, title, description string, deposit sdk.Coin, flags ...string) (bool, string, string) {
 	cmd := fmt.Sprintf("%s tx gov submit-proposal %v --keyring-backend=test --from=%s --type=%s",
-		f.KvcliBinary, f.Flags(), from, typ)
+		f.BkcliBinary, f.Flags(), from, typ)
 	cmd += fmt.Sprintf(" --title=%s --description=%s --deposit=%s", title, description, deposit)
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), clientkeys.DefaultKeyPass)
 }
 
-// TxGovDeposit is kvcli tx gov deposit
+// TxGovDeposit is bkcli tx gov deposit
 func (f *Fixtures) TxGovDeposit(proposalID int, from string, amount sdk.Coin, flags ...string) (bool, string, string) {
 	cmd := fmt.Sprintf("%s tx gov deposit %d %s --keyring-backend=test --from=%s %v",
-		f.KvcliBinary, proposalID, amount, from, f.Flags())
+		f.BkcliBinary, proposalID, amount, from, f.Flags())
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), clientkeys.DefaultKeyPass)
 }
 
-// TxGovVote is kvcli tx gov vote
+// TxGovVote is bkcli tx gov vote
 func (f *Fixtures) TxGovVote(proposalID int, option gov.VoteOption, from string, flags ...string) (bool, string, string) {
 	cmd := fmt.Sprintf("%s tx gov vote %d %s --keyring-backend=test --from=%s %v",
-		f.KvcliBinary, proposalID, option, from, f.Flags())
+		f.BkcliBinary, proposalID, option, from, f.Flags())
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), clientkeys.DefaultKeyPass)
 }
 
@@ -427,7 +427,7 @@ func (f *Fixtures) TxGovSubmitParamChangeProposal(
 ) (bool, string, string) {
 	cmd := fmt.Sprintf(
 		"%s tx gov submit-proposal param-change %s --keyring-backend=test --from=%s %v",
-		f.KvcliBinary, proposalPath, from, f.Flags(),
+		f.BkcliBinary, proposalPath, from, f.Flags(),
 	)
 
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), clientkeys.DefaultKeyPass)
@@ -440,18 +440,18 @@ func (f *Fixtures) TxGovSubmitCommunityPoolSpendProposal(
 ) (bool, string, string) {
 	cmd := fmt.Sprintf(
 		"%s tx gov submit-proposal community-pool-spend %s --keyring-backend=test --from=%s %v",
-		f.KvcliBinary, proposalPath, from, f.Flags(),
+		f.BkcliBinary, proposalPath, from, f.Flags(),
 	)
 
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), clientkeys.DefaultKeyPass)
 }
 
 //___________________________________________________________________________________
-// kvcli query account
+// bkcli query account
 
-// QueryAccount is kvcli query account
+// QueryAccount is bkcli query account
 func (f *Fixtures) QueryAccount(address sdk.AccAddress, flags ...string) auth.BaseAccount {
-	cmd := fmt.Sprintf("%s query account %s %v", f.KvcliBinary, address, f.Flags())
+	cmd := fmt.Sprintf("%s query account %s %v", f.BkcliBinary, address, f.Flags())
 	out, _ := tests.ExecuteT(f.T, addFlags(cmd, flags), "")
 	var initRes map[string]json.RawMessage
 	err := json.Unmarshal([]byte(out), &initRes)
@@ -466,11 +466,11 @@ func (f *Fixtures) QueryAccount(address sdk.AccAddress, flags ...string) auth.Ba
 }
 
 //___________________________________________________________________________________
-// kvcli query txs
+// bkcli query txs
 
-// QueryTxs is kvcli query txs
+// QueryTxs is bkcli query txs
 func (f *Fixtures) QueryTxs(page, limit int, events ...string) *sdk.SearchTxsResult {
-	cmd := fmt.Sprintf("%s query txs --page=%d --limit=%d --events='%s' %v", f.KvcliBinary, page, limit, queryEvents(events), f.Flags())
+	cmd := fmt.Sprintf("%s query txs --page=%d --limit=%d --events='%s' %v", f.BkcliBinary, page, limit, queryEvents(events), f.Flags())
 	out, _ := tests.ExecuteT(f.T, cmd, "")
 	var result sdk.SearchTxsResult
 
@@ -481,17 +481,17 @@ func (f *Fixtures) QueryTxs(page, limit int, events ...string) *sdk.SearchTxsRes
 
 // QueryTxsInvalid query txs with wrong parameters and compare expected error
 func (f *Fixtures) QueryTxsInvalid(expectedErr error, page, limit int, events ...string) {
-	cmd := fmt.Sprintf("%s query txs --page=%d --limit=%d --events='%s' %v", f.KvcliBinary, page, limit, queryEvents(events), f.Flags())
+	cmd := fmt.Sprintf("%s query txs --page=%d --limit=%d --events='%s' %v", f.BkcliBinary, page, limit, queryEvents(events), f.Flags())
 	_, err := tests.ExecuteT(f.T, cmd, "")
 	require.EqualError(f.T, expectedErr, err)
 }
 
 //___________________________________________________________________________________
-// kvcli query staking
+// bkcli query staking
 
-// QueryStakingValidator is kvcli query staking validator
+// QueryStakingValidator is bkcli query staking validator
 func (f *Fixtures) QueryStakingValidator(valAddr sdk.ValAddress, flags ...string) staking.Validator {
-	cmd := fmt.Sprintf("%s query staking validator %s %v", f.KvcliBinary, valAddr, f.Flags())
+	cmd := fmt.Sprintf("%s query staking validator %s %v", f.BkcliBinary, valAddr, f.Flags())
 	out, _ := tests.ExecuteT(f.T, addFlags(cmd, flags), "")
 	var validator staking.Validator
 
@@ -500,9 +500,9 @@ func (f *Fixtures) QueryStakingValidator(valAddr sdk.ValAddress, flags ...string
 	return validator
 }
 
-// QueryStakingUnbondingDelegationsFrom is kvcli query staking unbonding-delegations-from
+// QueryStakingUnbondingDelegationsFrom is bkcli query staking unbonding-delegations-from
 func (f *Fixtures) QueryStakingUnbondingDelegationsFrom(valAddr sdk.ValAddress, flags ...string) []staking.UnbondingDelegation {
-	cmd := fmt.Sprintf("%s query staking unbonding-delegations-from %s %v", f.KvcliBinary, valAddr, f.Flags())
+	cmd := fmt.Sprintf("%s query staking unbonding-delegations-from %s %v", f.BkcliBinary, valAddr, f.Flags())
 	out, _ := tests.ExecuteT(f.T, addFlags(cmd, flags), "")
 	var ubds []staking.UnbondingDelegation
 
@@ -511,9 +511,9 @@ func (f *Fixtures) QueryStakingUnbondingDelegationsFrom(valAddr sdk.ValAddress, 
 	return ubds
 }
 
-// QueryStakingDelegationsTo is kvcli query staking delegations-to
+// QueryStakingDelegationsTo is bkcli query staking delegations-to
 func (f *Fixtures) QueryStakingDelegationsTo(valAddr sdk.ValAddress, flags ...string) []staking.Delegation {
-	cmd := fmt.Sprintf("%s query staking delegations-to %s %v", f.KvcliBinary, valAddr, f.Flags())
+	cmd := fmt.Sprintf("%s query staking delegations-to %s %v", f.BkcliBinary, valAddr, f.Flags())
 	out, _ := tests.ExecuteT(f.T, addFlags(cmd, flags), "")
 	var delegations []staking.Delegation
 
@@ -522,9 +522,9 @@ func (f *Fixtures) QueryStakingDelegationsTo(valAddr sdk.ValAddress, flags ...st
 	return delegations
 }
 
-// QueryStakingPool is kvcli query staking pool
+// QueryStakingPool is bkcli query staking pool
 func (f *Fixtures) QueryStakingPool(flags ...string) staking.Pool {
-	cmd := fmt.Sprintf("%s query staking pool %v", f.KvcliBinary, f.Flags())
+	cmd := fmt.Sprintf("%s query staking pool %v", f.BkcliBinary, f.Flags())
 	out, _ := tests.ExecuteT(f.T, addFlags(cmd, flags), "")
 	var pool staking.Pool
 
@@ -533,9 +533,9 @@ func (f *Fixtures) QueryStakingPool(flags ...string) staking.Pool {
 	return pool
 }
 
-// QueryStakingParameters is kvcli query staking parameters
+// QueryStakingParameters is bkcli query staking parameters
 func (f *Fixtures) QueryStakingParameters(flags ...string) staking.Params {
-	cmd := fmt.Sprintf("%s query staking params %v", f.KvcliBinary, f.Flags())
+	cmd := fmt.Sprintf("%s query staking params %v", f.BkcliBinary, f.Flags())
 	out, _ := tests.ExecuteT(f.T, addFlags(cmd, flags), "")
 	var params staking.Params
 
@@ -545,11 +545,11 @@ func (f *Fixtures) QueryStakingParameters(flags ...string) staking.Params {
 }
 
 //___________________________________________________________________________________
-// kvcli query gov
+// bkcli query gov
 
-// QueryGovParamDeposit is kvcli query gov param deposit
+// QueryGovParamDeposit is bkcli query gov param deposit
 func (f *Fixtures) QueryGovParamDeposit() gov.DepositParams {
-	cmd := fmt.Sprintf("%s query gov param deposit %s", f.KvcliBinary, f.Flags())
+	cmd := fmt.Sprintf("%s query gov param deposit %s", f.BkcliBinary, f.Flags())
 	out, _ := tests.ExecuteT(f.T, cmd, "")
 	var depositParam gov.DepositParams
 
@@ -558,9 +558,9 @@ func (f *Fixtures) QueryGovParamDeposit() gov.DepositParams {
 	return depositParam
 }
 
-// QueryGovParamVoting is kvcli query gov param voting
+// QueryGovParamVoting is bkcli query gov param voting
 func (f *Fixtures) QueryGovParamVoting() gov.VotingParams {
-	cmd := fmt.Sprintf("%s query gov param voting %s", f.KvcliBinary, f.Flags())
+	cmd := fmt.Sprintf("%s query gov param voting %s", f.BkcliBinary, f.Flags())
 	out, _ := tests.ExecuteT(f.T, cmd, "")
 	var votingParam gov.VotingParams
 
@@ -569,9 +569,9 @@ func (f *Fixtures) QueryGovParamVoting() gov.VotingParams {
 	return votingParam
 }
 
-// QueryGovParamTallying is kvcli query gov param tallying
+// QueryGovParamTallying is bkcli query gov param tallying
 func (f *Fixtures) QueryGovParamTallying() gov.TallyParams {
-	cmd := fmt.Sprintf("%s query gov param tallying %s", f.KvcliBinary, f.Flags())
+	cmd := fmt.Sprintf("%s query gov param tallying %s", f.BkcliBinary, f.Flags())
 	out, _ := tests.ExecuteT(f.T, cmd, "")
 	var tallyingParam gov.TallyParams
 
@@ -580,9 +580,9 @@ func (f *Fixtures) QueryGovParamTallying() gov.TallyParams {
 	return tallyingParam
 }
 
-// QueryGovProposals is kvcli query gov proposals
+// QueryGovProposals is bkcli query gov proposals
 func (f *Fixtures) QueryGovProposals(flags ...string) gov.Proposals {
-	cmd := fmt.Sprintf("%s query gov proposals %v", f.KvcliBinary, f.Flags())
+	cmd := fmt.Sprintf("%s query gov proposals %v", f.BkcliBinary, f.Flags())
 	stdout, stderr := tests.ExecuteT(f.T, addFlags(cmd, flags), "")
 	if strings.Contains(stderr, "no matching proposals found") {
 		return gov.Proposals{}
@@ -595,9 +595,9 @@ func (f *Fixtures) QueryGovProposals(flags ...string) gov.Proposals {
 	return out
 }
 
-// QueryGovProposal is kvcli query gov proposal
+// QueryGovProposal is bkcli query gov proposal
 func (f *Fixtures) QueryGovProposal(proposalID int, flags ...string) gov.Proposal {
-	cmd := fmt.Sprintf("%s query gov proposal %d %v", f.KvcliBinary, proposalID, f.Flags())
+	cmd := fmt.Sprintf("%s query gov proposal %d %v", f.BkcliBinary, proposalID, f.Flags())
 	out, _ := tests.ExecuteT(f.T, addFlags(cmd, flags), "")
 	var proposal gov.Proposal
 
@@ -606,9 +606,9 @@ func (f *Fixtures) QueryGovProposal(proposalID int, flags ...string) gov.Proposa
 	return proposal
 }
 
-// QueryGovVote is kvcli query gov vote
+// QueryGovVote is bkcli query gov vote
 func (f *Fixtures) QueryGovVote(proposalID int, voter sdk.AccAddress, flags ...string) gov.Vote {
-	cmd := fmt.Sprintf("%s query gov vote %d %s %v", f.KvcliBinary, proposalID, voter, f.Flags())
+	cmd := fmt.Sprintf("%s query gov vote %d %s %v", f.BkcliBinary, proposalID, voter, f.Flags())
 	out, _ := tests.ExecuteT(f.T, addFlags(cmd, flags), "")
 	var vote gov.Vote
 
@@ -617,9 +617,9 @@ func (f *Fixtures) QueryGovVote(proposalID int, voter sdk.AccAddress, flags ...s
 	return vote
 }
 
-// QueryGovVotes is kvcli query gov votes
+// QueryGovVotes is bkcli query gov votes
 func (f *Fixtures) QueryGovVotes(proposalID int, flags ...string) []gov.Vote {
-	cmd := fmt.Sprintf("%s query gov votes %d %v", f.KvcliBinary, proposalID, f.Flags())
+	cmd := fmt.Sprintf("%s query gov votes %d %v", f.BkcliBinary, proposalID, f.Flags())
 	out, _ := tests.ExecuteT(f.T, addFlags(cmd, flags), "")
 	var votes []gov.Vote
 
@@ -628,9 +628,9 @@ func (f *Fixtures) QueryGovVotes(proposalID int, flags ...string) []gov.Vote {
 	return votes
 }
 
-// QueryGovDeposit is kvcli query gov deposit
+// QueryGovDeposit is bkcli query gov deposit
 func (f *Fixtures) QueryGovDeposit(proposalID int, depositor sdk.AccAddress, flags ...string) gov.Deposit {
-	cmd := fmt.Sprintf("%s query gov deposit %d %s %v", f.KvcliBinary, proposalID, depositor, f.Flags())
+	cmd := fmt.Sprintf("%s query gov deposit %d %s %v", f.BkcliBinary, proposalID, depositor, f.Flags())
 	out, _ := tests.ExecuteT(f.T, addFlags(cmd, flags), "")
 	var deposit gov.Deposit
 
@@ -639,9 +639,9 @@ func (f *Fixtures) QueryGovDeposit(proposalID int, depositor sdk.AccAddress, fla
 	return deposit
 }
 
-// QueryGovDeposits is kvcli query gov deposits
+// QueryGovDeposits is bkcli query gov deposits
 func (f *Fixtures) QueryGovDeposits(propsalID int, flags ...string) []gov.Deposit {
-	cmd := fmt.Sprintf("%s query gov deposits %d %v", f.KvcliBinary, propsalID, f.Flags())
+	cmd := fmt.Sprintf("%s query gov deposits %d %v", f.BkcliBinary, propsalID, f.Flags())
 	out, _ := tests.ExecuteT(f.T, addFlags(cmd, flags), "")
 	var deposits []gov.Deposit
 
@@ -655,7 +655,7 @@ func (f *Fixtures) QueryGovDeposits(propsalID int, flags ...string) []gov.Deposi
 
 // QuerySigningInfo returns the signing info for a validator
 func (f *Fixtures) QuerySigningInfo(val string) slashing.ValidatorSigningInfo {
-	cmd := fmt.Sprintf("%s query slashing signing-info %s %s", f.KvcliBinary, val, f.Flags())
+	cmd := fmt.Sprintf("%s query slashing signing-info %s %s", f.BkcliBinary, val, f.Flags())
 	res, errStr := tests.ExecuteT(f.T, cmd, "")
 	require.Empty(f.T, errStr)
 
@@ -665,9 +665,9 @@ func (f *Fixtures) QuerySigningInfo(val string) slashing.ValidatorSigningInfo {
 	return sinfo
 }
 
-// QuerySlashingParams is kvcli query slashing params
+// QuerySlashingParams is bkcli query slashing params
 func (f *Fixtures) QuerySlashingParams() slashing.Params {
-	cmd := fmt.Sprintf("%s query slashing params %s", f.KvcliBinary, f.Flags())
+	cmd := fmt.Sprintf("%s query slashing params %s", f.BkcliBinary, f.Flags())
 	res, errStr := tests.ExecuteT(f.T, cmd, "")
 	require.Empty(f.T, errStr)
 
@@ -682,7 +682,7 @@ func (f *Fixtures) QuerySlashingParams() slashing.Params {
 
 // QueryRewards returns the rewards of a delegator
 func (f *Fixtures) QueryRewards(delAddr sdk.AccAddress, flags ...string) distribution.QueryDelegatorTotalRewardsResponse {
-	cmd := fmt.Sprintf("%s query distribution rewards %s %s", f.KvcliBinary, delAddr, f.Flags())
+	cmd := fmt.Sprintf("%s query distribution rewards %s %s", f.BkcliBinary, delAddr, f.Flags())
 	res, errStr := tests.ExecuteT(f.T, cmd, "")
 	require.Empty(f.T, errStr)
 
@@ -697,7 +697,7 @@ func (f *Fixtures) QueryRewards(delAddr sdk.AccAddress, flags ...string) distrib
 
 // QueryTotalSupply returns the total supply of coins
 func (f *Fixtures) QueryTotalSupply(flags ...string) (totalSupply sdk.Coins) {
-	cmd := fmt.Sprintf("%s query supply total %s", f.KvcliBinary, f.Flags())
+	cmd := fmt.Sprintf("%s query supply total %s", f.BkcliBinary, f.Flags())
 	res, errStr := tests.ExecuteT(f.T, cmd, "")
 	require.Empty(f.T, errStr)
 
@@ -708,7 +708,7 @@ func (f *Fixtures) QueryTotalSupply(flags ...string) (totalSupply sdk.Coins) {
 
 // QueryTotalSupplyOf returns the total supply of a given coin denom
 func (f *Fixtures) QueryTotalSupplyOf(denom string, flags ...string) sdkmath.Int {
-	cmd := fmt.Sprintf("%s query supply total %s %s", f.KvcliBinary, denom, f.Flags())
+	cmd := fmt.Sprintf("%s query supply total %s %s", f.BkcliBinary, denom, f.Flags())
 	res, errStr := tests.ExecuteT(f.T, cmd, "")
 	require.Empty(f.T, errStr)
 
