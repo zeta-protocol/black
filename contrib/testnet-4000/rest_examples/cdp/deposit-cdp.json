@@ -1,0 +1,20 @@
+{
+  "base_req": {
+    "from": "black1rjnv8ns2wvz9calje5pmcnpxm055pegprywvjj",
+    "memo": "",
+    "chain_id": "black-internal",
+    "account_number": "12",
+    "sequence": "0",
+    "gas": "500000",
+    "gas_adjustment": "1.0",
+    "simulate": false
+  },
+  "owner": "black1mzqz3jfs9nzfp6v7qp647rv0afxlu2csl0txmq",
+  "depositor": "black1rjnv8ns2wvz9calje5pmcnpxm055pegprywvjj",
+  "collateral": [
+    {
+      "denom": "xrp",
+      "amount": "110000000"
+    }
+  ]
+}

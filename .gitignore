@@ -1,0 +1,39 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+cover.html
+
+# Exclude build files
+vendor
+
+# IDE files
+*.vscode
+*.idea
+node_modules
+docs/node_modules
+docs/.vuepress/dist
+
+# Ignore macOS file system metadata
+.DS_Store
+
+# Ignore build outputs
+out
+
+# Ignore build cache dir
+build/.cache
+
+# Ignore installed binaires
+build/bin
+
+# Ignore build dirs
+build/darwin
+build/linux

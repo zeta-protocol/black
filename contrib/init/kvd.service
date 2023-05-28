@@ -1,0 +1,15 @@
+[Unit]
+Description=Black daemon
+After=network-online.target
+
+[Service]
+
+# Run as black:black
+User=black
+ExecStart=/home/black/go/bin/kvd start
+Restart=on-failure
+RestartSec=3
+LimitNOFILE=4096
+
+[Install]
+WantedBy=multi-user.target

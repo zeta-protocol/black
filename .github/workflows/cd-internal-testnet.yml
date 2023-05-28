@@ -1,0 +1,60 @@
+name: Continuous Deployment (Internal Testnet)
+# run after every successful CI job of new commits to the master branch
+on:
+  workflow_run:
+    workflows: [Continuous Integration (Black Master)]
+    types:
+      - completed
+
+jobs:
+  # in order:
+  # enter standby (prevents autoscaling group from killing node during deploy)
+  # stop black
+  # take ebs + zfs snapshots
+  # download updated binary and genesis
+  # reset application database state (only done on internal testnet)
+  reset-chain-to-zero-state:
+    # only start cd pipeline if last ci run was successful
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    uses: ./.github/workflows/cd-reset-internal-testnet.yml
+    with:
+      aws-region: us-east-1
+      chain-id: black_2221-17000
+      ssm-document-name: black-testnet-internal-node-update
+      playbook-name: reset-internal-testnet-playbook.yml
+      playbook-infrastructure-branch: master
+    secrets: inherit
+
+  # start black with new binary and genesis state on api, peer and seed nodes, place nodes in service once they start and are synched to live
+  start-chain-api:
+    uses: ./.github/workflows/cd-start-chain.yml
+    with:
+      aws-region: us-east-1
+      chain-id: black_2221-17000
+      ssm-document-name: black-testnet-internal-node-update
+      playbook-name: start-chain-api-playbook.yml
+      playbook-infrastructure-branch: master
+    secrets: inherit
+    needs: [reset-chain-to-zero-state]
+
+  # setup test and development accounts and balances, deploy contracts by calling the chain's api
+  seed-chain-state:
+    uses: ./.github/workflows/cd-seed-chain.yml
+    with:
+      chain-api-url: https://rpc.app.internal.testnet.us-east.production.black.io:443
+      chain-id: black_2221-17000
+      seed-script-filename: seed-internal-testnet.sh
+      erc20-deployer-network-name: internal_testnet
+      genesis_validator_addresses: "blackvaloper1xcgtffvv2yeqmgs3yz4gv29kgjrj8usxrnrlwp blackvaloper1w66m9hdzwgd6uc8g93zqkcumgwzrpcw958sh3s"
+      black_version_filepath:  ./ci/env/black-internal-testnet/BLACK.VERSION
+    secrets: inherit
+    needs: [start-chain-api]
+  post-pipeline-metrics:
+    uses: ./.github/workflows/metric-pipeline.yml
+    if: always() # always run so we metric failures and successes
+    with:
+      aws-region: us-east-1
+      metric-name: black.deploys.testnet.internal
+      namespace: Black/ContinuousDeployment
+    secrets: inherit
+    needs: [seed-chain-state]

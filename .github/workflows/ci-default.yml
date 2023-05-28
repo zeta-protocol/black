@@ -1,0 +1,81 @@
+name: Continuous Integration (Default Checks)
+
+on:
+  workflow_call:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo from current commit
+        uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.20"
+          check-latest: true
+          cache: true
+      - name: build application
+        run: make build
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo from current commit
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.20"
+          check-latest: true
+          cache: true
+      - name: run unit tests
+        run: make test
+      - name: run e2e tests
+        run: make docker-build test-e2e
+  validate-internal-testnet-genesis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo from current commit
+        uses: actions/checkout@v3
+      - name: save version of black that will be deployed if this pr is merged
+        id: black-version
+        run: |
+          echo "BLACK_VERSION=$(cat ./ci/env/black-internal-testnet/BLACK.VERSION)" >> $GITHUB_OUTPUT
+      - name: checkout repo from master
+        uses: actions/checkout@v3
+        with:
+          ref: master
+      - name: checkout version of black that will be deployed if this pr is merged
+        run: |
+          git pull -p
+          git checkout $BLACK_VERSION
+        env:
+          BLACK_VERSION: ${{ steps.black-version.outputs.BLACK_VERSION }}
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.20"
+          check-latest: true
+          cache: true
+      - name: build black cli
+        run: make install
+      - name: checkout repo from current commit to validate current branch's genesis
+        uses: actions/checkout@v3
+      - name: validate testnet genesis
+        run: black validate-genesis ci/env/black-internal-testnet/genesis.json
+  validate-protonet-genesis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo from current commit
+        uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.20"
+          check-latest: true
+          cache: true
+      - name: build black cli
+        run: make install
+      - name: validate protonet genesis
+        run: black validate-genesis ci/env/black-protonet/genesis.json

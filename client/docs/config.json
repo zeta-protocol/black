@@ -1,0 +1,278 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Black - gRPC Gateway docs",
+    "description": "A REST interface for state queries",
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "GitHub",
+    "url": "https://github.com/Zeta-Protocol/black"
+  },
+  "host": "api.data.black.io",
+  "schemes": ["https"],
+  "apis": [
+    {
+      "url": "./out/swagger/black/auction/v1beta1/query.swagger.json",
+      "tags": {
+        "rename": {
+          "Query": "Auction"
+        }
+      },
+      "operationIds": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "Auction$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./out/swagger/black/bep3/v1beta1/query.swagger.json",
+      "tags": {
+        "rename": {
+          "Query": "BEP3"
+        }
+      },
+      "operationIds": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "BEP3$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./out/swagger/black/cdp/v1beta1/query.swagger.json",
+      "tags": {
+        "rename": {
+          "Query": "CDP"
+        }
+      },
+      "operationIds": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "CDP$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./out/swagger/black/committee/v1beta1/query.swagger.json",
+      "tags": {
+        "rename": {
+          "Query": "Committee"
+        }
+      },
+      "operationIds": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "Committee$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./out/swagger/black/earn/v1beta1/query.swagger.json",
+      "tags": {
+        "rename": {
+          "Query": "Earn"
+        }
+      },
+      "operationIds": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "Earn$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./out/swagger/black/hard/v1beta1/query.swagger.json",
+      "tags": {
+        "rename": {
+          "Query": "Hard"
+        }
+      },
+      "operationIds": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "Hard$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./out/swagger/black/incentive/v1beta1/query.swagger.json",
+      "tags": {
+        "rename": {
+          "Query": "Incentive"
+        }
+      },
+      "operationIds": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "Incentive$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./out/swagger/black/issuance/v1beta1/query.swagger.json",
+      "tags": {
+        "rename": {
+          "Query": "Issuance"
+        }
+      },
+      "operationIds": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "Issuance$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./out/swagger/black/blackdist/v1beta1/query.swagger.json",
+      "tags": {
+        "rename": {
+          "Query": "Blackdist"
+        }
+      },
+      "operationIds": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "Blackdist$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./out/swagger/black/liquid/v1beta1/query.swagger.json",
+      "tags": {
+        "rename": {
+          "Query": "Liquid"
+        }
+      },
+      "operationIds": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "Liquid$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./out/swagger/black/pricefeed/v1beta1/query.swagger.json",
+      "tags": {
+        "rename": {
+          "Query": "Pricefeed"
+        }
+      },
+      "operationIds": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "Pricefeed$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./out/swagger/black/swap/v1beta1/query.swagger.json",
+      "tags": {
+        "rename": {
+          "Query": "Swap"
+        }
+      },
+      "operationIds": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "Swap$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./out/swagger/black/savings/v1beta1/query.swagger.json",
+      "tags": {
+        "rename": {
+          "Query": "Savings"
+        }
+      },
+      "operationIds": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "Savings$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./client/docs/cosmos-swagger.yml",
+      "dereference": {
+        "circular": "ignore"
+      },
+      "tags": {
+        "rename": {
+          "Gaia REST": "BLACK Rest",
+          "Query": "Cosmos SDK"
+        }
+      },
+      "paths": {
+        "exclude": ["^/cosmos/authz/.*", "^/cosmos/feegrant/.*"]
+      }
+    },
+    {
+      "url": "./client/docs/ibc-go-swagger.yml",
+      "dereference": {
+        "circular": "ignore"
+      },
+      "tags": {
+        "rename": {
+          "Query": "IBC"
+        }
+      },
+      "operationIds": {
+        "rename": [
+          {
+            "type": "regex",
+            "from": "(.*)",
+            "to": "Ibc$1"
+          }
+        ]
+      }
+    },
+    {
+      "url": "./client/docs/legacy-swagger.yml",
+      "dereference": {
+        "circular": "ignore"
+      }
+    }
+  ]
+}

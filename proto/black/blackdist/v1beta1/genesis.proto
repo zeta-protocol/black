@@ -1,0 +1,18 @@
+syntax = "proto3";
+package black.blackdist.v1beta1;
+
+import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
+import "black/blackdist/v1beta1/params.proto";
+
+option go_package = "github.com/zeta-protocol/black/x/blackdist/types";
+
+// GenesisState defines the blackdist module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+
+  google.protobuf.Timestamp previous_block_time = 2 [
+    (gogoproto.stdtime) = true,
+    (gogoproto.nullable) = false
+  ];
+}
